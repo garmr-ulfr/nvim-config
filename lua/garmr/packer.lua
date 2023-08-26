@@ -20,6 +20,22 @@ return require('packer').startup(function(use)
     use({ 'catppuccin/nvim', as = 'catppuccin' })
 
     use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
+    use("nvim-treesitter/nvim-treesitter-context")
+
+    use('ray-x/go.nvim')
+    use('ray-x/guihua.lua')
+
+    use {
+        'neovim/nvim-lspconfig',
+        requires = 'zbirenbaum/copilot.lua'
+    }
+    use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         requires = {
@@ -32,10 +48,10 @@ return require('packer').startup(function(use)
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
             { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-nvim-lua' },
+            { 'saadparwaiz1/cmp_luasnip' },
 
             -- Snippets
             { 'L3MON4D3/LuaSnip' },
@@ -43,34 +59,52 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- Autocompletion
     use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-buffer')
-    use('hrsh7th/cmp-path')
-    use('saadparwaiz1/cmp_luasnip')
-    use('hrsh7th/cmp-nvim-lsp')
-    use('hrsh7th/cmp-nvim-lua')
-
-    -- Snippets
-    use('L3MON4D3/LuaSnip')
-    use('rafamadriz/friendly-snippets')
-
     use {
-        'nvim-treesitter/nvim-treesitter',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
+        'hrsh7th/cmp-buffer',
+        after = 'nvim-cmp'
+    }
+    use {
+        'hrsh7th/cmp-path',
+        after = 'nvim-cmp'
+    }
+    use {
+        'saadparwaiz1/cmp_luasnip',
+        after = 'nvim-cmp'
+    }
+    use {
+        'hrsh7th/cmp-nvim-lsp',
+        after = 'nvim-cmp'
+    }
+    use {
+        'hrsh7th/cmp-nvim-lua',
+        after = 'nvim-cmp'
     }
 
-    use('ray-x/go.nvim')
-    use('ray-x/guihua.lua')
-    use('neovim/nvim-lspconfig')
-    use("nvim-treesitter/nvim-treesitter-context")
+    -- Snippets
+    use {
+        "L3MON4D3/LuaSnip",
+        lazy = true,
+        config = function()
+            local luasnip = require("luasnip")
+            luasnip.config.set_config({
+                defaults = {
+                    history = true,
+                    updateevents = "TextChanged,TextChangedI",
+                },
+            })
+        end,
+    }
+    use('rafamadriz/friendly-snippets')
+
+    use("ray-x/lsp_signature.nvim")
 
     use {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
+        after = "nvim-lspconfig",
         config = function()
             require("copilot").setup({
                 suggestion = { enabled = false },
@@ -81,18 +115,11 @@ return require('packer').startup(function(use)
 
     use {
         "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
         config = function()
             require("copilot_cmp").setup()
         end
     }
 
---     use({
---         "nvim-tree/nvim-web-devicons",
---         config = function()
---             require("nvim-web-devicons").setup()
---         end
---     })
     use("folke/trouble.nvim")
 
     use({

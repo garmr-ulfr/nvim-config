@@ -1,52 +1,3 @@
-local lsp = require('lsp-zero').preset('recommended')
-
-lsp.ensure_installed({
-	'gopls',
---	'lua-language-server',
-})
-
--- lsp.nvim_workspace()
-
-lsp.set_preferences({
-    suggest_lsp_server = true,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I',
-    }
-})
-
-lsp.on_attach(function(client, bufnr)
-    lsp.default_keymaps({buffer = bufnr})
-    local opts = {buffer = bufnr, remap = false}
-
-    require('lsp_signature').on_attach({
-        bind = true,
-        hint_enable = true,
-        hint_prefix = '',
-        floating_window = false,
-        transparency = 100,
-        doc_lines=0,
-        always_trigger = true,
-        fix_pos = false,
-        extra_trigger_chars = {'(', ',', ')'}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
-        hi_parameter = "LspSignatureActiveParameter",
-        handler_opts = {
-            border = "none", -- double, single, shadow, none
-        },
-        floating_window_off_x = 2, -- adjust float windows x position.
-        floating_window_off_y = 0, -- adjust float windows y position.
-    }, bufnr)
-
-    vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-end)
-
-lsp.setup()
-
 require('go').setup({
 	goimport = 'gopls',      -- goimport command, can be gopls[default] or goimport
 	fillstruct = 'gopls',    -- can be nil (use fillstruct, slower) and gopls
@@ -113,7 +64,6 @@ require('go').setup({
 	test_runner = 'go',                                     -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
 	verbose_tests = true,                                   -- set to add verbose flag to tests deprecated, see '-v' option
 	run_in_floaterm = true,                                -- set to true to run in float window. :GoTermClose closes the floatterm
-	-- float term recommend if you use richgo/ginkgo with terminal color
 
 	floaterm = {                                                          -- position
 		posititon = 'right',                                           -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
@@ -127,24 +77,3 @@ require('go').setup({
 
 local cfg = require('go.lsp').config()
 require('lspconfig').gopls.setup(cfg)
-
-local cmp = require('cmp')
-cmp.setup({
-    sources = {
-        { name = 'copilot' },
-        {name = 'nvim_lsp'},
-        {name = 'buffer'},
-        {name = 'path'},
-        {name = 'nvim_lua'},
-    },
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-    experimental = {
-            ghost_text = true,
-    }
-})
-
---set max height of items
-vim.cmd([[ set pumheight=6 ]])
