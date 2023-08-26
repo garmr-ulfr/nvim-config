@@ -10,14 +10,38 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+        requires = { { 'nvim-lua/plenary.nvim' } },
+        config = function ()
+            require('garmr.configs.telescope')
+        end
     }
 
-    use('ThePrimeagen/harpoon')
     use("theprimeagen/refactoring.nvim")
-    use('mbbill/undotree')
-    use('tpope/vim-fugitive')
-    use({ 'catppuccin/nvim', as = 'catppuccin' })
+    use {
+        'mbbill/undotree',
+        config = function ()
+            require('garmr.configs.undotree')
+        end
+    }
+    use {
+        'ThePrimeagen/harpoon',
+        config = function ()
+            require('garmr.configs.harpoon')
+        end
+    }
+    use {
+        'tpope/vim-fugitive',
+        config = function ()
+            require('garmr.configs.fugitive')
+        end
+    }
+    use {
+        'catppuccin/nvim',
+        as = 'catppuccin',
+        config = function ()
+            require('garmr.configs.catppuccin')
+        end
+    }
 
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -25,6 +49,9 @@ return require('packer').startup(function(use)
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
         end,
+        config = function ()
+            require('garmr.configs.treesitter')
+        end
     }
     use("nvim-treesitter/nvim-treesitter-context")
 
@@ -56,7 +83,10 @@ return require('packer').startup(function(use)
             -- Snippets
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
-        }
+        },
+        config = function ()
+            require('garmr.configs.lsp')
+        end
     }
 
     -- Autocompletion
@@ -120,7 +150,12 @@ return require('packer').startup(function(use)
         end
     }
 
-    use("folke/trouble.nvim")
+    use {
+        "folke/trouble.nvim",
+        config = function ()
+            require('garmr.configs.trouble')
+        end
+    }
 
     use({
         "iamcco/markdown-preview.nvim",
@@ -129,6 +164,9 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+        config = function ()
+            require('garmr.configs.lualine')
+        end
     }
 end)
