@@ -30,6 +30,6 @@ end)
 lsp.setup()
 
 require("garmr.configs.go")
-require("garmr.configs.nvim_cmp")
+require("garmr.configs.cmp")
 require("garmr.configs.lsp_signature")
 

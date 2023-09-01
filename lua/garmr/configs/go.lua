@@ -11,7 +11,12 @@ require('go').setup({
 	lsp_cfg = false,          -- true: use non-default gopls setup specified in go/lsp.lua
 	lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
 	lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
-	lsp_keymaps = true, -- set to false to disable gopls/lsp keymap
+	lsp_keymaps = function (bufnr)
+        local opts = {buffer = bufnr, remap = false}
+        vim.keymap.set("n", "<leader>gtf", "<cmd>GoTestFunc<CR>", opts)
+        vim.keymap.set("n", "<leader>gfs", "<cmd>GoFillStruct<CR>", opts)
+        vim.keymap.set("n", "<leader>gcx", "<cmd>GoTermClose<CR>", opts)
+	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
 	lsp_diag_hdlr = true, -- hook lsp diag handler
 	lsp_diag_underline = true,

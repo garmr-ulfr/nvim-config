@@ -90,27 +90,15 @@ return require('packer').startup(function(use)
     }
 
     -- Autocompletion
-    use('hrsh7th/nvim-cmp')
     use {
-        'hrsh7th/cmp-buffer',
-        after = 'nvim-cmp'
+        'hrsh7th/nvim-cmp',
+        requires = 'zbirenbaum/copilot.lua'
     }
-    use {
-        'hrsh7th/cmp-path',
-        after = 'nvim-cmp'
-    }
-    use {
-        'saadparwaiz1/cmp_luasnip',
-        after = 'nvim-cmp'
-    }
-    use {
-        'hrsh7th/cmp-nvim-lsp',
-        after = 'nvim-cmp'
-    }
-    use {
-        'hrsh7th/cmp-nvim-lua',
-        after = 'nvim-cmp'
-    }
+    use ('hrsh7th/cmp-buffer')
+    use ('hrsh7th/cmp-path')
+    use ('saadparwaiz1/cmp_luasnip')
+    use ('hrsh7th/cmp-nvim-lsp')
+    use ('hrsh7th/cmp-nvim-lua')
 
     -- Snippets
     use {
@@ -133,12 +121,16 @@ return require('packer').startup(function(use)
     use {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
-        event = "InsertEnter",
-        after = "nvim-lspconfig",
         config = function()
             require("copilot").setup({
                 suggestion = { enabled = false },
                 panel = { enabled = false },
+                settings = {
+                    advanced = {
+                        listCount = 5, -- #completions for panel
+                        inlineSuggestCount = 5, -- #completions for getCompletions
+                    }
+                },
             })
         end,
     }
@@ -149,6 +141,18 @@ return require('packer').startup(function(use)
             require("copilot_cmp").setup()
         end
     }
+
+--    use {
+--        "~/.config/nvim/lua/garmr/copilot_cmp",
+--        module = "copilot_cmp",
+--        config = function ()
+--            local opts = {
+--                event = { "InsertEnter", "LspAttach" },
+--                fix_pairs = true,
+--            }
+--            require('copilot_cmp').setup()
+--        end
+--    }
 
     use {
         "folke/trouble.nvim",
