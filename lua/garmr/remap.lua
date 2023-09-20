@@ -1,67 +1,73 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+local map = function(mode, lhs, rhs, opts)
+    local op = opts or {}
+    vim.keymap.set(mode, lhs, rhs, op)
+end
 
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "G", "Gzz")
+map("n", "<leader>pv", vim.cmd.Ex)
+map("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("x", "<leader>p", [["_dP]])
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+map("n", "J", "mzJ`z")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("n", "G", "Gzz")
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
-vim.keymap.set({"n", "v"}, "<leader>c", [["_di]])
+map("x", "<leader>p", [["_dP]])
 
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "q", "<nop>")
--- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+map({"n", "v"}, "<leader>y", [["+y]])
+map("n", "<leader>Y", [["+Y]])
 
--- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
--- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
--- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
--- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+map({"n", "v"}, "<leader>d", [["_d]])
+map({"n", "v"}, "<leader>c", [["_di]])
 
-vim.keymap.set({"n", "v"}, "<leader>k", "10k")
-vim.keymap.set({"n", "v"}, "<leader>j", "10j")
+map("n", "Q", "<nop>")
+map("n", "q", "<nop>")
+-- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+map("n", "<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>vx", "<cmd>!chmod +x %<CR>", { silent = true })
+-- map("n", "<C-k>", "<cmd>cnext<CR>zz")
+-- map("n", "<C-j>", "<cmd>cprev<CR>zz")
+-- map("n", "<leader>k", "<cmd>lnext<CR>zz")
+-- map("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>");
+map({"n", "v"}, "<leader>k", "10k")
+map({"n", "v"}, "<leader>j", "10j")
 
-vim.keymap.set("n", "<leader>vsh", function()
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+map("n", "<leader>vx", "<cmd>!chmod +x %<CR>", { silent = true })
+
+map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>");
+
+map("n", "<leader>sh", function()
     vim.cmd("sp")
 end)
 
-vim.keymap.set("n", "<leader>vsv", function()
+map("n", "<leader>sv", function()
     vim.cmd("vs")
 end)
 
-vim.keymap.set("n", "<leader><leader>", function()
+map("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
-vim.keymap.set("i", '"<Tab>', '""<Left>')
-vim.keymap.set("i", "'<Tab>", "''<Left>")
-vim.keymap.set("i", "(<Tab>", "()<Left>")
-vim.keymap.set("i", "(<CR>", "(<CR>)<Esc>O<C-T>")
-vim.keymap.set("i", "[<Tab>", "[]<Left>")
-vim.keymap.set("i", "[<CR>", "[<CR>]<Esc>O<C-T>")
-vim.keymap.set("i", "{<Tab>", "{}<Left>")
-vim.keymap.set("i", "{<CR>", "{<CR>}<Esc>O<C-T>")
-vim.keymap.set("i", "<<Tab>", "<><Left>")
-vim.keymap.set("i", "<<CR>", "<<CR>><Esc>O<C-T>")
+map("i", '"<Tab>', '""<Left>')
+map("i", "'<Tab>", "''<Left>")
+map("i", "(<Tab>", "()<Left>")
+map("i", "(<CR>", "(<CR>)<Esc>O<C-T>")
+map("i", "[<Tab>", "[]<Left>")
+map("i", "[<CR>", "[<CR>]<Esc>O<C-T>")
+map("i", "{<Tab>", "{}<Left>")
+map("i", "{<CR>", "{<CR>}<Esc>O<C-T>")
+map("i", "<<Tab>", "<><Left>")
+map("i", "<<CR>", "<<CR>><Esc>O<C-T>")
 
-vim.keymap.set("n", "<leader>vh", "<C-w>h")
-vim.keymap.set("n", "<leader>vl", "<C-w>l")
-vim.keymap.set("n", "<leader>vj", "<C-w>j")
-vim.keymap.set("n", "<leader>vk", "<C-w>k")
+map("n", "<leader>vh", "<C-w>h")
+map("n", "<leader>vl", "<C-w>l")
+map("n", "<leader>vj", "<C-w>j")
+map("n", "<leader>vk", "<C-w>k")

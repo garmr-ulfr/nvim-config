@@ -1,4 +1,5 @@
 require('go').setup({
+--    go="go19",
 	goimport = 'gopls',      -- goimport command, can be gopls[default] or goimport
 	fillstruct = 'gopls',    -- can be nil (use fillstruct, slower) and gopls
 	max_line_len = 128,      -- max line length in golines format, Target maximum line length for golines
@@ -15,7 +16,8 @@ require('go').setup({
         local opts = {buffer = bufnr, remap = false}
         vim.keymap.set("n", "<leader>gtf", "<cmd>GoTestFunc<CR>", opts)
         vim.keymap.set("n", "<leader>gfs", "<cmd>GoFillStruct<CR>", opts)
-        vim.keymap.set("n", "<leader>gcx", "<cmd>GoTermClose<CR>", opts)
+        vim.keymap.set("n", "<leader>gtc", "<cmd>GoTermClose<CR>", opts)
+        vim.keymap.set("n", "<leader>gie", "<cmd>GoIfErr<CR>", opts)
 	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
 	lsp_diag_hdlr = true, -- hook lsp diag handler

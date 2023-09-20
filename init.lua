@@ -1,3 +1,4 @@
+vim.loader.enable()
 require("garmr")
 
 -- Run gofmt + goimport on save

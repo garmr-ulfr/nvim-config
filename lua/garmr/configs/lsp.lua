@@ -1,11 +1,6 @@
-local lsp = require('lsp-zero').preset('recommended')
+local lsp = require('lsp-zero').preset('minimal')
 
-lsp.ensure_installed({
-	'gopls',
---	'lua-language-server',
-})
-
--- lsp.nvim_workspace()
+lsp.nvim_workspace()
 
 lsp.set_preferences({
     suggest_lsp_server = true,
@@ -33,3 +28,4 @@ require("garmr.configs.go")
 require("garmr.configs.cmp")
 require("garmr.configs.lsp_signature")
 
+vim.lsp.set_log_level("OFF")
