@@ -40,7 +40,7 @@ map({"n", "v"}, "<leader>k", "10k")
 map({"n", "v"}, "<leader>j", "10j")
 
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-map("n", "<leader>vx", "<cmd>!chmod +x %<CR>", { silent = true })
+-- map("n", "<leader>vx", "<cmd>!chmod +x %<CR>", { silent = true })
 
 map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>");
 
