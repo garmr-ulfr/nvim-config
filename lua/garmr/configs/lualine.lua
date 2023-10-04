@@ -112,6 +112,8 @@ ins_act_left {
   'filename',
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = 'bold' },
+  file_status = true,
+  symbols = { modified = '*'},
 }
 
 ins_act_left {
@@ -208,6 +210,7 @@ ins_inact_left {
   'filename',
   cond = conditions.buffer_not_empty,
   color = { fg = 'grey', gui = 'bold' },
+  symbols = { modified = '*'},
 }
 
 ins_inact_left {
