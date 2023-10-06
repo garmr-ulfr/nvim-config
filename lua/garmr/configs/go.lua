@@ -14,18 +14,21 @@ require('go').setup({
 	lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
 	lsp_keymaps = function (bufnr)
         local opts = {buffer = bufnr, remap = false}
-        vim.keymap.set("n", "<leader>gtf", "<cmd>GoTestFunc<CR>", opts)
-        vim.keymap.set("n", "<leader>gfs", "<cmd>GoFillStruct<CR>", opts)
+        vim.keymap.set("n", "<leader>rt", "<cmd>GoTestFunc<CR>", opts)
+        vim.keymap.set("n", "<leader>at", "<cmd>GoAddTest<CR>", opts)
+        vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
+        vim.keymap.set("n", "<leader>ie", "<cmd>GoIfErr<CR>", opts)
         vim.keymap.set("n", "<leader>gtc", "<cmd>GoTermClose<CR>", opts)
-        vim.keymap.set("n", "<leader>gie", "<cmd>GoIfErr<CR>", opts)
 	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
-	lsp_diag_hdlr = true, -- hook lsp diag handler
-	lsp_diag_underline = true,
-	-- virtual text setup
-	lsp_diag_virtual_text = { space = 0, prefix = '■' },
-	lsp_diag_signs = true,
-	lsp_diag_update_in_insert = false,
+    diagnostics = {
+        hdlr = true, -- hook lsp diag handler
+        underline = true,
+        -- virtual text setup
+        virtual_text = { space = 0, prefix = '■' },
+        signs = true,
+        update_in_insert = false,
+    },
 	lsp_document_formatting = true,
 	lsp_inlay_hints = {
 		enable = true,
@@ -41,7 +44,7 @@ require('go').setup({
 		-- default: false
 		show_variable_name = true,
 		-- prefix for parameter hints
-		parameter_hints_prefix = "\\(.*\\) ",
+		parameter_hints_prefix = "\\(.*\\) f",
 		show_parameter_hints = true,
 		-- prefix for all the other hints (type, chaining)
 		other_hints_prefix = "=> ",
