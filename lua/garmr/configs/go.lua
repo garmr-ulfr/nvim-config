@@ -2,6 +2,7 @@ require('go').setup({
 --    go="go19",
 	goimport = 'gopls',      -- goimport command, can be gopls[default] or goimport
 	fillstruct = 'gopls',    -- can be nil (use fillstruct, slower) and gopls
+    gofmt = 'gofumpt',
 	max_line_len = 128,      -- max line length in golines format, Target maximum line length for golines
 	tag_transform = false,   -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
 	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
@@ -10,8 +11,9 @@ require('go').setup({
     comment_placeholder = '' ,
     verbose = false,         -- output loginf in messages
 	lsp_cfg = false,          -- true: use non-default gopls setup specified in go/lsp.lua
-	lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-	lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
+	lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+    lsp_fmt_async = false, -- async lsp.buf.format
+    lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
 	lsp_keymaps = function (bufnr)
         local opts = {buffer = bufnr, remap = false}
         vim.keymap.set("n", "<leader>rt", "<cmd>GoTestFunc<CR>", opts)
@@ -86,4 +88,34 @@ require('go').setup({
 })
 
 local cfg = require('go.lsp').config()
+local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+cfg.on_attach = function(client, bufnr)
+    vim.api.nvim_clear_autocmds({ group = format_sync_grp, buffer = bufnr})
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+            -- require('go.format').goimport()
+
+            local params = vim.lsp.util.make_range_params()
+            params.context = {only = {"source.organizeImports"}}
+            -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+            -- machine and codebase, you may want longer. Add an additional
+            -- argument after params if you find that you have to write the file
+            -- twice for changes to be saved.
+            -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+            for cid, res in pairs(result or {}) do
+                for _, r in pairs(res.result or {}) do
+                    if r.edit then
+                        local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                        vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                    end
+                end
+            end
+            vim.lsp.buf.format({async = false})
+        end,
+        group = format_sync_grp,
+    })
+end
+
 require('lspconfig').gopls.setup(cfg)
