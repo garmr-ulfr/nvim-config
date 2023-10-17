@@ -21,6 +21,7 @@ require('go').setup({
         vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
         vim.keymap.set("n", "<leader>ie", "<cmd>GoIfErr<CR>", opts)
         vim.keymap.set("n", "<leader>gtc", "<cmd>GoTermClose<CR>", opts)
+        vim.keymap.set("n", "<leader>gca", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
 	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
     diagnostics = {
@@ -89,13 +90,16 @@ require('go').setup({
 
 local cfg = require('go.lsp').config()
 local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
+local on_attach =  cfg.on_attach
 cfg.on_attach = function(client, bufnr)
+    if on_attach then
+        on_attach(client, bufnr)
+    end
+
     vim.api.nvim_clear_autocmds({ group = format_sync_grp, buffer = bufnr})
     vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*.go",
         callback = function()
-            -- require('go.format').goimport()
-
             local params = vim.lsp.util.make_range_params()
             params.context = {only = {"source.organizeImports"}}
             -- buf_request_sync defaults to a 1000ms timeout. Depending on your

@@ -14,6 +14,8 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 map("n", "J", "mzJ`z")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
+map("n", "<C-i>", "<C-i>zz")
+map("n", "<C-o>", "<C-o>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 map("n", "G", "Gzz")
@@ -29,7 +31,7 @@ map({"n", "v"}, "<leader>c", [["_di]])
 map("n", "Q", "<nop>")
 map("n", "q", "<nop>")
 -- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-map("n", "<leader>f", vim.lsp.buf.format)
+map("n", "<leader>ff", vim.lsp.buf.format)
 
 -- map("n", "<C-k>", "<cmd>cnext<CR>zz")
 -- map("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -40,7 +42,6 @@ map({"n", "v"}, "<leader>k", "10k")
 map({"n", "v"}, "<leader>j", "10j")
 
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- map("n", "<leader>vx", "<cmd>!chmod +x %<CR>", { silent = true })
 
 map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>");
 
