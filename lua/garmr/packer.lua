@@ -17,7 +17,12 @@ return require('packer').startup({
             end
         }
 
-        use("theprimeagen/refactoring.nvim")
+        use {
+				"theprimeagen/refactoring.nvim",
+				config = function()
+					require("garmr.configs.refactoring")
+				end,
+		  }
         use {
             'mbbill/undotree',
             config = function ()
