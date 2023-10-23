@@ -30,9 +30,10 @@ map({"n", "v"}, "<leader>c", [["_di]])
 
 map("n", "Q", "<nop>")
 map("n", "q", "<nop>")
--- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+map("n", "<leader>q", "<cmd>q<CR>")
 map("n", "<leader>ff", vim.lsp.buf.format)
 
+-- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- map("n", "<C-k>", "<cmd>cnext<CR>zz")
 -- map("n", "<C-j>", "<cmd>cprev<CR>zz")
 -- map("n", "<leader>k", "<cmd>lnext<CR>zz")
