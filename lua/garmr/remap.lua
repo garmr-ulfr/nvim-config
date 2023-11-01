@@ -5,33 +5,39 @@ local map = function(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, rhs, op)
 end
 
-map("n", "<leader>pv", vim.cmd.Ex)
+map("n", "<leader>pv", vim.cmd.Ex) -- project view
 map("i", "<C-c>", "<Esc>")
 
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv") -- move selected down
+map("v", "K", ":m '<-2<CR>gv=gv") -- move selected up
 
-map("n", "J", "mzJ`z")
+map("n", "J", "mzJ`z") -- join line
+-- center jump commands
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("n", "G", "Gzz")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-i>", "<C-i>zz")
 map("n", "<C-o>", "<C-o>zz")
-map("n", "n", "nzzzv")
-map("n", "N", "Nzzzv")
-map("n", "G", "Gzz")
 
+-- paste over visual selection
 map("x", "<leader>p", [["_dP]])
 
+-- copy to system clipboard
 map({"n", "v"}, "<leader>y", [["+y]])
 map("n", "<leader>Y", [["+Y]])
 
+-- delete to black hole register
 map({"n", "v"}, "<leader>d", [["_d]])
 map({"n", "v"}, "<leader>c", [["_di]])
 
+-- clear qQ mappings
 map("n", "Q", "<nop>")
 map("n", "q", "<nop>")
-map("n", "<leader>q", "<cmd>q<CR>")
-map("n", "<leader>ff", vim.lsp.buf.format)
+
+map("n", "<leader>q", "<cmd>q<CR>") -- quit
+map("n", "<leader>ff", vim.lsp.buf.format) -- format
 
 -- map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 -- map("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -39,27 +45,28 @@ map("n", "<leader>ff", vim.lsp.buf.format)
 -- map("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- map("n", "<leader>j", "<cmd>lprev<CR>zz")
 
+-- long jump commands
 map({"n", "v"}, "<leader>k", "10k")
 map({"n", "v"}, "<leader>j", "10j")
 
+-- replace word under cursor
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>");
+-- edit packer config
+map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>")
 
-map("n", "<leader>sh", function()
-    vim.cmd("sp")
-end)
+-- split window
+map("n", "<leader>sh", ":sp<CR>")
+map("n", "<leader>sv", ":vs<CR>")
 
-map("n", "<leader>sv", function()
-    vim.cmd("vs")
-end)
-
+-- source file
 map("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
-map("i", '"<Tab>', '""<Left>')
-map("i", "'<Tab>", "''<Left>")
+-- auto close 
+map("i", [["<Tab>]], [[""<Left>]])
+map("i", [['<Tab>]], [[''<Left>]])
 map("i", "(<Tab>", "()<Left>")
 map("i", "(<CR>", "(<CR>)<Esc>O")
 map("i", "[<Tab>", "[]<Left>")
@@ -69,6 +76,7 @@ map("i", "{<CR>", "{<CR>}<Esc>O")
 map("i", "<<Tab>", "<><Left>")
 map("i", "<<CR>", "<<CR>><Esc>O")
 
+-- move between splits
 map("n", "<leader>vh", "<C-w>h")
 map("n", "<leader>vl", "<C-w>l")
 map("n", "<leader>vj", "<C-w>j")

@@ -16,6 +16,7 @@ require('go').setup({
 	lsp_keymaps = function (bufnr)
 		local opts = {buffer = bufnr, remap = false}
 		vim.keymap.set("n", "<leader>rt", "<cmd>GoTestFunc<CR>", opts)
+		vim.keymap.set("n", "<leader>rat", "<cmd>GoTestFile<CR>", opts)
 		vim.keymap.set("n", "<leader>at", "<cmd>GoAddTest<CR>", opts)
 		vim.keymap.set("n", "<leader>aat", "<cmd>GoAddAllTest<CR>", opts)
 		vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)

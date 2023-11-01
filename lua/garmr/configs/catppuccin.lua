@@ -1,3 +1,4 @@
+local latte = require("catppuccin.palettes").get_palette "latte"
 require("catppuccin").setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
     background = {
@@ -25,7 +26,14 @@ require("catppuccin").setup({
         operators = {},
     },
     color_overrides = {},
-    custom_highlights = {},
+    custom_highlights = function(colors)
+		 return {
+			FloatTitle = { fg = colors.lavender },
+			FloatBorder = { fg = colors.lavender },
+
+			["@string"] = {fg = colors.green},
+		 }
+	 end,
     integrations = {
         cmp = true,
         gitsigns = true,
@@ -33,9 +41,10 @@ require("catppuccin").setup({
         treesitter = true,
         harpoon = true,
         mason = true,
-        telescope = {
+		  markdown = true,
+		  lsp_trouble = true,
+		  telescope = {
             enabled = true,
-            -- style = "nvchad"
         }
     },
 })

@@ -164,6 +164,13 @@ return require('packer').startup({
                 require('garmr.configs.lualine')
             end
         }
+
+		  use {
+			  "jeniasaigak/goplay.nvim",
+			  config = function()
+				  require("garmr.configs.goplay")
+			  end,
+		  }
     end,
     config = {
         profile = {
