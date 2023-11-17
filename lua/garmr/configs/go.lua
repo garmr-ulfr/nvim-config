@@ -1,3 +1,5 @@
+-- local tempdir = vim.fn.finddir('gotests/templates', vim.fn.stdpath('config') .. "/**")
+
 require('go').setup({
 	goimport = 'gopls',			 -- goimport command, can be gopls[default] or goimport
 	fillstruct = 'gopls',		 -- can be nil (use fillstruct, slower) and gopls
@@ -5,7 +7,7 @@ require('go').setup({
 	max_line_len = 128,			 -- max line length in golines format, Target maximum line length for golines
 	tag_transform = false,	 -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
 	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
-	gotests_template = "",	 -- sets gotests -template parameter (check gotests for details)
+	gotests_template = "testify",	 -- sets gotests -template parameter (check gotests for details)
 	gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
 	comment_placeholder = '' ,
 	verbose = false,			 -- output loginf in messages
@@ -21,7 +23,7 @@ require('go').setup({
 		vim.keymap.set("n", "<leader>aat", "<cmd>GoAddAllTest<CR>", opts)
 		vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
 		vim.keymap.set("n", "<leader>ie", "<cmd>GoIfErr<CR>", opts)
-		vim.keymap.set("n", "<leader>ea", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
+		vim.keymap.set("n", "<leader>cl", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
 		vim.keymap.set("n", "<leader>ct", "<cmd>GoTermClose<CR>", opts)
 	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
