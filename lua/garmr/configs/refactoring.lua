@@ -6,9 +6,9 @@ require("refactoring").setup({
 		go = true,
 	},
 })
-vim.keymap.set("x", "<leader>re", ":Refactor extract ")
-vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
-vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
+vim.keymap.set("x", "<leader>re", ":Refactor extract ", {noremap = true})
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ", {noremap = true})
+vim.keymap.set("n", "<leader>rb", ":Refactor extract_block", {noremap = true})
 
-vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
-vim.keymap.set( "n", "<leader>rI", ":Refactor inline_func")
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var", {noremap = true})
+vim.keymap.set( "n", "<leader>rI", ":Refactor inline_func", {noremap = true})

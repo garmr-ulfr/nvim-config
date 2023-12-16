@@ -60,9 +60,7 @@ map("n", "<leader>sh", ":sp<CR>")
 map("n", "<leader>sv", ":vs<CR>")
 
 -- source file
-map("n", "<leader><leader>", function()
-    vim.cmd("so")
-end)
+map("n", "<leader><leader>", ":so<CR>")
 
 -- auto close 
 map("i", [["<Tab>]], [[""<Left>]])
@@ -81,3 +79,9 @@ map("n", "<leader>vh", "<C-w>h")
 map("n", "<leader>vl", "<C-w>l")
 map("n", "<leader>vj", "<C-w>j")
 map("n", "<leader>vk", "<C-w>k")
+
+-- remove debug code blocks. using line comments '>>> DEBUG' marks the start of a block and '<<< DEBUG' marks the end. 
+map("v", "<leader>rd", [[:s/^\_s\zs\_s*.\+>\{3,}\s\?DEBUG\s*\_.\{-}\n.*<\{3,}\s\?DEBUG\(\s*\n\)\+//i<CR>]], {silent = true})
+
+-- add debug code block for go. TEMPORARY, will be replaced by function to add debug code blocks for any language
+map("n", "<leader>ad", "i{ ///////////// >>>>> DEBUG<CR>} ///////////// <<<<< DEBUG<Esc>O\t")
