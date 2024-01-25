@@ -23,7 +23,8 @@ require('go').setup({
 		vim.keymap.set("n", "<leader>aat", "<cmd>GoAddAllTest<CR>", opts)
 		vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
 		vim.keymap.set("n", "<leader>ie", "<cmd>GoIfErr<CR>", opts)
-		vim.keymap.set("n", "<leader>cl", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
+		vim.keymap.set("n", "<leader>gc", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
+		vim.keymap.set("n", "<leader>cl", "<cmd>GoCodeLenAct<CR>", opts)
 		vim.keymap.set("n", "<leader>ct", "<cmd>GoTermClose<CR>", opts)
 	end, -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function

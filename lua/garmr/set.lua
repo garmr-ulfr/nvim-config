@@ -28,7 +28,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.showmode = false
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "120"
+vim.opt.colorcolumn = "100"
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99

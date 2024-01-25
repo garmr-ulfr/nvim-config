@@ -81,7 +81,7 @@ map("n", "<leader>vj", "<C-w>j")
 map("n", "<leader>vk", "<C-w>k")
 
 -- remove debug code blocks. using line comments '>>> DEBUG' marks the start of a block and '<<< DEBUG' marks the end. 
-map("v", "<leader>rd", [[:s/^\_s\zs\_s*.\+>\{3,}\s\?DEBUG\s*\_.\{-}\n.*<\{3,}\s\?DEBUG\(\s*\n\)\+//i<CR>]], {silent = true})
+map("v", "<leader>rd", [[:s/\_s\zs\_s*.\+>\{3,}\s\?DEBUG\s*\_.\{-}\n.*<\{3,}\s\?DEBUG\(\s*\n\)\+//i<CR>]], {silent = true})
 
 -- add debug code block for go. TEMPORARY, will be replaced by function to add debug code blocks for any language
-map("n", "<leader>ad", "i{ ///////////// >>>>> DEBUG<CR>} ///////////// <<<<< DEBUG<Esc>O\t")
+map("n", "<leader>ad", "o{ ///////////// >>>>> DEBUG<CR>} ///////////// <<<<< DEBUG<CR><Esc>kO")
