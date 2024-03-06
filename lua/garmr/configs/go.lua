@@ -17,8 +17,8 @@ require('go').setup({
 	lsp_on_attach = nil, -- nil: use on_attach function defined in go/lsp.lua,
 	lsp_keymaps = function (bufnr)
 		local opts = {buffer = bufnr, remap = false}
-		vim.keymap.set("n", "<leader>rt", "<cmd>GoTestFunc '-count=1' '-timeout=30s'<CR>", opts)
-		vim.keymap.set("n", "<leader>rat", "<cmd>GoTestFile '-count=1' '-timeout=30s'<CR>", opts)
+		vim.keymap.set("n", "<leader>rt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", opts)
+		vim.keymap.set("n", "<leader>rat", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", opts)
 		vim.keymap.set("n", "<leader>at", "<cmd>GoAddTest<CR>", opts)
 		vim.keymap.set("n", "<leader>aat", "<cmd>GoAddAllTest<CR>", opts)
 		vim.keymap.set("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
