@@ -11,6 +11,7 @@ cmp.setup({
         {name = 'path'},
         {name = 'buffer'},
         {name = 'nvim_lua'},
+        {name = 'luasnip'},
     },
     completion = {
         completeopt = 'menu,menuone,noinsert,noselect',

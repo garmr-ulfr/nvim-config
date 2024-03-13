@@ -41,3 +41,4 @@ require("garmr.configs.cmp")
 require("garmr.configs.lsp_signature")
 
 vim.lsp.set_log_level("OFF")
+vim.cmd("MasonUpdate")
