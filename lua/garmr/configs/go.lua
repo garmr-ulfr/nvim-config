@@ -4,7 +4,7 @@ require('go').setup({
 	goimport = 'gopls',			 -- goimport command, can be gopls[default] or goimport
 	fillstruct = 'gopls',		 -- can be nil (use fillstruct, slower) and gopls
 	gofmt = 'gofmt',
-	max_line_len = 128,			 -- max line length in golines format, Target maximum line length for golines
+	-- max_line_len = 128,			 -- max line length in golines format, Target maximum line length for golines
 	tag_transform = false,	 -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
 	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
 	gotests_template = "testify",	 -- sets gotests -template parameter (check gotests for details)
@@ -40,6 +40,7 @@ require('go').setup({
 	lsp_document_formatting = true,
 	lsp_inlay_hints = {
 		enable = true,
+		style = "inlay",
 		-- Only show inlay hints for the current line
 		only_current_line = false,
 		-- Event which triggers a refersh of the inlay hints.
@@ -89,7 +90,7 @@ require('go').setup({
 		height = 0.98,									-- height of float window if not auto
 	},
 	trouble = true,								-- true: use trouble to open quickfix
-	test_efm = true,								-- errorfomat for quickfix, default mix mode, set to true will be efm only
+	test_efm = false,								-- errorfomat for quickfix, default mix mode, set to true will be efm only
 	luasnip = true,								-- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 })
 

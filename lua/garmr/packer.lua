@@ -7,7 +7,6 @@ return require('packer').startup({
 	function(use)
 		-- Packer can manage itself
 		use 'wbthomason/packer.nvim'
-
 		use {
 			'nvim-telescope/telescope.nvim', tag = '0.1.2',
 			-- or                            , branch = '0.1.x',
@@ -16,7 +15,6 @@ return require('packer').startup({
 				require('garmr.configs.telescope')
 			end
 		}
-
 		use {
 			"theprimeagen/refactoring.nvim",
 			config = function()
@@ -48,14 +46,12 @@ return require('packer').startup({
 				require('garmr.configs.catppuccin')
 			end
 		}
-
 		use {
 			'EdenEast/nightfox.nvim',
 			config = function()
 				require('garmr.configs.nightfox')
 			end
 		}
-
 		use {
 			'nvim-treesitter/nvim-treesitter',
 			run = function()
@@ -66,11 +62,11 @@ return require('packer').startup({
 				require('garmr.configs.treesitter')
 			end
 		}
-		use("nvim-treesitter/nvim-treesitter-context")
+		use "nvim-treesitter/nvim-treesitter-context"
 
-		use('ray-x/go.nvim')
-		use('ray-x/guihua.lua')
-		use("ray-x/lsp_signature.nvim")
+		use 'ray-x/go.nvim'
+		use 'ray-x/guihua.lua'
+		use "ray-x/lsp_signature.nvim"
 
 		use {
 			'neovim/nvim-lspconfig',
@@ -103,14 +99,11 @@ return require('packer').startup({
 		}
 
 		-- Autocompletion
-		use {
-			'hrsh7th/nvim-cmp',
-			-- requires = 'zbirenbaum/copilot.lua'
-		}
-		use('hrsh7th/cmp-buffer')
-		use('hrsh7th/cmp-path')
-		use('hrsh7th/cmp-nvim-lsp')
-		use('hrsh7th/cmp-nvim-lua')
+		use 'hrsh7th/nvim-cmp'
+		use 'hrsh7th/cmp-buffer'
+		use 'hrsh7th/cmp-path'
+		use 'hrsh7th/cmp-nvim-lsp'
+		use 'hrsh7th/cmp-nvim-lua'
 
 		-- Snippets
 		use {
@@ -144,7 +137,6 @@ return require('packer').startup({
 				})
 			end,
 		}
-
 		use {
 			"zbirenbaum/copilot-cmp",
 			config = function()
@@ -152,21 +144,22 @@ return require('packer').startup({
 			end
 		}
 
+		use 'nvim-tree/nvim-web-devicons'
 		use {
 			"folke/trouble.nvim",
+			require = "nvim-tree/nvim-web-devicons",
 			config = function()
 				require('garmr.configs.trouble')
 			end
 		}
 
-		use({
+		use{
 			"iamcco/markdown-preview.nvim",
 			run = function() vim.fn["mkdp#util#install"]() end,
-		})
-
+		}
 		use {
 			'nvim-lualine/lualine.nvim',
-			requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+			require = "nvim-tree/nvim-web-devicons",
 			config = function()
 				require('garmr.configs.lualine')
 			end
