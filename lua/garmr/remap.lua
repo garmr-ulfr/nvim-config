@@ -1,9 +1,6 @@
 vim.g.mapleader = " "
 
-local map = function(mode, lhs, rhs, opts)
-    local op = opts or {}
-    vim.keymap.set(mode, lhs, rhs, op)
-end
+local map = require("garmr.util").map
 
 map("n", "<leader>pv", vim.cmd.Ex) -- project view
 map("i", "<C-c>", "<Esc>")

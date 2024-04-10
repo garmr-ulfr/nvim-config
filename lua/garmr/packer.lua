@@ -64,10 +64,6 @@ return require('packer').startup({
 		}
 		use "nvim-treesitter/nvim-treesitter-context"
 
-		use 'ray-x/go.nvim'
-		use 'ray-x/guihua.lua'
-		use "ray-x/lsp_signature.nvim"
-
 		use {
 			'neovim/nvim-lspconfig',
 			-- requires = 'zbirenbaum/copilot.lua'
@@ -120,6 +116,10 @@ return require('packer').startup({
 			end,
 		}
 
+		use 'ray-x/go.nvim'
+		use 'ray-x/guihua.lua'
+		use "ray-x/lsp_signature.nvim"
+
 		use {
 			"zbirenbaum/copilot.lua",
 			cmd = "Copilot",
@@ -165,12 +165,12 @@ return require('packer').startup({
 			end
 		}
 
-		use {
-			"jeniasaigak/goplay.nvim",
-			config = function()
-				require("garmr.configs.goplay")
-			end,
-		}
+		-- use {
+		-- 	"jeniasaigak/goplay.nvim",
+		-- 	config = function()
+		-- 		require("garmr.configs.goplay")
+		-- 	end,
+		-- }
 
 		use {
 			'fei6409/log-highlight.nvim',

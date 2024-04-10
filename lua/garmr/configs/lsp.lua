@@ -1,6 +1,6 @@
 local lsp = require('lsp-zero').preset('minimal')
 
-lsp.nvim_workspace()
+-- lsp.nvim_workspace()
 
 lsp.set_preferences({
 	suggest_lsp_server = true,
@@ -38,7 +38,7 @@ lsp.setup()
 
 require("garmr.configs.go")
 require("garmr.configs.cmp")
-require("garmr.configs.lsp_signature")
+-- require("garmr.configs.lsp_signature")
 
-vim.lsp.set_log_level("OFF")
-vim.cmd("MasonUpdate")
+-- vim.lsp.set_log_level("OFF")
+-- vim.cmd("MasonUpdate")
