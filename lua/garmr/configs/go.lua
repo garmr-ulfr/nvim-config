@@ -73,7 +73,7 @@ require('go').setup({
 		-- The color of the hints
 		highlight = "Comment",
 	},
-	gocoverage_sign = "█",
+	gocoverage_sign = "λ",
 	sign_priority = 5,                                           -- change to a higher number to override other signs
 	dap_debug = false,                                           -- set to false to disable dap
 	dap_debug_keymap = true,                                     -- true: use keymap for debugger defined in go/dap.lua
@@ -100,21 +100,5 @@ require('go').setup({
 })
 
 -- local cfg = require('go.lsp').config()
--- local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
--- local on_attach = cfg.on_attach
--- cfg.on_attach = function(client, bufnr)
--- 	if on_attach then
--- 		on_attach(client, bufnr)
--- 	end
---
--- 	vim.api.nvim_clear_autocmds({ group = format_sync_grp, buffer = bufnr })
--- 	vim.api.nvim_create_autocmd("BufWritePre", {
--- 		pattern = "*.go",
--- 		callback = function()
--- 			require("go.format").goimports()
--- 		end,
--- 		group = format_sync_grp,
--- 	})
--- end
 --
 -- require('lspconfig').gopls.setup(cfg)

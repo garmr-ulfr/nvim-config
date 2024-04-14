@@ -1,6 +1,6 @@
-require("garmr.packer")
-require("garmr.remap")
 require("garmr.set")
+require("garmr.remap")
+require("garmr.lazy")
 
 local format_sync_grp = vim.api.nvim_create_augroup("goimports", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
