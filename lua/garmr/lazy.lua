@@ -61,14 +61,14 @@ require("lazy").setup({
 	},
 	{
 		'ray-x/go.nvim',
-		dependencies = { 'VonHeikemen/lsp-zero.nvim' },
+		-- dependencies = { 'VonHeikemen/lsp-zero.nvim' },
 		-- ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
 	},
 
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
-		event = "InsertEnter",
+		event = "BufEnter",
 		config = function()
 			require("copilot").setup({
 				suggestion = { enabled = false },
@@ -84,10 +84,10 @@ require("lazy").setup({
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		dependencies = {
-			"hrsh7th/nvim-cmp",
-			"zbirenbaum/copilot.lua",
-		},
+		-- dependencies = {
+		-- 	"hrsh7th/nvim-cmp",
+		-- 	"zbirenbaum/copilot.lua",
+		-- },
 		config = function()
 			require("copilot_cmp").setup()
 		end
@@ -125,7 +125,13 @@ require("lazy").setup({
 	{ 'nvim-tree/nvim-web-devicons' },
 	{
 		"iamcco/markdown-preview.nvim",
-		build = function() vim.fn["mkdp#util#install"]() end,
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && yarn install && ./install.sh",
+		ft = { "markdown" },
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+			vim.g.mkdp_browser = "firefox"
+		end,
 	},
 	{
 		'nvim-lualine/lualine.nvim',

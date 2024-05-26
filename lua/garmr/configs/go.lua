@@ -12,6 +12,7 @@ require('go').setup({
 	gotests_template_dir = "",    -- sets gotests -template_dir parameter (check gotests for details)
 	comment_placeholder = '',
 	verbose = true,               -- output loginf in messages
+	log_path = vim.fn.expand("$HOME") .. "/.local/state/nvim/gonvim.log",
 	lsp_cfg = false,              -- true: use non-default gopls setup specified in go/lsp.lua
 	lsp_gofumpt = false,          -- true: set default gofmt in gopls format to gofumpt
 	lsp_fmt_async = false,        -- async lsp.buf.format
@@ -34,14 +35,7 @@ require('go').setup({
 		end, opts)
 	end,               -- set to false to disable gopls/lsp keymap
 	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
-	diagnostics = {
-		hdlr = true,    -- hook lsp diag handler
-		underline = true,
-		-- virtual text setup
-		virtual_text = { space = 0, prefix = '■' },
-		signs = true,
-		update_in_insert = false,
-	},
+	diagnostics = false,
 	lsp_document_formatting = true,
 	lsp_inlay_hints = {
 		enable = true,
@@ -99,6 +93,8 @@ require('go').setup({
 	luasnip = true,                                              -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 })
 
--- local cfg = require('go.lsp').config()
---
--- require('lspconfig').gopls.setup(cfg)
+local cfg = require('go.lsp').config()
+cfg.settings.gopls.diagnosticsTrigger = "Edit"
+cfg.settings.gopls.analyses = nil
+
+require('lspconfig').gopls.setup(cfg)
