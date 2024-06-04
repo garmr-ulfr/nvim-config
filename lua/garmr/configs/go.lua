@@ -39,7 +39,7 @@ require('go').setup({
 	lsp_document_formatting = true,
 	lsp_inlay_hints = {
 		enable = true,
-		style = "inlay",
+		style = "eol",
 		-- Only show inlay hints for the current line
 		only_current_line = false,
 		-- Event which triggers a refersh of the inlay hints.
@@ -68,33 +68,45 @@ require('go').setup({
 		highlight = "Comment",
 	},
 	gocoverage_sign = "λ",
-	sign_priority = 5,                                           -- change to a higher number to override other signs
-	dap_debug = false,                                           -- set to false to disable dap
-	dap_debug_keymap = true,                                     -- true: use keymap for debugger defined in go/dap.lua
-	dap_debug_gui = {},                                          -- bool|table put your dap-ui setup here set to false to disable
-	dap_debug_vt = { enabled_commands = true, all_frames = true }, -- bool|table put your dap-virtual-text setup here set to false to disable
+	sign_priority = 5,     -- change to a higher number to override other signs
+	dap_debug = false,     -- set to false to disable dap
+	dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
+	dap_debug_gui = {},    -- bool|table put your dap-ui setup here set to false to disable
+	dap_debug_vt = {
+		enabled_commands = true,
+		all_frames = true
+	},                    -- bool|table put your dap-virtual-text setup here set to false to disable
 
-	dap_port = 38697,                                            -- can be set to a number, if set to -1 go.nvim will pickup a random port
-	dap_timeout = 15,                                            --	see dap option initialize_timeout_sec = 15,
-	dap_retries = 20,                                            -- see dap option max_retries
+	dap_port = 38697,     -- can be set to a number, if set to -1 go.nvim will pickup a random port
+	dap_timeout = 15,     --	see dap option initialize_timeout_sec = 15,
+	dap_retries = 20,     -- see dap option max_retries
 	--	build_tags = "tag1,tag2",						-- set default build tags
-	textobjects = true,                                          -- enable default text jobects through treesittter-text-objects
-	test_runner = 'go',                                          -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
-	verbose_tests = true,                                        -- set to add verbose flag to tests deprecated, see '-v' option
-	run_in_floaterm = true,                                      -- set to true to run in float window. :GoTermClose closes the floatterm
+	textobjects = true,   -- enable default text jobects through treesittter-text-objects
+	test_runner = 'go',   -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
+	verbose_tests = true, -- set to add verbose flag to tests deprecated, see '-v' option
+	run_in_floaterm = true, -- set to true to run in float window. :GoTermClose closes the floatterm
 
-	floaterm = {                                                 -- position
-		posititon = 'right',                                      -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
-		width = 0.45,                                             -- width of float window if not auto
-		height = 0.98,                                            -- height of float window if not auto
+	floaterm = {          -- position
+		posititon = 'right', -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
+		width = 0.45,      -- width of float window if not auto
+		height = 0.98,     -- height of float window if not auto
 	},
-	trouble = true,                                              -- true: use trouble to open quickfix
-	test_efm = false,                                            -- errorfomat for quickfix, default mix mode, set to true will be efm only
-	luasnip = true,                                              -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
+	trouble = true,       -- true: use trouble to open quickfix
+	test_efm = false,     -- errorfomat for quickfix, default mix mode, set to true will be efm only
+	luasnip = true,       -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 })
 
 local cfg = require('go.lsp').config()
-cfg.settings.gopls.diagnosticsTrigger = "Edit"
-cfg.settings.gopls.analyses = nil
+local gopls = cfg.settings.gopls
+gopls.diagnosticsTrigger = "Edit"
 
+gopls.analyses.atomicalign = false
+gopls.analyses.fieldalignment = false
+
+-- gopls.hints = {
+-- 	compositeLiteralFields = true,
+-- 	constantValues = true,
+-- }
+
+cfg.settings.gopls = gopls
 require('lspconfig').gopls.setup(cfg)

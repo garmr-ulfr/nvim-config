@@ -1,4 +1,4 @@
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-zero').preset('minimal')
 
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
@@ -33,10 +33,9 @@ lsp.set_sign_icons({
 	}
 })
 
-require("garmr.configs.go")
-
 lsp.setup()
 
+require("garmr.configs.go")
 require("garmr.configs.cmp")
 
 -- vim.lsp.set_log_level("OFF")

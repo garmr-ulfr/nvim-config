@@ -21,6 +21,7 @@ require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter-context" },
 	{
 		"folke/trouble.nvim",
+		-- cmd = "Trouble",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require('garmr.configs.trouble')
@@ -68,16 +69,18 @@ require("lazy").setup({
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
-		event = "BufEnter",
+		event = "InsertEnter",
 		config = function()
 			require("copilot").setup({
 				suggestion = { enabled = false },
 				panel = { enabled = false },
-				settings = {
-					advanced = {
-						listCount = 5, -- #completions for panel
-						inlineSuggestCount = 5, -- #completions for getCompletions
-					}
+				server_opts_overrides = {
+					settings = {
+						advanced = {
+							listCount = 5, -- #completions for panel
+							inlineSuggestCount = 3, -- #completions for getCompletions
+						}
+					},
 				},
 			})
 		end,
