@@ -11,7 +11,7 @@ require('go').setup({
 	gotests_template = "testify", -- sets gotests -template parameter (check gotests for details)
 	gotests_template_dir = "",    -- sets gotests -template_dir parameter (check gotests for details)
 	comment_placeholder = '',
-	verbose = true,               -- output loginf in messages
+	verbose = false,               -- output loginf in messages
 	log_path = vim.fn.expand("$HOME") .. "/.local/state/nvim/gonvim.log",
 	lsp_cfg = false,              -- true: use non-default gopls setup specified in go/lsp.lua
 	lsp_gofumpt = false,          -- true: set default gofmt in gopls format to gofumpt
@@ -92,7 +92,7 @@ require('go').setup({
 		height = 0.98,     -- height of float window if not auto
 	},
 	trouble = true,       -- true: use trouble to open quickfix
-	test_efm = false,     -- errorfomat for quickfix, default mix mode, set to true will be efm only
+	test_efm = true,     -- errorfomat for quickfix, default mix mode, set to true will be efm only
 	luasnip = true,       -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
 })
 

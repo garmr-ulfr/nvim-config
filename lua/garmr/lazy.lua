@@ -34,15 +34,26 @@ require("lazy").setup({
 		branch = 'v2.x',
 		dependencies = {
 			-- LSP Support
-			{ 'neovim/nvim-lspconfig' },       -- Required
-			{ 'williamboman/mason.nvim' },     -- Optional
-			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
+			'neovim/nvim-lspconfig',
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
 
 			-- Autocompletion
-			{ 'hrsh7th/nvim-cmp' }, -- Required
-			{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
-			{ 'hrsh7th/cmp-buffer' },
-			{ 'hrsh7th/cmp-path' },
+			'hrsh7th/nvim-cmp',
+		},
+		config = function()
+			require('garmr.configs.lsp')
+		end
+	},
+	{ 'ray-x/go.nvim' },
+
+	{
+		'hrsh7th/nvim-cmp',
+		dependencies = {
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-nvim-lua',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
 			{
 				"L3MON4D3/LuaSnip",
 				config = function()
@@ -56,20 +67,11 @@ require("lazy").setup({
 				end,
 			},
 		},
-		config = function()
-			require('garmr.configs.lsp')
-		end
 	},
-	{
-		'ray-x/go.nvim',
-		-- dependencies = { 'VonHeikemen/lsp-zero.nvim' },
-		-- ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
-	},
-
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
-		event = "InsertEnter",
+		event = "BufEnter",
 		config = function()
 			require("copilot").setup({
 				suggestion = { enabled = false },
