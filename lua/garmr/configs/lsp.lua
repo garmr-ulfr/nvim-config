@@ -1,16 +1,6 @@
 local lsp = require('lsp-zero').preset('minimal')
 
-lsp.nvim_workspace()
-
-lsp.set_preferences({
-	suggest_lsp_server = true,
-	sign_icons = {
-		error = 'E',
-		warn = 'W',
-		hint = 'H',
-		info = 'I',
-	}
-})
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.on_attach(function(client, bufnr)
 	lsp.default_keymaps({ buffer = bufnr })
@@ -34,11 +24,19 @@ lsp.on_attach(function(client, bufnr)
 	end, opts)
 end)
 
+lsp.set_sign_icons({
+	sign_icons = {
+		error = 'E',
+		warn = 'W',
+		hint = 'H',
+		info = 'I',
+	}
+})
+
 lsp.setup()
 
 require("garmr.configs.go")
 require("garmr.configs.cmp")
-require("garmr.configs.lsp_signature")
 
-vim.lsp.set_log_level("OFF")
-vim.cmd("MasonUpdate")
+-- vim.lsp.set_log_level("OFF")
+-- vim.cmd("MasonUpdate")

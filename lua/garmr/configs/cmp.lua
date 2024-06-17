@@ -1,18 +1,19 @@
 local cmp = require('cmp')
 cmp.setup({
+	preselect = cmp.PreselectMode.Item,
    snippet = {
        expand = function(args)
            require("luasnip").lsp_expand(args.body)
        end,
    },
-    sources = {
+	sources = cmp.config.sources({
         {name = 'copilot'},
         {name = 'nvim_lsp'},
         {name = 'path'},
         {name = 'buffer'},
         {name = 'nvim_lua'},
         {name = 'luasnip'},
-    },
+    }),
     completion = {
         completeopt = 'menu,menuone,noinsert,noselect',
     },

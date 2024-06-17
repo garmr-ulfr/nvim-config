@@ -1,9 +1,6 @@
 vim.g.mapleader = " "
 
-local map = function(mode, lhs, rhs, opts)
-    local op = opts or {}
-    vim.keymap.set(mode, lhs, rhs, op)
-end
+local map = require("garmr.util").map
 
 map("n", "<leader>pv", vim.cmd.Ex) -- project view
 map("i", "<C-c>", "<Esc>")
@@ -52,15 +49,12 @@ map({"n", "v"}, "<leader>j", "10j")
 -- replace word under cursor
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
--- edit packer config
-map("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/garmr/packer.lua<CR>")
-
 -- split window
-map("n", "<leader>sh", ":sp<CR>")
-map("n", "<leader>sv", ":vs<CR>")
+map("n", "<leader>sh", "<cmd>sp<CR>")
+map("n", "<leader>sv", "<cmd>vs<CR>")
 
 -- source file
-map("n", "<leader><leader>", ":so<CR>")
+map("n", "<leader><leader>", "<cmd>so<CR>")
 
 -- auto close 
 map("i", [["<Tab>]], [[""<Left>]])
