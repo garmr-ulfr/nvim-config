@@ -123,6 +123,12 @@ require("lazy").setup({
 			require('garmr.configs.fugitive')
 		end
 	},
+	{
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	},
 
 	-- Visual
 	{ 'ray-x/guihua.lua' },

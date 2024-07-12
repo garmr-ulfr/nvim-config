@@ -46,8 +46,8 @@ map("n", "<leader>ff", vim.lsp.buf.format) -- format
 map({"n", "v"}, "<leader>k", "10k")
 map({"n", "v"}, "<leader>j", "10j")
 
--- replace word under cursor
-map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- replace all occurences of word under cursor
+map("n", "<leader>wr", [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]])
 
 -- split window
 map("n", "<leader>sh", "<cmd>sp<CR>")
@@ -67,12 +67,6 @@ map("i", "{<Tab>", "{}<Left>")
 map("i", "{<CR>", "{<CR>}<Esc>O")
 map("i", "<<Tab>", "<><Left>")
 map("i", "<<CR>", "<<CR>><Esc>O")
-
--- move between splits
-map("n", "<leader>vh", "<C-w>h")
-map("n", "<leader>vl", "<C-w>l")
-map("n", "<leader>vj", "<C-w>j")
-map("n", "<leader>vk", "<C-w>k")
 
 -- remove debug code blocks. using line comments '>>> DEBUG' marks the start of a block and '<<< DEBUG' marks the end. 
 map("v", "<leader>rd", [[:s/\_s\zs\_s*.\+>\{3,}\s\?DEBUG\s*\_.\{-}\n.*<\{3,}\s\?DEBUG\(\s*\n\)\+//i<CR>]], {silent = true})

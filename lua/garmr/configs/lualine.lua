@@ -182,7 +182,7 @@ ins_act_right {
 
 ins_act_right {
 	'diff',
-	symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+	symbols = { added = ' ', modified = '󰈩 ', removed = ' ' },
 	diff_color = {
 		added = { fg = colors.green },
 		modified = { fg = colors.orange },
@@ -277,7 +277,7 @@ ins_inact_right {
 
 ins_inact_right {
 	'diff',
-	symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+	symbols = { added = ' ', modified = '󰈩 ', removed = ' ' },
 	diff_color = {
 		added = { fg = 'grey' },
 		modified = { fg = 'grey' },
