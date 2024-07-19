@@ -1,5 +1,8 @@
 require("trouble").setup({
 	focus = true,
+	keys = {
+		["<cr>"] = "jump_close",
+	},
 	modes = {
 		diagnostics = {
 			mode = "diagnostics",

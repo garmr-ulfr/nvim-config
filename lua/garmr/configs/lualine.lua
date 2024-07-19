@@ -111,6 +111,7 @@ ins_act_left {
 ins_act_left {
 	'filename',
 	cond = conditions.buffer_not_empty,
+	path = 1,
 	color = { fg = colors.magenta, gui = 'bold' },
 	file_status = true,
 	symbols = { modified = '*' },
@@ -175,7 +176,7 @@ ins_act_left {
 }
 
 ins_act_right {
-	'branch',
+	'FugitiveHead',
 	icon = '',
 	color = { fg = colors.violet, gui = 'bold' },
 }
@@ -228,6 +229,7 @@ ins_inact_left {
 
 ins_inact_left {
 	'filename',
+	path = 1,
 	cond = conditions.buffer_not_empty,
 	color = { fg = 'grey', gui = 'bold' },
 	symbols = { modified = '*' },
@@ -270,7 +272,7 @@ ins_inact_left {
 }
 
 ins_inact_right {
-	'branch',
+	'FugitiveHead',
 	icon = '',
 	color = { fg = 'grey', gui = 'bold' },
 }
