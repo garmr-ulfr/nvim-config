@@ -29,6 +29,7 @@ require('go').setup({
 		util.map("n", "<leader>cl", "<cmd>GoCodeLenAct<CR>", opts)
 		util.map("n", "<leader>ct", "<cmd>GoTermClose<CR>", opts)
 		util.map("n", "<leader>gd", ":GoDoc ", opts)
+		util.map("n", "<leader>gi", ":GoImpl ", opts)
 		util.map("n", "<leader>mt", "<cmd>GoModTidy<CR>", opts)
 		util.map("n", "<leader>ff", function()
 			require('go.format').goimports()

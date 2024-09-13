@@ -10,6 +10,8 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
 
+	vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<cr>", opts)
+
 	vim.keymap.set('n', 'gD', function()
 		vim.lsp.buf.declaration()
 		vim.cmd.normal('zz')
