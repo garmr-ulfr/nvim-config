@@ -34,3 +34,16 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
 
 vim.opt.mouse = ""
+
+vim.g.clipboard = {
+	name = 'OSC 52',
+	copy = {
+	  ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+	  ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+	},
+	paste = {
+	  ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+	  ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+	},
+	cache_enabled = 1,
+}

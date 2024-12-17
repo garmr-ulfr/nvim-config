@@ -103,6 +103,7 @@ gopls.diagnosticsTrigger = "Edit"
 
 gopls.analyses.atomicalign = false
 gopls.analyses.fieldalignment = false
+gopls.analyses.shadow = true
 
 -- gopls.hints = {
 -- 	compositeLiteralFields = true,

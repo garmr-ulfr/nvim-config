@@ -129,6 +129,15 @@ require("lazy").setup({
 			require('Comment').setup()
 		end
 	},
+	{
+		'jeniasaigak/goplay.nvim',
+		config = function()
+			require('goplay').setup()
+			vim.api.nvim_set_keymap('n', '<leader>gop', ':GPToggle<CR>', { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', '<leader>gpe', ':GPExec<CR>', { noremap = true, silent = true })
+			vim.api.nvim_set_keymap('n', '<leader>gpf', ':GPExecFile<CR>', { noremap = true, silent = true })
+		end
+	},
 
 	-- Visual
 	{ 'ray-x/guihua.lua' },
