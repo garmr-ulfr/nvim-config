@@ -80,7 +80,7 @@ require("lazy").setup({
 					settings = {
 						advanced = {
 							listCount = 5, -- #completions for panel
-							inlineSuggestCount = 3, -- #completions for getCompletions
+							inlineSuggestCount = 5, -- #completions for getCompletions
 						}
 					},
 				},
@@ -97,6 +97,13 @@ require("lazy").setup({
 			require("copilot_cmp").setup()
 		end
 	},
+
+	-- {
+	-- 	'huggingface/llm.nvim',
+	-- 	config = function()
+	-- 		require('garmr.configs.llm_ls')
+	-- 	end
+	-- },
 
 	-- Util
 	{

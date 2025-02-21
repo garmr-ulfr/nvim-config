@@ -50,8 +50,8 @@ map({"n", "v"}, "<leader>j", "10j")
 map("n", "<leader>wr", [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]])
 
 -- split window
-map("n", "<leader>sh", "<cmd>sp<CR>")
-map("n", "<leader>sv", "<cmd>vs<CR>")
+map("n", "<leader>sh", "<cmd>vs<CR>")
+map("n", "<leader>sv", "<cmd>sp<CR>")
 
 -- source file
 map("n", "<leader><leader>", "<cmd>so<CR>")
