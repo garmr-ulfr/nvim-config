@@ -97,7 +97,7 @@ require("lazy").setup({
 			require("copilot_cmp").setup()
 		end
 	},
-
+	{ import = "garmr.plugins" },
 	-- {
 	-- 	'huggingface/llm.nvim',
 	-- 	config = function()
@@ -151,14 +151,12 @@ require("lazy").setup({
 	-- { "ray-x/lsp_signature.nvim" },
 	{ 'nvim-tree/nvim-web-devicons' },
 	{
-		"iamcco/markdown-preview.nvim",
-		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-		build = "cd app && yarn install && ./install.sh",
-		ft = { "markdown" },
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
-			vim.g.mkdp_browser = "firefox"
-		end,
+		"MeanderingProgrammer/render-markdown.nvim",
+		optional = true,
+		opts = {
+			file_types = { "markdown", "copilot-chat" },
+		},
+		ft = { "markdown", "copilot-chat" },
 	},
 	{
 		'nvim-lualine/lualine.nvim',

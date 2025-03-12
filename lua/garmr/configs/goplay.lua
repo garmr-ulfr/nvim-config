@@ -1,5 +1,5 @@
 local gp = require('goplay')
-gp.setup({output_mode = 'raw'})
+gp.setup({output_mode = 'formatted'})
 
 vim.keymap.set('n', '<leader>gop', function ()
 	local bufExist = pcall(vim.api.nvim_buf_get_name, gp._activeBuf)
