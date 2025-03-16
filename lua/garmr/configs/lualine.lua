@@ -16,6 +16,27 @@ local colors = {
 	red      = '#ec5f67',
 }
 
+local mode_color = {
+	n = colors.red,
+	i = colors.green,
+	v = colors.blue,
+	V = colors.blue,
+	c = colors.magenta,
+	no = colors.red,
+	s = colors.orange,
+	S = colors.orange,
+	ic = colors.yellow,
+	R = colors.violet,
+	Rv = colors.violet,
+	cv = colors.red,
+	ce = colors.red,
+	r = colors.cyan,
+	rm = colors.cyan,
+	['r?'] = colors.cyan,
+	['!'] = colors.red,
+	t = colors.red,
+}
+
 local conditions = {
 	buffer_not_empty = function()
 		return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
@@ -30,113 +51,8 @@ local conditions = {
 	end,
 }
 
--- Config
-local config = {
-	options = {
-		component_separators = '',
-		section_separators = '',
-		theme = {
-			normal = { c = { fg = colors.fg, bg = colors.bg } },
-			inactive = { c = { fg = colors.fg, bg = colors.bg } },
-		},
-	},
-	sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_y = {},
-		lualine_z = {},
-		lualine_c = {},
-		lualine_x = {},
-	},
-	inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = {},
-		lualine_y = {},
-		lualine_z = {},
-	},
-}
-
--- Inserts a component in lualine_c at left section
-local function ins_act_left(component)
-	table.insert(config.sections.lualine_c, component)
-end
-
--- Inserts a component in lualine_x at right section
-local function ins_act_right(component)
-	table.insert(config.sections.lualine_x, component)
-end
-
-ins_act_left {
-	function()
-		return '▊'
-	end,
-	color = { fg = colors.blue },
-	padding = { left = 0, right = 1 },
-}
-
-ins_act_left {
-	function()
-		local mode = require('lualine.utils.mode').get_mode()
-		return mode
-	end,
-	icon = '',
-	color = function()
-		local mode_color = {
-			n = colors.red,
-			i = colors.green,
-			v = colors.blue,
-			V = colors.blue,
-			c = colors.magenta,
-			no = colors.red,
-			s = colors.orange,
-			S = colors.orange,
-			ic = colors.yellow,
-			R = colors.violet,
-			Rv = colors.violet,
-			cv = colors.red,
-			ce = colors.red,
-			r = colors.cyan,
-			rm = colors.cyan,
-			['r?'] = colors.cyan,
-			['!'] = colors.red,
-			t = colors.red,
-		}
-		return { fg = mode_color[vim.fn.mode()] }
-	end,
-	padding = { right = 1 },
-}
-
-ins_act_left {
-	'filename',
-	cond = conditions.buffer_not_empty,
-	path = 1,
-	color = { fg = colors.magenta, gui = 'bold' },
-	file_status = true,
-	symbols = { modified = '*' },
-}
-
-ins_act_left {
-	'diagnostics',
-	sources = { 'nvim_diagnostic' },
-	symbols = { error = ' ', warn = ' ', info = ' ' },
-	diagnostics_color = {
-		error = { fg = colors.red },
-		warn = { fg = colors.yellow },
-		info = { fg = colors.cyan },
-	},
-}
-
-ins_act_left {
-	function()
-		return '%='
-	end,
-}
-
 local function get_lsp()
 	local msg = 'No Active Lsp'
-	-- local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
 	local buf_ft = vim.bo[0].filetype
 	local clients = vim.lsp.get_clients()
 	if next(clients) == nil then
@@ -151,149 +67,132 @@ local function get_lsp()
 	return msg
 end
 
-ins_act_left {
-	-- Lsp server name .
-	get_lsp,
-	icon = ' LSP:',
-	color = { fg = colors.cyan, gui = 'bold' },
-}
+local function spacer() return '%=' end
 
-ins_act_left {
-	function()
-		if get_lsp() == 'No Active Lsp' then
-			return ''
-		end
+local url = vim.fn.system('git config --get remote.origin.url')
+local repo = url:match("/(.*)%.git")
 
-		return ' '
-	end,
-	icon = "",
-	color = function()
-		if require("copilot.client").is_disabled() then
-			return { fg = colors.red, gui = "bold" }
-		end
-		return { fg = colors.green, gui = "bold" }
-	end,
-}
-
-ins_act_right {
-	'FugitiveHead',
-	icon = '',
-	color = { fg = colors.violet, gui = 'bold' },
-}
-
-ins_act_right {
-	'diff',
-	symbols = { added = ' ', modified = '󰈩 ', removed = ' ' },
-	diff_color = {
-		added = { fg = colors.green },
-		modified = { fg = colors.orange },
-		removed = { fg = colors.red },
-	},
-	cond = conditions.hide_in_width,
-}
-
-ins_act_right {
-	function()
-		return '▊'
-	end,
-	color = { fg = colors.blue },
-	padding = { left = 1 },
-}
-
-local function ins_inact_left(component)
-	table.insert(config.inactive_sections.lualine_c, component)
+local function left_section(fg)
+	return {
+			 function() return '▊' end,
+			 color = { fg = fg or colors.blue },
+			 padding = { left = 0, right = 1 },
+		 },
+		 {
+			 "mode",
+			 icon = '',
+			 color = function()
+				 return { fg = fg or mode_color[vim.fn.mode()] }
+			 end,
+			 padding = { right = 1 },
+		 },
+		 {
+			 'filename',
+			 cond = conditions.buffer_not_empty,
+			 path = 1,
+			 color = { fg = fg or colors.magenta, gui = 'bold' },
+			 file_status = true,
+			 symbols = { modified = '*' },
+		 },
+		 {
+			 'diagnostics',
+			 sources = { 'nvim_diagnostic' },
+			 symbols = { error = ' ', warn = ' ', info = ' ' },
+			 diagnostics_color = {
+				 error = { fg = fg or colors.red },
+				 warn = { fg = fg or colors.yellow },
+				 info = { fg = fg or colors.cyan },
+			 },
+		 }
 end
 
--- Inserts a component in lualine_x at right section
-local function ins_inact_right(component)
-	table.insert(config.inactive_sections.lualine_x, component)
+local function middle_section(fg)
+	-- Lsp server name .
+	return spacer(),
+		 {
+			 get_lsp,
+			 icon = ' LSP:',
+			 color = { fg = fg or colors.cyan, gui = 'bold' },
+			 cond = conditions.hide_in_width
+		 },
+		 {
+			 function()
+				 if get_lsp() == 'No Active Lsp' then
+					 return ''
+				 end
+				 return ' '
+			 end,
+			 icon = "",
+			 color = function()
+				 if require("copilot.client").is_disabled() then
+					 return { fg = fg or colors.red, gui = "bold" }
+				 end
+				 return { fg = fg or colors.green, gui = "bold" }
+			 end,
+		 },
+		 spacer()
 end
 
-ins_inact_left {
-	function()
-		return ' '
-	end,
-	color = { fg = 'grey' },
-	padding = { left = 0, right = 1 },
-}
+local function right_section(fg)
+	return {
+			 function()
+				 return repo .. '[' .. vim.fn.FugitiveHead() .. ']'
+			 end,
+			 icon = '',
+			 color = { fg = fg or colors.violet, gui = 'bold' },
+		 },
+		 {
+			 'diff',
+			 symbols = { added = ' ', modified = '󰈩 ', removed = ' ' },
+			 diff_color = {
+				 added = { fg = fg or colors.green },
+				 modified = { fg = fg or colors.orange },
+				 removed = { fg = fg or colors.red },
+			 },
+			 cond = conditions.hide_in_width,
+		 },
+		 {
+			 function() return '▊' end,
+			 color = { fg = fg or colors.blue },
+			 padding = { left = 1, right = 0 },
+		 }
+end
 
-ins_inact_left {
-	function()
-		local mode = require('lualine.utils.mode').get_mode()
-		return mode
-	end,
-	icon = '',
-	color = { fg = 'grey' },
-	padding = { right = 1 },
-}
-
-ins_inact_left {
-	'filename',
-	path = 1,
-	cond = conditions.buffer_not_empty,
-	color = { fg = 'grey', gui = 'bold' },
-	symbols = { modified = '*' },
-}
-
-ins_inact_left {
-	'diagnostics',
-	sources = { 'nvim_diagnostic' },
-	symbols = { error = ' ', warn = ' ', info = ' ' },
-	diagnostics_color = {
-		error = { fg = 'grey' },
-		warn = { fg = 'grey' },
-		info = { fg = 'grey' },
+-- Config
+local config = {
+	options = {
+		always_divide_middle = false,
+		component_separators = '',
+		section_separators = '',
+		theme = {
+			normal = {
+				a = { fg = colors.fg, bg = colors.bg },
+				b = { fg = colors.fg, bg = colors.bg },
+				c = { fg = colors.fg, bg = colors.bg },
+			},
+			inactive = {
+				a = { fg = colors.fg, bg = colors.bg },
+				b = { fg = colors.fg, bg = colors.bg },
+				c = { fg = colors.fg, bg = colors.bg },
+			},
+		},
 	},
-}
-
-ins_inact_left {
-	function()
-		return '%='
-	end,
-}
-
-ins_inact_left {
-	-- Lsp server name .
-	get_lsp,
-	icon = ' LSP:',
-	color = { fg = 'grey', gui = 'bold' },
-}
-
-ins_inact_left {
-	function()
-		if get_lsp() == 'No Active Lsp' then
-			return ''
-		end
-
-		return ' '
-	end,
-	icon = "",
-	color = { fg = 'grey', gui = 'bold' },
-}
-
-ins_inact_right {
-	'FugitiveHead',
-	icon = '',
-	color = { fg = 'grey', gui = 'bold' },
-}
-
-ins_inact_right {
-	'diff',
-	symbols = { added = ' ', modified = '󰈩 ', removed = ' ' },
-	diff_color = {
-		added = { fg = 'grey' },
-		modified = { fg = 'grey' },
-		removed = { fg = 'grey' },
+	sections = {
+		lualine_a = { left_section() },
+		lualine_b = { middle_section() },
+		lualine_c = { right_section() },
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = {},
 	},
-	cond = conditions.hide_in_width,
-}
-
-ins_inact_right {
-	function()
-		return ' '
-	end,
-	color = { fg = 'grey' },
-	padding = { left = 1 },
+	inactive_sections = {
+		lualine_a = { left_section('grey') },
+		lualine_b = { middle_section('grey') },
+		lualine_c = { right_section('grey') },
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = {},
+	},
 }
 
 lualine.setup(config)

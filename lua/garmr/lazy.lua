@@ -1,8 +1,8 @@
 require("lazy").setup({
 	{
 		'nvim-telescope/telescope.nvim',
-		tag = '0.1.6',
-		-- or                              , branch = '0.1.x',
+		-- tag = '0.1.6',
+		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function()
 			require('garmr.configs.telescope')
@@ -29,24 +29,31 @@ require("lazy").setup({
 	},
 
 	-- LSP
+	-- {
+	-- 	'VonHeikemen/lsp-zero.nvim',
+	-- 	branch = 'v2.x',
+	-- 	dependencies = {
+	-- 		-- LSP Support
+	-- 		'neovim/nvim-lspconfig',
+	-- 		'williamboman/mason.nvim',
+	-- 		'williamboman/mason-lspconfig.nvim',
+	--
+	-- 		-- Autocompletion
+	-- 		'hrsh7th/nvim-cmp',
+	-- 	},
+	-- 	config = function()
+	-- 		require('garmr.configs.lsp')
+	-- 	end
+	-- },
+	{ 'williamboman/mason.nvim' },
+	{ 'williamboman/mason-lspconfig.nvim' },
 	{
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v2.x',
-		dependencies = {
-			-- LSP Support
-			'neovim/nvim-lspconfig',
-			'williamboman/mason.nvim',
-			'williamboman/mason-lspconfig.nvim',
-
-			-- Autocompletion
-			'hrsh7th/nvim-cmp',
-		},
+		'neovim/nvim-lspconfig',
 		config = function()
-			require('garmr.configs.lsp')
+			require('garmr.configs.lspconfig')
 		end
 	},
 	{ 'ray-x/go.nvim' },
-
 	{
 		'hrsh7th/nvim-cmp',
 		dependencies = {
@@ -67,6 +74,9 @@ require("lazy").setup({
 				end,
 			},
 		},
+		config = function()
+			require('garmr.configs.nvim_cmp')
+		end
 	},
 	{
 		"zbirenbaum/copilot.lua",
@@ -76,23 +86,19 @@ require("lazy").setup({
 			require("copilot").setup({
 				suggestion = { enabled = false },
 				panel = { enabled = false },
-				server_opts_overrides = {
-					settings = {
-						advanced = {
-							listCount = 5, -- #completions for panel
-							inlineSuggestCount = 5, -- #completions for getCompletions
-						}
-					},
-				},
+				-- server_opts_overrides = {
+				-- 	settings = {
+				-- 		advanced = {
+				-- 			listCount = 5, -- #completions for panel
+				-- 			inlineSuggestCount = 5, -- #completions for getCompletions
+				-- 		}
+				-- 	},
+				-- },
 			})
 		end,
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		-- dependencies = {
-		-- 	"hrsh7th/nvim-cmp",
-		-- 	"zbirenbaum/copilot.lua",
-		-- },
 		config = function()
 			require("copilot_cmp").setup()
 		end
