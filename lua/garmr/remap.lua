@@ -54,7 +54,7 @@ map("n", "<leader>sh", "<cmd>vs<CR>")
 map("n", "<leader>sv", "<cmd>sp<CR>")
 
 -- source file
-map("n", "<leader><leader>", "<cmd>so<CR>")
+-- map("n", "<leader><leader>", "<cmd>so<CR>")
 
 -- auto close 
 map("i", [["<Tab>]], [[""<Left>]])

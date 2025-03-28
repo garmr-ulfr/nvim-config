@@ -13,6 +13,7 @@ require('go').setup({
 	comment_placeholder = '',
 	verbose = false,               -- output loginf in messages
 	log_path = vim.fn.expand("$HOME") .. "/.local/state/nvim/gonvim.log",
+	lsp_semantic_highlights = true,
 	lsp_cfg = false,              -- true: use non-default gopls setup specified in go/lsp.lua
 	lsp_gofumpt = false,          -- true: set default gofmt in gopls format to gofumpt
 	lsp_fmt_async = false,        -- async lsp.buf.format

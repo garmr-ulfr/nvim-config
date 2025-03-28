@@ -133,7 +133,8 @@ require("lazy").setup({
 	{
 		'tpope/vim-fugitive',
 		config = function()
-			require('garmr.configs.fugitive')
+			vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+			vim.keymap.set("n", "<leader>gp", "<cmd>Git push<CR>")
 		end
 	},
 	{
@@ -154,7 +155,12 @@ require("lazy").setup({
 
 	-- Visual
 	{ 'ray-x/guihua.lua' },
-	-- { "ray-x/lsp_signature.nvim" },
+	{
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require('garmr.configs.lsp_signature')
+		end
+	},
 	{ 'nvim-tree/nvim-web-devicons' },
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
