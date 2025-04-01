@@ -119,8 +119,8 @@ cmp.setup({
 	sources = {
 		{ name = 'copilot',  group_index = 1 },
 		{ name = 'nvim_lsp', group_index = 1 },
+		{ name = 'buffer',   group_index = 1 },
 		{ name = 'path',     group_index = 2 },
-		{ name = 'buffer',   group_index = 2 },
 		{ name = 'nvim_lua', group_index = 2 },
 		{ name = 'luasnip',  group_index = 2 },
 	},
@@ -143,8 +143,8 @@ cmp.setup({
 			cmp.config.compare.length,
 			cmp.config.compare.order,
 		}),
-		preselect = cmp.PreselectMode.Item,
-	}
+	},
+	preselect = cmp.PreselectMode.None,
 })
 
 --set max height of items

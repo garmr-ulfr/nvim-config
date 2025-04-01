@@ -3,17 +3,16 @@ require('mason-lspconfig').setup({})
 
 local lspconfig = require('lspconfig')
 
-
 lspconfig.util.on_setup = lspconfig.util.add_hook_after(
-  lspconfig.util.on_setup,
-  function(config, user_config)
-    config.capabilities = vim.tbl_deep_extend(
-      'force',
-      config.capabilities,
-      require('cmp_nvim_lsp').default_capabilities(),
-      vim.tbl_get(user_config, 'capabilities') or {}
-    )
-  end
+	lspconfig.util.on_setup,
+	function(config, user_config)
+		config.capabilities = vim.tbl_deep_extend(
+			'force',
+			config.capabilities,
+			require('cmp_nvim_lsp').default_capabilities(),
+			vim.tbl_get(user_config, 'capabilities') or {}
+		)
+	end
 )
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -50,6 +49,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
 		map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
 		map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+
+		vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	end
 })
 
@@ -108,7 +109,7 @@ end, { desc = 'Remove folder from workspace' })
 -- 	require('lspconfig')[server_name].setup({})
 -- end
 
-lspconfig.lua_ls.setup{}
-lspconfig.jsonls.setup{}
+lspconfig.lua_ls.setup {}
+lspconfig.jsonls.setup {}
 
 require("garmr.configs.go")

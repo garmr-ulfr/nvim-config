@@ -13,7 +13,7 @@ require('go').setup({
 	comment_placeholder = '',
 	verbose = false,               -- output loginf in messages
 	log_path = vim.fn.expand("$HOME") .. "/.local/state/nvim/gonvim.log",
-	lsp_semantic_highlights = true,
+	lsp_semantic_highlights = false,
 	lsp_cfg = false,              -- true: use non-default gopls setup specified in go/lsp.lua
 	lsp_gofumpt = false,          -- true: set default gofmt in gopls format to gofumpt
 	lsp_fmt_async = false,        -- async lsp.buf.format
@@ -112,4 +112,14 @@ gopls.analyses.shadow = true
 -- }
 
 cfg.settings.gopls = gopls
-require('lspconfig').gopls.setup(cfg)
+
+local nvim_lsp = require('lspconfig')
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- capabilities.textDocument.completion.dynamicRegistration = true
+-- capabilities.textDocument.completion.completionItem.preselectSupport = false
+-- cfg.capabilities = capabilities
+
+cfg.cmd = { "gopls", "--remote=auto" }
+nvim_lsp.gopls.setup(cfg)
+
+vim.lsp.set_log_level("error")

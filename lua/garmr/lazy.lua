@@ -1,7 +1,7 @@
 require("lazy").setup({
 	{
 		'nvim-telescope/telescope.nvim',
-		-- tag = '0.1.6',
+		-- tag = '0.1.8',
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function()
@@ -86,14 +86,6 @@ require("lazy").setup({
 			require("copilot").setup({
 				suggestion = { enabled = false },
 				panel = { enabled = false },
-				-- server_opts_overrides = {
-				-- 	settings = {
-				-- 		advanced = {
-				-- 			listCount = 5, -- #completions for panel
-				-- 			inlineSuggestCount = 5, -- #completions for getCompletions
-				-- 		}
-				-- 	},
-				-- },
 			})
 		end,
 	},

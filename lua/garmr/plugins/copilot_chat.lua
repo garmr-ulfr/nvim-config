@@ -8,6 +8,7 @@ local prompts = {
 	FixError = "explain the error in the following text and provide a solution.",
 	BetterNamings = "provide better names for the following variables and functions.",
 	Documentation = "provide documentation for the following code.",
+	Commit = "generate a commit message for the following changes.",
 	-- Text related prompts
 	Summarize = "summarize the following text.",
 	Spelling = "correct any grammar and spelling errors in the following text.",

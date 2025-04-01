@@ -25,6 +25,8 @@ lsp.on_attach(function(client, bufnr)
 		vim.lsp.buf.type_definition()
 		vim.cmd.normal('zz')
 	end, opts)
+
+	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end)
 
 lsp.set_sign_icons({
