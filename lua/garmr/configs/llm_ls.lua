@@ -1,39 +1,39 @@
-local llm = require('llm')
-
-llm.setup({
-	api_token = nil, -- cf Install paragraph
-	backend = 'ollama',
-	model = 'deepseek-coder:6.7b',
-	url = 'http://192.168.1.16:11434', -- llm-ls uses "/api/generate"
-	-- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
-	fim = {
-		enabled = true,
-		prefix = "< | fim▁begin | >",
-		middle = "< | fim_end | >",
-		suffix = "< | fim_hole | >",
-	},
-	request_body = {
-		-- Modelfile options for the model you use
-		options = {
-			temperature = 0.2,
-			top_p = 0.95,
-		},
-	},
-	debounce_ms = 150,
-	accept_keymap = "<C-y>",
-	dismiss_keymap = "<S-Tab>",
-	tls_skip_verify_insecure = true,
-	-- llm-ls configuration, cf llm-ls section
-	lsp = {
-		bin_path = vim.api.nvim_call_function("stdpath", { "data" }) .. "/mason/bin/llm-ls",
-		host = nil,
-		port = nil,
-		cmd_env = nil, -- or { LLM_LOG_LEVEL = "DEBUG" } to set the log level of llm-ls
-	},
-	tokenizer = nil, -- cf Tokenizer paragraph
-	context_window = 1024, -- max number of tokens for the context window
-	enable_suggestions_on_startup = true, -- enable suggestions on startup
-	-- enable_suggestions_on_files = "*", -- pattern matching syntax to enable suggestions on specific files, either a string or a list of strings
-	-- disable_url_path_completion = false, -- cf Backend
-})
-
+-- local llm = require('llm')
+--
+-- llm.setup({
+-- 	api_token = nil, -- cf Install paragraph
+-- 	backend = 'ollama',
+-- 	model = 'deepseek-coder:6.7b',
+-- 	url = 'http://192.168.1.16:11434', -- llm-ls uses "/api/generate"
+-- 	-- cf https://github.com/ollama/ollama/blob/main/docs/api.md#parameters
+-- 	fim = {
+-- 		enabled = true,
+-- 		prefix = "< | fim▁begin | >",
+-- 		middle = "< | fim_end | >",
+-- 		suffix = "< | fim_hole | >",
+-- 	},
+-- 	request_body = {
+-- 		-- Modelfile options for the model you use
+-- 		options = {
+-- 			temperature = 0.2,
+-- 			top_p = 0.95,
+-- 		},
+-- 	},
+-- 	debounce_ms = 150,
+-- 	accept_keymap = "<C-y>",
+-- 	dismiss_keymap = "<S-Tab>",
+-- 	tls_skip_verify_insecure = true,
+-- 	-- llm-ls configuration, cf llm-ls section
+-- 	lsp = {
+-- 		bin_path = vim.api.nvim_call_function("stdpath", { "data" }) .. "/mason/bin/llm-ls",
+-- 		host = nil,
+-- 		port = nil,
+-- 		cmd_env = nil, -- or { LLM_LOG_LEVEL = "DEBUG" } to set the log level of llm-ls
+-- 	},
+-- 	tokenizer = nil, -- cf Tokenizer paragraph
+-- 	context_window = 1024, -- max number of tokens for the context window
+-- 	enable_suggestions_on_startup = true, -- enable suggestions on startup
+-- 	-- enable_suggestions_on_files = "*", -- pattern matching syntax to enable suggestions on specific files, either a string or a list of strings
+-- 	-- disable_url_path_completion = false, -- cf Backend
+-- })
+--

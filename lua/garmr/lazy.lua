@@ -27,30 +27,12 @@ require("lazy").setup({
 			require('garmr.configs.trouble')
 		end
 	},
-
-	-- LSP
-	-- {
-	-- 	'VonHeikemen/lsp-zero.nvim',
-	-- 	branch = 'v2.x',
-	-- 	dependencies = {
-	-- 		-- LSP Support
-	-- 		'neovim/nvim-lspconfig',
-	-- 		'williamboman/mason.nvim',
-	-- 		'williamboman/mason-lspconfig.nvim',
-	--
-	-- 		-- Autocompletion
-	-- 		'hrsh7th/nvim-cmp',
-	-- 	},
-	-- 	config = function()
-	-- 		require('garmr.configs.lsp')
-	-- 	end
-	-- },
-	{ 'williamboman/mason.nvim' },
-	{ 'williamboman/mason-lspconfig.nvim' },
+	{ 'williamboman/mason.nvim', branch = 'v1.x'  },
+	{ 'williamboman/mason-lspconfig.nvim', branch = 'v1.x'  },
 	{
 		'neovim/nvim-lspconfig',
 		config = function()
-			require('garmr.configs.lspconfig')
+			require('garmr.configs.lsp_config')
 		end
 	},
 	{ 'ray-x/go.nvim' },

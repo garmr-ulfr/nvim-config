@@ -106,10 +106,12 @@ end, { desc = 'Remove folder from workspace' })
 
 -- local get_servers = require('mason-lspconfig').get_installed_servers
 -- for _, server_name in ipairs(get_servers()) do
--- 	require('lspconfig')[server_name].setup({})
+-- 	lspconfig[server_name].setup({})
 -- end
 
 lspconfig.lua_ls.setup {}
 lspconfig.jsonls.setup {}
+
+vim.lsp.set_log_level("error")
 
 require("garmr.configs.go")

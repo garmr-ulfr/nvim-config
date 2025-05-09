@@ -1,23 +1,151 @@
 -- local tempdir = vim.fn.finddir('gotests/templates', vim.fn.stdpath('config') .. "/**")
-local util = require('garmr.util')
+local get_current_gomod = function()
+  local file = io.open('go.mod', 'r')
+  if file == nil then
+    return nil
+  end
 
-require('go').setup({
-	goimports = 'gopls',          -- goimport command, can be gopls[default] or goimport
+  local first_line = file:read()
+  local mod_name = first_line:gsub('module ', '')
+  file:close()
+  return mod_name
+end
+
+local cfg = {
+	capabilities = {
+		textDocument = {
+			completion = {
+				completionItem = {
+					commitCharactersSupport = true,
+					deprecatedSupport = true,
+					documentationFormat = { 'markdown', 'plaintext' },
+					preselectSupport = true,
+					insertReplaceSupport = true,
+					labelDetailsSupport = true,
+					snippetSupport = true,
+					resolveSupport = {
+						properties = {
+							'edit',
+							'documentation',
+							'details',
+							'additionalTextEdits',
+						},
+					},
+				},
+				completionList = {
+					itemDefaults = {
+						'editRange',
+						'insertTextFormat',
+						'insertTextMode',
+						'data',
+					},
+				},
+				contextSupport = true,
+				dynamicRegistration = true,
+			},
+		},
+	},
+	filetypes = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
+	message_level = vim.lsp.protocol.MessageType.Error,
+	cmd = { 'gopls', '-remote.debug=:0' },
+	root_dir = function(fname)
+		local has_lsp, lspconfig = pcall(require, 'lspconfig')
+		if has_lsp then
+			local util = lspconfig.util
+        return util.root_pattern('go.work', 'go.mod', '.git')(fname) or util.path.dirname(fname)
+		end
+	end,
+	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+	settings = {
+		gopls = {
+			-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+			analyses = {
+				atomicalign = false,
+				unreachable = true,
+				nilness = true,
+				unusedvar = false,
+				unusedparams = true,
+				useany = true,
+				unusedwrite = true,
+				ST1003 = true,
+				undeclaredname = true,
+				fillreturns = true,
+				nonewvars = false,
+				fieldalignment = false,
+				shadow = true,
+			},
+			codelenses = {
+				generate = true,
+				gc_details = true,
+				test = true,
+				tidy = true,
+				vendor = true,
+				regenerate_cgo = true,
+				upgrade_dependency = true,
+			},
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				compositeLiteralTypes = true,
+				constantValues = true,
+				functionTypeParameters = true,
+				parameterNames = true,
+				rangeVariableTypes = true,
+			},
+			usePlaceholders = true,
+			completeUnimported = true,
+			staticcheck = true,
+			matcher = 'Fuzzy',
+			diagnosticsDelay = '500ms',
+			diagnosticsTrigger = 'Edit',
+			symbolMatcher = 'FastFuzzy',
+			semanticTokens = false, -- disable semantic tokens as treesitter is better
+			vulncheck = 'Imports',
+			['local'] = get_current_gomod(),
+			gofumpt = false,
+		},
+	},
+	-- NOTE: it is important to add handler to formatting handlers
+	-- the async formatter will call these handlers when gopls responed
+	-- without these handlers, the file will not be saved
+	handlers = {
+		['textDocument/rangeFormatting'] = function(...)
+			vim.lsp.handlers['textDocument/rangeFormatting'](...)
+			if vim.fn.getbufinfo('%')[1].changed == 1 then
+				vim.cmd('noautocmd write')
+			end
+		end,
+		['textDocument/formatting'] = function(...)
+			vim.lsp.handlers['textDocument/formatting'](...)
+			if vim.fn.getbufinfo('%')[1].changed == 1 then
+				vim.cmd('noautocmd write')
+			end
+		end,
+	},
+}
+
+local util = require('garmr.util')
+local opts = {
+	-- remap_commands = {}, -- Vim commands to remap or disable, e.g. `{ GoFmt = "GoFormat", GoDoc = false }`
+	-- settings with {}; string will be set to ''. user need to setup ALL the settings
+	-- It is import to set ALL values in your own config if set value to true otherwise the plugin may not work
+	go = 'go',
+	goimports = 'gopls',
 	gofmt = 'gopls',
-	fillstruct = 'gopls',         -- can be nil (use fillstruct, slower) and gopls
-	-- max_line_len = 128,			 -- max line length in golines format, Target maximum line length for golines
-	tag_transform = false,        -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+	fillstruct = 'gopls',
+	-- max_line_len = 0,
+	tag_transform = false,
 	tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
-	gotests_template = "testify", -- sets gotests -template parameter (check gotests for details)
-	gotests_template_dir = "",    -- sets gotests -template_dir parameter (check gotests for details)
+	gotests_template = "testify",
+	gotests_template_dir = "",
+	gotest_case_exact_match = true, -- true: run test with ^Testname$, false: run test with TestName
 	comment_placeholder = '',
-	verbose = false,               -- output loginf in messages
-	log_path = vim.fn.expand("$HOME") .. "/.local/state/nvim/gonvim.log",
-	lsp_semantic_highlights = false,
-	lsp_cfg = false,              -- true: use non-default gopls setup specified in go/lsp.lua
-	lsp_gofumpt = false,          -- true: set default gofmt in gopls format to gofumpt
-	lsp_fmt_async = false,        -- async lsp.buf.format
-	lsp_on_attach = nil,          -- nil: use on_attach function defined in go/lsp.lua,
+	-- icons = {breakpoint = '🧘', currentpos = '🏃'},  -- setup to `false` to disable icons setup
+	verbose = false,
+	lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
+	lsp_cfg = cfg,
+	lsp_gofumpt = false,
+	lsp_on_attach = true,
 	lsp_keymaps = function(bufnr)
 		local opts = { buffer = bufnr, remap = false }
 		util.map("n", "<leader>rt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", opts)
@@ -35,13 +163,25 @@ require('go').setup({
 		util.map("n", "<leader>ff", function()
 			require('go.format').goimports()
 		end, opts)
-	end,               -- set to false to disable gopls/lsp keymap
-	lsp_codelens = true, -- set to false to disable codelens, true by default, you can use a function
-	diagnostics = false,
+	end,
+	lsp_codelens = true,
+	golangci_lint = false,
+	-- null_ls = false,
+	diagnostics = false, -- set to false to disable vim.diagnostic.config setup,
+	-- diagnostic = {  -- set diagnostic to false to disable vim.diagnostic.config setup,
+	--   hdlr = false, -- hook lsp diag handler and send diag to quickfix
+	--   underline = true,
+	--   virtual_text = { spacing = 2, prefix = '' }, -- virtual text setup
+	--   signs = {'', '', '', ''},  -- set to true to use default signs, an array of 4 to specify custom signs
+	--   update_in_insert = false,
+	-- },
 	lsp_document_formatting = true,
 	lsp_inlay_hints = {
-		enable = true,
-		style = "eol",
+		enable = true, -- this is the only field apply to neovim > 0.10
+		-- following are used for neovim < 0.10 which does not implement inlay hints
+		-- hint style, set to 'eol' for end-of-line hints, 'inlay' for inline hints
+		style = 'eol',
+		-- Note: following setup only works for style = 'eol', you do not need to set it for 'inlay'
 		-- Only show inlay hints for the current line
 		only_current_line = false,
 		-- Event which triggers a refersh of the inlay hints.
@@ -54,72 +194,50 @@ require('go').setup({
 		-- default: false
 		show_variable_name = true,
 		-- prefix for parameter hints
-		parameter_hints_prefix = "\\(.*\\) f",
+		parameter_hints_prefix = "\\(.*\\) 󰊕 ",
 		show_parameter_hints = true,
-		-- prefix for all the other hints (type, chaining)
 		other_hints_prefix = "=> ",
-		-- whether to align to the lenght of the longest line in the file
 		max_len_align = false,
-		-- padding from the left if max_len_align is true
 		max_len_align_padding = 1,
-		-- whether to align to the extreme right or not
 		right_align = false,
-		-- padding from the right if right_align is true
 		right_align_padding = 6,
-		-- The color of the hints
 		highlight = "Comment",
 	},
+	gopls_cmd = nil,        -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+	gopls_remote_auto = true, -- add -remote=auto to gopls
 	gocoverage_sign = "λ",
-	sign_priority = 5,     -- change to a higher number to override other signs
-	dap_debug = false,     -- set to false to disable dap
-	dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
-	dap_debug_gui = {},    -- bool|table put your dap-ui setup here set to false to disable
-	dap_debug_vt = {
-		enabled_commands = true,
-		all_frames = true
-	},                    -- bool|table put your dap-virtual-text setup here set to false to disable
-
-	dap_port = 38697,     -- can be set to a number, if set to -1 go.nvim will pickup a random port
-	dap_timeout = 15,     --	see dap option initialize_timeout_sec = 15,
-	dap_retries = 20,     -- see dap option max_retries
-	--	build_tags = "tag1,tag2",						-- set default build tags
-	textobjects = true,   -- enable default text jobects through treesittter-text-objects
-	test_runner = 'go',   -- one of {`go`, `richgo`, `dlv`, `ginkgo`, `gotestsum`}
-	verbose_tests = true, -- set to add verbose flag to tests deprecated, see '-v' option
-	run_in_floaterm = true, -- set to true to run in float window. :GoTermClose closes the floatterm
-
-	floaterm = {          -- position
-		posititon = 'right', -- one of {`top`, `bottom`, `left`, `right`, `center`, `auto`}
-		width = 0.45,      -- width of float window if not auto
-		height = 0.98,     -- height of float window if not auto
+	sign_priority = 5,      -- change to a higher number to override other signs
+	-- dap_debug = true, -- set to false to disable dap
+	-- dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
+	--                          -- false: do not use keymap in go/dap.lua.  you must define your own.
+	--                          -- Windows: Use Visual Studio keymap
+	-- dap_debug_gui = {}, -- bool|table put your dap-ui setup here set to false to disable
+	-- dap_debug_vt = { enabled = true, enabled_commands = true, all_frames = true }, -- bool|table put your dap-virtual-text setup here set to false to disable
+	--
+	-- dap_port = 38697, -- can be set to a number, if set to -1 go.nvim will pick up a random port
+	-- dap_timeout = 15, --  see dap option initialize_timeout_sec = 15,
+	-- dap_retries = 20, -- see dap option max_retries
+	-- dap_enrich_config = nil, -- see dap option enrich_config
+	-- build_tags = "tag1,tag2", -- set default build tags
+	textobjects = true, -- enable default text objects through treesittter-text-objects
+	test_runner = 'go',
+	verbose_tests = true,
+	run_in_floaterm = true,
+	floaterm = {
+		posititon = 'right',
+		width = 0.45,
+		height = 0.98,
+		title_colors = 'nord',
 	},
-	trouble = true,       -- true: use trouble to open quickfix
-	test_efm = true,     -- errorfomat for quickfix, default mix mode, set to true will be efm only
-	luasnip = true,       -- enable included luasnip snippets. you can also disable while add lua/snips folder to luasnip load
-})
+	trouble = true,
+	test_efm = false,
+	luasnip = true
+}
 
-local cfg = require('go.lsp').config()
-local gopls = cfg.settings.gopls
-gopls.diagnosticsTrigger = "Edit"
+require('go').setup(opts)
 
-gopls.analyses.atomicalign = false
-gopls.analyses.fieldalignment = false
-gopls.analyses.shadow = true
+-- local nvim_lsp = require('lspconfig')
 
--- gopls.hints = {
--- 	compositeLiteralFields = true,
--- 	constantValues = true,
--- }
-
-cfg.settings.gopls = gopls
-
-local nvim_lsp = require('lspconfig')
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- capabilities.textDocument.completion.dynamicRegistration = true
 -- capabilities.textDocument.completion.completionItem.preselectSupport = false
--- cfg.capabilities = capabilities
-
-cfg.cmd = { "gopls", "--remote=auto" }
-nvim_lsp.gopls.setup(cfg)
-
-vim.lsp.set_log_level("error")

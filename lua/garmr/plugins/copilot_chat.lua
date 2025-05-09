@@ -28,41 +28,41 @@ return {
 			answer_header = "## Copilot ",
 			error_header = "## Error ",
 			prompts = prompts,
-			-- model = "claude-3.7-sonnet",
+			model = "gpt-4o",
 			selection = function(source)
 				local select = require("CopilotChat.select")
 				return select.visual(source) or select.buffer(source)
 			end,
 			mappings = {
-				-- Use tab for completion
-				complete = {
-					detail = "Use @<Tab> or /<Tab> for options.",
-					insert = "<Tab>",
-				},
-				-- Close the chat
-				close = {
-					normal = "q",
-					insert = "<C-c>",
-				},
+				-- -- Use tab for completion
+				-- complete = {
+				-- 	detail = "Use @<Tab> or /<Tab> for options.",
+				-- 	insert = "<Tab>",
+				-- },
+				-- -- Close the chat
+				-- close = {
+				-- 	normal = "q",
+				-- 	insert = "<C-c>",
+				-- },
 				-- Reset the chat buffer
-				reset = {
-					normal = "<C-x>",
-					insert = "<C-x>",
-				},
-				-- Submit the prompt to Copilot
-				submit_prompt = {
-					normal = "<CR>",
-					insert = "<C-CR>",
-				},
-				-- Accept the diff
-				accept_diff = {
-					normal = "<C-y>",
-					insert = "<C-y>",
-				},
-				-- Show help
-				show_help = {
-					normal = "g?",
-				},
+				-- reset = {
+				-- 	normal = "<C-x>",
+				-- 	insert = "<C-x>",
+				-- },
+				-- -- Submit the prompt to Copilot
+				-- submit_prompt = {
+				-- 	normal = "<CR>",
+				-- 	insert = "<C-CR>",
+				-- },
+				-- -- Accept the diff
+				-- accept_diff = {
+				-- 	normal = "<C-y>",
+				-- 	insert = "<C-y>",
+				-- },
+				-- -- Show help
+				-- show_help = {
+				-- 	normal = "g?",
+				-- },
 			},
 		},
 		config = function(_, opts)
@@ -185,7 +185,7 @@ return {
 			-- Clear buffer and chat history
 			{ "<leader>al", "<cmd>CopilotChatReset<cr>",    desc = "CopilotChat - Clear buffer and chat history" },
 			-- Toggle Copilot Chat Vsplit
-			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   mode = { "n", "v" },                                 desc = "CopilotChat - Toggle" },
+			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   mode = { "n", "v" }, desc = "CopilotChat - Toggle" },
 			-- Copilot Chat Models
 			{ "<leader>a?", "<cmd>CopilotChatModels<cr>",   desc = "CopilotChat - Select Models" },
 			-- Copilot Chat Agents
