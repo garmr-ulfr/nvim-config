@@ -1,7 +1,6 @@
 require("lazy").setup({
 	{
 		'nvim-telescope/telescope.nvim',
-		-- tag = '0.1.8',
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function()
@@ -21,14 +20,13 @@ require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter-context" },
 	{
 		"folke/trouble.nvim",
-		-- cmd = "Trouble",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			require('garmr.configs.trouble')
 		end
 	},
-	{ 'williamboman/mason.nvim', branch = 'v1.x'  },
-	{ 'williamboman/mason-lspconfig.nvim', branch = 'v1.x'  },
+	{ 'mason-org/mason.nvim' },
+	{ 'mason-org/mason-lspconfig.nvim' },
 	{
 		'neovim/nvim-lspconfig',
 		config = function()

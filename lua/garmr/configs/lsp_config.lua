@@ -1,5 +1,7 @@
 require('mason').setup({})
-require('mason-lspconfig').setup({})
+require('mason-lspconfig').setup({
+	automatic_enable = true,
+})
 
 local lspconfig = require('lspconfig')
 
@@ -108,9 +110,6 @@ end, { desc = 'Remove folder from workspace' })
 -- for _, server_name in ipairs(get_servers()) do
 -- 	lspconfig[server_name].setup({})
 -- end
-
-lspconfig.lua_ls.setup {}
-lspconfig.jsonls.setup {}
 
 vim.lsp.set_log_level("error")
 

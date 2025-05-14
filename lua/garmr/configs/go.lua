@@ -47,7 +47,7 @@ local cfg = {
 	},
 	filetypes = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
 	message_level = vim.lsp.protocol.MessageType.Error,
-	cmd = { 'gopls', '-remote.debug=:0' },
+	cmd = { 'gopls' },
 	root_dir = function(fname)
 		local has_lsp, lspconfig = pcall(require, 'lspconfig')
 		if has_lsp then
@@ -124,6 +124,9 @@ local cfg = {
 	},
 }
 
+vim.lsp.config('gopls', cfg)
+vim.lsp.enable('gopls')
+
 local util = require('garmr.util')
 local opts = {
 	-- remap_commands = {}, -- Vim commands to remap or disable, e.g. `{ GoFmt = "GoFormat", GoDoc = false }`
@@ -143,9 +146,9 @@ local opts = {
 	-- icons = {breakpoint = '🧘', currentpos = '🏃'},  -- setup to `false` to disable icons setup
 	verbose = false,
 	lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
-	lsp_cfg = cfg,
+	lsp_cfg = false,
 	lsp_gofumpt = false,
-	lsp_on_attach = true,
+	lsp_on_attach = nil,
 	lsp_keymaps = function(bufnr)
 		local opts = { buffer = bufnr, remap = false }
 		util.map("n", "<leader>rt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", opts)
@@ -204,7 +207,7 @@ local opts = {
 		highlight = "Comment",
 	},
 	gopls_cmd = nil,        -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
-	gopls_remote_auto = true, -- add -remote=auto to gopls
+	gopls_remote_auto = false, -- add -remote=auto to gopls
 	gocoverage_sign = "λ",
 	sign_priority = 5,      -- change to a higher number to override other signs
 	-- dap_debug = true, -- set to false to disable dap
@@ -235,9 +238,3 @@ local opts = {
 }
 
 require('go').setup(opts)
-
--- local nvim_lsp = require('lspconfig')
-
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- capabilities.textDocument.completion.dynamicRegistration = true
--- capabilities.textDocument.completion.completionItem.preselectSupport = false
