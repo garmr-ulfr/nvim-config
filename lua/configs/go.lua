@@ -124,8 +124,8 @@ local cfg = {
 	},
 }
 
-vim.lsp.config('gopls', cfg)
-vim.lsp.enable('gopls')
+-- vim.lsp.config('gopls', cfg)
+-- vim.lsp.enable('gopls')
 
 local util = require('util')
 local opts = {
@@ -146,9 +146,9 @@ local opts = {
 	-- icons = {breakpoint = '🧘', currentpos = '🏃'},  -- setup to `false` to disable icons setup
 	verbose = false,
 	lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
-	lsp_cfg = false,
+	lsp_cfg = cfg,
 	lsp_gofumpt = false,
-	lsp_on_attach = nil,
+	lsp_on_attach = true,
 	lsp_keymaps = function(bufnr)
 		local opts = { buffer = bufnr, remap = false }
 		util.map("n", "<leader>rt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", opts)
