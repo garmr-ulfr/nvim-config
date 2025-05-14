@@ -7,6 +7,7 @@ require("lazy").setup({
 			require('configs.telescope')
 		end
 	},
+	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 	{
 		'nvim-treesitter/nvim-treesitter',
 		build = function()
@@ -15,7 +16,7 @@ require("lazy").setup({
 		end,
 		config = function()
 			require('configs.treesitter')
-		end
+		end,
 	},
 	{ "nvim-treesitter/nvim-treesitter-context" },
 	{
@@ -34,7 +35,7 @@ require("lazy").setup({
 		end
 	},
 	{ 'ray-x/go.nvim' },
-	--  { -- optional blink completion source for require statements and module annotations
+	--  {
 	--   "saghen/blink.cmp",
 	--   opts = {
 	--     sources = {

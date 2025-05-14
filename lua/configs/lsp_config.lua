@@ -1,3 +1,8 @@
+vim.keymap.del('n', 'grn')
+vim.keymap.del('n', 'gra')
+vim.keymap.del('n', 'grr')
+vim.keymap.del('n', 'gri')
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
 	automatic_enable = true,
@@ -18,6 +23,21 @@ lspconfig.util.on_setup = lspconfig.util.add_hook_after(
 )
 
 vim.api.nvim_create_autocmd('LspAttach', {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+		if client:supports_method('textDocument/formatting') then
+			vim.api.nvim_create_autocmd('BufWritePre', {
+				buffer = args.buf,
+				callback = function()
+					vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+				end,
+			})
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP actions',
 	callback = function(event)
 		local bufnr = event.buf
@@ -33,9 +53,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		end, { desc = 'Format buffer with language server' })
 
 		-- LSP actions
-		map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
-		map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
-		map("n", "gr", "<cmd>Telescope lsp_references<cr>")
+		map('n', 'K', '<cmd>lua vim.lsp.buf.hover({ border = "rounded" })<cr>')
+		map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help({ border = "rounded" })<cr>')
+
+		local builtin = require('telescope.builtin')
+		map("n", "gr", builtin.lsp_references)
 
 		map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>zz')
 		map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>zz')
@@ -51,8 +73,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
 		map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
 		map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
-
-		vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 	end
 })
 
@@ -69,29 +89,6 @@ vim.diagnostic.config({
 	}
 })
 
---  local sign = function(args)
---   vim.fn.sign_define(args.hl, {
---     texthl = args.hl,
---     text = opts[args.name],
---     numhl = ''
---   })
--- end
---
--- sign({ name = 'error', hl = 'DiagnosticSignError' })
--- sign({ name = 'warn', hl = 'DiagnosticSignWarn' })
--- sign({ name = 'hint', hl = 'DiagnosticSignHint' })
--- sign({ name = 'info', hl = 'DiagnosticSignInfo' })
-
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-	vim.lsp.handlers.hover,
-	{ border = 'rounded' }
-)
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-	vim.lsp.handlers.signature_help,
-	{ border = 'rounded' }
-)
-
 local command = vim.api.nvim_create_user_command
 
 command('LspWorkspaceAdd', function()
@@ -105,11 +102,6 @@ end, { desc = 'List workspace folders' })
 command('LspWorkspaceRemove', function()
 	vim.lsp.buf.remove_workspace_folder()
 end, { desc = 'Remove folder from workspace' })
-
--- local get_servers = require('mason-lspconfig').get_installed_servers
--- for _, server_name in ipairs(get_servers()) do
--- 	lspconfig[server_name].setup({})
--- end
 
 vim.lsp.set_log_level("error")
 
