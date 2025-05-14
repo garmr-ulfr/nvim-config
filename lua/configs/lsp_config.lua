@@ -113,4 +113,4 @@ end, { desc = 'Remove folder from workspace' })
 
 vim.lsp.set_log_level("error")
 
-require("garmr.configs.go")
+require("configs.go")

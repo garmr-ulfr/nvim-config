@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 
-local map = require("garmr.util").map
+local map = require("util").map
 
 map("n", "<leader>pv", vim.cmd.Ex) -- project view
 map("i", "<C-c>", "<Esc>")

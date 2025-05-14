@@ -4,7 +4,7 @@ require("lazy").setup({
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function()
-			require('garmr.configs.telescope')
+			require('configs.telescope')
 		end
 	},
 	{
@@ -14,7 +14,7 @@ require("lazy").setup({
 			ts_update()
 		end,
 		config = function()
-			require('garmr.configs.treesitter')
+			require('configs.treesitter')
 		end
 	},
 	{ "nvim-treesitter/nvim-treesitter-context" },
@@ -22,7 +22,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			require('garmr.configs.trouble')
+			require('configs.trouble')
 		end
 	},
 	{ 'mason-org/mason.nvim' },
@@ -30,10 +30,27 @@ require("lazy").setup({
 	{
 		'neovim/nvim-lspconfig',
 		config = function()
-			require('garmr.configs.lsp_config')
+			require('configs.lsp_config')
 		end
 	},
 	{ 'ray-x/go.nvim' },
+	--  { -- optional blink completion source for require statements and module annotations
+	--   "saghen/blink.cmp",
+	--   opts = {
+	--     sources = {
+	--       -- add lazydev to your completion providers
+	--       default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+	--       providers = {
+	--         lazydev = {
+	--           name = "LazyDev",
+	--           module = "lazydev.integrations.blink",
+	--           -- make lazydev completions top priority (see `:h blink.cmp`)
+	--           score_offset = 100,
+	--         },
+	--       },
+	--     },
+	--   },
+	-- },
 	{
 		'hrsh7th/nvim-cmp',
 		dependencies = {
@@ -55,7 +72,7 @@ require("lazy").setup({
 			},
 		},
 		config = function()
-			require('garmr.configs.nvim_cmp')
+			require('configs.nvim_cmp')
 		end
 	},
 	{
@@ -75,11 +92,11 @@ require("lazy").setup({
 			require("copilot_cmp").setup()
 		end
 	},
-	{ import = "garmr.plugins" },
+	{ import = "plugins" },
 	-- {
 	-- 	'huggingface/llm.nvim',
 	-- 	config = function()
-	-- 		require('garmr.configs.llm_ls')
+	-- 		require('configs.llm_ls')
 	-- 	end
 	-- },
 
@@ -87,19 +104,19 @@ require("lazy").setup({
 	{
 		"theprimeagen/refactoring.nvim",
 		config = function()
-			require("garmr.configs.refactoring")
+			require("configs.refactoring")
 		end,
 	},
 	{
 		'mbbill/undotree',
 		config = function()
-			require('garmr.configs.undotree')
+			require('configs.undotree')
 		end
 	},
 	{
 		'ThePrimeagen/harpoon',
 		config = function()
-			require('garmr.configs.harpoon')
+			require('configs.harpoon')
 		end
 	},
 	{
@@ -130,7 +147,7 @@ require("lazy").setup({
 	{
 		"ray-x/lsp_signature.nvim",
 		config = function()
-			require('garmr.configs.lsp_signature')
+			require('configs.lsp_signature')
 		end
 	},
 	{ 'nvim-tree/nvim-web-devicons' },
@@ -146,7 +163,7 @@ require("lazy").setup({
 		'nvim-lualine/lualine.nvim',
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			require('garmr.configs.lualine')
+			require('configs.lualine')
 		end
 	},
 	{
@@ -162,13 +179,13 @@ require("lazy").setup({
 		name = 'catppuccin',
 		priority = 1000,
 		config = function()
-			require('garmr.configs.catppuccin')
+			require('configs.catppuccin')
 		end
 	},
 	-- {
 	-- 	'EdenEast/nightfox.nvim',
 	-- 	config = function()
-	-- 		require('garmr.configs.nightfox')
+	-- 		require('configs.nightfox')
 	-- 	end
 	-- },
 })

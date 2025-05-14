@@ -127,7 +127,7 @@ local cfg = {
 vim.lsp.config('gopls', cfg)
 vim.lsp.enable('gopls')
 
-local util = require('garmr.util')
+local util = require('util')
 local opts = {
 	-- remap_commands = {}, -- Vim commands to remap or disable, e.g. `{ GoFmt = "GoFormat", GoDoc = false }`
 	-- settings with {}; string will be set to ''. user need to setup ALL the settings
