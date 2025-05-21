@@ -30,7 +30,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			vim.api.nvim_create_autocmd('BufWritePre', {
 				buffer = args.buf,
 				callback = function()
-					vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+					if client.name == 'gopls' then
+						require('go.format').goimports()
+					else
+						vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+					end
 				end,
 			})
 		end

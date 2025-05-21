@@ -1,14 +1,14 @@
 local opts = {
-	use_local_fs = false,                   -- use local files on right side of reviews
-	enable_builtin = false,                 -- shows a list of builtin actions when no action is provided
+	use_local_fs = false,                    -- use local files on right side of reviews
+	enable_builtin = false,                  -- shows a list of builtin actions when no action is provided
 	default_remote = { "upstream", "origin" }, -- order to try remotes
-	default_merge_method = "commit",        -- default merge method which should be used for both `Octo pr merge` and merging from picker, could be `commit`, `rebase` or `squash`
-	default_delete_branch = false,          -- whether to delete branch when merging pull request with either `Octo pr merge` or from picker (can be overridden with `delete`/`nodelete` argument to `Octo pr merge`)
-	ssh_aliases = {},                       -- SSH aliases. e.g. `ssh_aliases = {["github.com-work"] = "github.com"}`. The key part will be interpreted as an anchored Lua pattern.
-	picker = "telescope",                   -- or "fzf-lua"
+	default_merge_method = "commit",         -- default merge method which should be used for both `Octo pr merge` and merging from picker, could be `commit`, `rebase` or `squash`
+	default_delete_branch = false,           -- whether to delete branch when merging pull request with either `Octo pr merge` or from picker (can be overridden with `delete`/`nodelete` argument to `Octo pr merge`)
+	ssh_aliases = {},                        -- SSH aliases. e.g. `ssh_aliases = {["github.com-work"] = "github.com"}`. The key part will be interpreted as an anchored Lua pattern.
+	picker = "telescope",                    -- or "fzf-lua"
 	picker_config = {
-		use_emojis = false,                  -- only used by "fzf-lua" picker for now
-		mappings = {                         -- mappings for the pickers
+		use_emojis = false,                   -- only used by "fzf-lua" picker for now
+		mappings = {                          -- mappings for the pickers
 			open_in_browser = { lhs = "<C-b>", desc = "open issue in browser" },
 			copy_url = { lhs = "<C-y>", desc = "copy url to system clipboard" },
 			checkout_pr = { lhs = "<C-o>", desc = "checkout pull request" },
@@ -48,8 +48,8 @@ local opts = {
 		assigned = "  ",
 		review_requested = "  ",
 	},
-	right_bubble_delimiter = "", -- bubble delimiter
-	left_bubble_delimiter = "", -- bubble delimiter
+	right_bubble_delimiter = "", -- bubble delimiter
+	left_bubble_delimiter = "", -- bubble delimiter
 	github_hostname = "", -- GitHub Enterprise host
 	snippet_context_lines = 4, -- number or lines around commented lines
 	gh_cmd = "gh", -- Command to use when calling Github CLI
@@ -61,14 +61,14 @@ local opts = {
 		use_signstatus = true, -- show "modified" marks on the status column
 	},
 	issues = {
-		order_by = {          -- criteria to sort results of `Octo issue list`
+		order_by = {       -- criteria to sort results of `Octo issue list`
 			field = "CREATED_AT", -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
 			direction =
-			"DESC"             -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
+			"DESC"          -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
 		}
 	},
 	reviews = {
-		auto_show_threads = true,  -- automatically show comment threads on cursor move
+		auto_show_threads = true, -- automatically show comment threads on cursor move
 		focus             = "right", -- focus right buffer on diff open
 	},
 	runs = {
@@ -82,10 +82,10 @@ local opts = {
 		},
 	},
 	pull_requests = {
-		order_by = {                         -- criteria to sort the results of `Octo pr list`
-			field = "CREATED_AT",             -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
+		order_by = {                       -- criteria to sort the results of `Octo pr list`
+			field = "CREATED_AT",           -- either COMMENTS, CREATED_AT or UPDATED_AT (https://docs.github.com/en/graphql/reference/enums#issueorderfield)
 			direction =
-			"DESC"                            -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
+			"DESC"                          -- either DESC or ASC (https://docs.github.com/en/graphql/reference/enums#orderdirection)
 		},
 		always_select_remote_on_create = false -- always give prompt to select base remote repo when creating PRs
 	},
@@ -93,10 +93,10 @@ local opts = {
 		current_repo_only = false, -- show notifications for current repo only
 	},
 	file_panel = {
-		size = 10,     -- changed files panel rows
+		size = 10,   -- changed files panel rows
 		use_icons = true -- use web-devicons in file panel (if false, nvim-web-devicons does not need to be installed)
 	},
-	colors = {        -- used for highlight groups (see Colors section below)
+	colors = {      -- used for highlight groups (see Colors section below)
 		white = "#ffffff",
 		grey = "#2A354C",
 		black = "#000000",

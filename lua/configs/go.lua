@@ -1,14 +1,14 @@
 -- local tempdir = vim.fn.finddir('gotests/templates', vim.fn.stdpath('config') .. "/**")
 local get_current_gomod = function()
-  local file = io.open('go.mod', 'r')
-  if file == nil then
-    return nil
-  end
+	local file = io.open('go.mod', 'r')
+	if file == nil then
+		return nil
+	end
 
-  local first_line = file:read()
-  local mod_name = first_line:gsub('module ', '')
-  file:close()
-  return mod_name
+	local first_line = file:read()
+	local mod_name = first_line:gsub('module ', '')
+	file:close()
+	return mod_name
 end
 
 local cfg = {
@@ -52,7 +52,7 @@ local cfg = {
 		local has_lsp, lspconfig = pcall(require, 'lspconfig')
 		if has_lsp then
 			local util = lspconfig.util
-        return util.root_pattern('go.work', 'go.mod', '.git')(fname) or util.path.dirname(fname)
+			return util.root_pattern('go.work', 'go.mod', '.git')(fname) or util.path.dirname(fname)
 		end
 	end,
 	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
@@ -105,27 +105,21 @@ local cfg = {
 			gofumpt = false,
 		},
 	},
-	-- NOTE: it is important to add handler to formatting handlers
-	-- the async formatter will call these handlers when gopls responed
-	-- without these handlers, the file will not be saved
 	handlers = {
 		['textDocument/rangeFormatting'] = function(...)
 			vim.lsp.handlers['textDocument/rangeFormatting'](...)
 			if vim.fn.getbufinfo('%')[1].changed == 1 then
-				vim.cmd('noautocmd write')
+				vim.print('ran rangeFormatting')
 			end
 		end,
 		['textDocument/formatting'] = function(...)
 			vim.lsp.handlers['textDocument/formatting'](...)
 			if vim.fn.getbufinfo('%')[1].changed == 1 then
-				vim.cmd('noautocmd write')
+				vim.print('ran formatting')
 			end
 		end,
 	},
 }
-
--- vim.lsp.config('gopls', cfg)
--- vim.lsp.enable('gopls')
 
 local util = require('util')
 local opts = {
@@ -142,11 +136,12 @@ local opts = {
 	gotests_template = "testify",
 	gotests_template_dir = "",
 	gotest_case_exact_match = true, -- true: run test with ^Testname$, false: run test with TestName
-	comment_placeholder = '',
+	comment_placeholder = '   ',
 	-- icons = {breakpoint = '🧘', currentpos = '🏃'},  -- setup to `false` to disable icons setup
 	verbose = false,
 	lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
 	lsp_cfg = cfg,
+	lsp_document_formatting = true,
 	lsp_gofumpt = false,
 	lsp_on_attach = true,
 	lsp_keymaps = function(bufnr)
@@ -163,9 +158,7 @@ local opts = {
 		util.map("n", "<leader>gd", ":GoDoc ", opts)
 		util.map("n", "<leader>gi", ":GoImpl ", opts)
 		util.map("n", "<leader>mt", "<cmd>GoModTidy<CR>", opts)
-		util.map("n", "<leader>ff", function()
-			require('go.format').goimports()
-		end, opts)
+		util.map("n", "<leader>ff", function() vim.lsp.buf.format() end, opts)
 	end,
 	lsp_codelens = true,
 	golangci_lint = false,
@@ -178,7 +171,6 @@ local opts = {
 	--   signs = {'', '', '', ''},  -- set to true to use default signs, an array of 4 to specify custom signs
 	--   update_in_insert = false,
 	-- },
-	lsp_document_formatting = true,
 	lsp_inlay_hints = {
 		enable = true, -- this is the only field apply to neovim > 0.10
 		-- following are used for neovim < 0.10 which does not implement inlay hints
@@ -206,10 +198,10 @@ local opts = {
 		right_align_padding = 6,
 		highlight = "Comment",
 	},
-	gopls_cmd = nil,        -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
+	gopls_cmd = nil,         -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
 	gopls_remote_auto = false, -- add -remote=auto to gopls
 	gocoverage_sign = "λ",
-	sign_priority = 5,      -- change to a higher number to override other signs
+	sign_priority = 5,       -- change to a higher number to override other signs
 	-- dap_debug = true, -- set to false to disable dap
 	-- dap_debug_keymap = true, -- true: use keymap for debugger defined in go/dap.lua
 	--                          -- false: do not use keymap in go/dap.lua.  you must define your own.

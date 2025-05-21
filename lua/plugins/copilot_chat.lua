@@ -2,7 +2,7 @@ local prompts = {
 	-- Code related prompts
 	Explain = "explain how the following code works.",
 	Review = "review the following code and provide suggestions for improvement.",
-	Tests = "explain how the selected code works, then generate unit tests for it.",
+	Tests = "generate unit tests for the following code.",
 	Refactor = "refactor the following code to improve its clarity and readability.",
 	FixCode = "fix the following code to make it work as intended.",
 	FixError = "explain the error in the following text and provide a solution.",
@@ -24,11 +24,11 @@ return {
 			{ "nvim-lua/plenary.nvim" },
 		},
 		opts = {
-			question_header = "## Me ",
-			answer_header = "## Copilot ",
+			question_header = "## Me 󰮠 ",
+			answer_header = "## Copilot  ",
 			error_header = "## Error ",
 			prompts = prompts,
-			model = "gpt-4o",
+			model = "gpt-4.1",
 			selection = function(source)
 				local select = require("CopilotChat.select")
 				return select.visual(source) or select.buffer(source)
@@ -185,7 +185,7 @@ return {
 			-- Clear buffer and chat history
 			{ "<leader>al", "<cmd>CopilotChatReset<cr>",    desc = "CopilotChat - Clear buffer and chat history" },
 			-- Toggle Copilot Chat Vsplit
-			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   mode = { "n", "v" }, desc = "CopilotChat - Toggle" },
+			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   mode = { "n", "v" },                                 desc = "CopilotChat - Toggle" },
 			-- Copilot Chat Models
 			{ "<leader>a?", "<cmd>CopilotChatModels<cr>",   desc = "CopilotChat - Select Models" },
 			-- Copilot Chat Agents
