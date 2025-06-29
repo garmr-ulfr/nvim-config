@@ -145,20 +145,23 @@ local opts = {
 	lsp_gofumpt = false,
 	lsp_on_attach = true,
 	lsp_keymaps = function(bufnr)
-		local opts = { buffer = bufnr, remap = false }
-		util.map("n", "<leader>rt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", opts)
-		util.map("n", "<leader>rat", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", opts)
-		util.map("n", "<leader>at", "<cmd>GoAddTest<CR>", opts)
-		util.map("n", "<leader>aat", "<cmd>GoAddAllTest<CR>", opts)
-		util.map("n", "<leader>fs", "<cmd>GoFillStruct<CR>", opts)
-		util.map("n", "<leader>ie", "<cmd>GoIfErr<CR>", opts)
-		util.map("n", "<leader>gc", "gg<cmd>GoCodeLenAct<CR><C-o>", opts)
-		util.map("n", "<leader>cl", "<cmd>GoCodeLenAct<CR>", opts)
-		util.map("n", "<leader>ct", "<cmd>GoTermClose<CR>", opts)
-		util.map("n", "<leader>gd", ":GoDoc ", opts)
-		util.map("n", "<leader>gi", ":GoImpl ", opts)
-		util.map("n", "<leader>mt", "<cmd>GoModTidy<CR>", opts)
-		util.map("n", "<leader>ff", function() vim.lsp.buf.format() end, opts)
+		local map = function(mode, lhs, rhs, desc)
+			local opts = { buffer = bufnr, remap = false, desc = desc }
+			vim.keymap.set(mode, lhs, rhs, opts)
+		end
+		map("n", "<leader>xt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", "run test")
+		map("n", "<leader>xtf", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", "run file tests")
+		map("n", "<leader>xat", "<cmd>GoAddTest<CR>", "add test")
+		map("n", "<leader>xaa", "<cmd>GoAddAllTest<CR>", "add all tests")
+		map("n", "<leader>xfs", "<cmd>GoFillStruct<CR>", "fill struct")
+		map("n", "<leader>xie", "<cmd>GoIfErr<CR>", "if err")
+		map("n", "<leader>xgc", "gg<cmd>GoCodeLenAct<CR><C-o>", "GC analysis")
+		map("n", "<leader>xcl", "<cmd>GoCodeLenAct<CR>", "code lens")
+		map("n", "<leader>xct", "<cmd>GoTermClose<CR>", "close term")
+		map("n", "<leader>xgd", ":GoDoc ", "go doc")
+		map("n", "<leader>xgi", ":GoImpl ", "impl")
+		map("n", "<leader>xmt", "<cmd>GoModTidy<CR>", "mod tidy")
+		map("n", "<leader>ff", function() vim.lsp.buf.format() end, "format file")
 	end,
 	lsp_codelens = true,
 	golangci_lint = false,

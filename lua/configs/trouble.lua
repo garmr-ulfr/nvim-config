@@ -11,5 +11,5 @@ require("trouble").setup({
 	-- }
 })
 
-vim.keymap.set("n", "<leader>tt", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
-vim.keymap.set("n", "<leader>tp", "<cmd>Trouble diagnostics toggle<cr>")
+vim.keymap.set("n", "<leader>tt", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer diagnostics" })
+vim.keymap.set("n", "<leader>tp", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Project diagnostics" })

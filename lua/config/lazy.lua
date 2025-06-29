@@ -26,6 +26,33 @@ require("lazy").setup({
 			require('configs.trouble')
 		end
 	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts_extend = { "spec" },
+		opts = {
+			preset = "helix",
+			-- triggers = {},
+			spec = {
+				-- { "<leader>a", group = "ai" },
+				{ "<leader>h", group = "harpoon" },
+				{ "<leader>x", group = "code" },
+				{ "<leader>f", group = "file" },
+				{ "<leader>g", group = "git" },
+				{ "<leader>p", group = "project" },
+				{ "<leader>t", group = "trouble" },
+			},
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
 	{ 'mason-org/mason.nvim' },
 	{ 'mason-org/mason-lspconfig.nvim' },
 	{
@@ -136,13 +163,9 @@ require("lazy").setup({
 	{
 		'jeniasaigak/goplay.nvim',
 		config = function()
-			require('goplay').setup()
-			vim.api.nvim_set_keymap('n', '<leader>gop', ':GPToggle<CR>', { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>gpe', ':GPExec<CR>', { noremap = true, silent = true })
-			vim.api.nvim_set_keymap('n', '<leader>gpf', ':GPExecFile<CR>', { noremap = true, silent = true })
+			require('configs.goplay')
 		end
 	},
-
 	-- Visual
 	{ 'ray-x/guihua.lua' },
 	{
@@ -158,7 +181,7 @@ require("lazy").setup({
 		opts = {
 			file_types = { "markdown", "copilot-chat" },
 		},
-		ft = { "markdown", "copilot-chat" },
+		ft = { "markdown", "copilot-chat", "codecompanion" },
 	},
 	{
 		'nvim-lualine/lualine.nvim',

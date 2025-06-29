@@ -20,8 +20,8 @@ require('telescope').setup({
 require('telescope').load_extension('fzf')
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
-vim.keymap.set('n', '<leader>bs', builtin.current_buffer_fuzzy_find, {})
-vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'Find Files' })
+vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = 'Live Grep' })
+vim.keymap.set('n', '<leader>pg', builtin.git_files, { desc = 'Git Files' })
+vim.keymap.set('n', '<leader>bs', builtin.current_buffer_fuzzy_find, { desc = 'Buffer Search' })
+vim.keymap.set('n', '<leader>ht', builtin.help_tags, { desc = 'Help Tags' })

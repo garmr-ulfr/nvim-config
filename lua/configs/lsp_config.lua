@@ -45,8 +45,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	desc = 'LSP actions',
 	callback = function(event)
 		local bufnr = event.buf
-		local map = function(m, lhs, rhs)
-			local opts = { buffer = bufnr }
+		local map = function(m, lhs, rhs, desc)
+			local opts = { buffer = bufnr, desc = desc }
 			vim.keymap.set(m, lhs, rhs, opts)
 		end
 
@@ -57,26 +57,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		end, { desc = 'Format buffer with language server' })
 
 		-- LSP actions
-		map('n', 'K', '<cmd>lua vim.lsp.buf.hover({ border = "rounded" })<cr>')
-		map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help({ border = "rounded" })<cr>')
+		map('n', 'K', '<cmd>lua vim.lsp.buf.hover({ border = "rounded" })<cr>', "Hover")
+		map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help({ border = "rounded" })<cr>', "Signature Help")
 
 		local builtin = require('telescope.builtin')
 		map("n", "gr", builtin.lsp_references)
 
-		map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>zz')
-		map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>zz')
-		map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>zz')
-		map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>zz')
+		map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>zz', "Go to definition")
+		map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>zz', "Go to declaration")
+		map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>zz', "Go to implementation")
+		map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>zz', "Go to type definition")
 
-		map({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>')
-		map('n', 'vca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
-		map('n', 'vrn', '<cmd>lua vim.lsp.buf.rename()<cr>')
-		map('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
+		map({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', "Format buffer")
+		map('n', 'vca', '<cmd>lua vim.lsp.buf.code_action()<cr>', "Code action")
+		map('n', 'vrn', '<cmd>lua vim.lsp.buf.rename()<cr>', "Rename symbol")
+		map('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', "Range code action")
 
 		-- Diagnostics
-		map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
-		map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-		map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+		map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', "Show diagnostics")
+		map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', "Previous diagnostic")
+		map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', "Next diagnostic")
 	end
 })
 
