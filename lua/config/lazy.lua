@@ -18,7 +18,7 @@ require("lazy").setup({
 			require('configs.treesitter')
 		end,
 	},
-	{ "nvim-treesitter/nvim-treesitter-context" },
+	{ "nvim-treesitter/nvim-treesitter-context",  opts = {} },
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -34,9 +34,8 @@ require("lazy").setup({
 			preset = "helix",
 			-- triggers = {},
 			spec = {
-				-- { "<leader>a", group = "ai" },
 				{ "<leader>h", group = "harpoon" },
-				{ "<leader>x", group = "code" },
+				{ "<leader>z", group = "code" },
 				{ "<leader>f", group = "file" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>p", group = "project" },
@@ -107,18 +106,14 @@ require("lazy").setup({
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 		event = "BufEnter",
-		config = function()
-			require("copilot").setup({
-				suggestion = { enabled = false },
-				panel = { enabled = false },
-			})
-		end,
+		opts = {
+			suggestion = { enabled = false }, -- disable inline suggestions
+			panel = { enabled = false }, -- disable the copilot panel
+		},
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		config = function()
-			require("copilot_cmp").setup()
-		end
+		opts = {},
 	},
 	{ import = "plugins" },
 	-- {
@@ -129,17 +124,17 @@ require("lazy").setup({
 	-- },
 
 	-- Util
-	{
-		"theprimeagen/refactoring.nvim",
-		config = function()
-			require("configs.refactoring")
-		end,
-	},
+	-- {
+	-- 	"theprimeagen/refactoring.nvim",
+	-- 	config = function()
+	-- 		require("configs.refactoring")
+	-- 	end,
+	-- },
 	{
 		'mbbill/undotree',
-		config = function()
-			require('configs.undotree')
-		end
+		keys = {
+			{ "<leader>u", vim.cmd.UndotreeToggle, desc = "Undotree", mode = "n" }
+		}
 	},
 	{
 		'ThePrimeagen/harpoon',
@@ -149,17 +144,12 @@ require("lazy").setup({
 	},
 	{
 		'tpope/vim-fugitive',
-		config = function()
-			vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-			vim.keymap.set("n", "<leader>gp", "<cmd>Git push<CR>")
-		end
+		keys = {
+			{ "<leader>gs", vim.cmd.Git,         desc = "Git status" },
+			{ "<leader>gp", "<cmd>Git push<CR>", desc = "Git push" },
+		},
 	},
-	{
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-		end
-	},
+	{ 'numToStr/Comment.nvim' },
 	{
 		'jeniasaigak/goplay.nvim',
 		config = function()
@@ -190,12 +180,7 @@ require("lazy").setup({
 			require('configs.lualine')
 		end
 	},
-	{
-		'fei6409/log-highlight.nvim',
-		config = function()
-			require('log-highlight').setup {}
-		end,
-	},
+	{ 'fei6409/log-highlight.nvim', ft = { "log" } },
 
 	-- theme
 	{

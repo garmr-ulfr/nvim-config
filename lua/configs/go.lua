@@ -48,13 +48,13 @@ local cfg = {
 	filetypes = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
 	message_level = vim.lsp.protocol.MessageType.Error,
 	cmd = { 'gopls' },
-	root_dir = function(fname)
-		local has_lsp, lspconfig = pcall(require, 'lspconfig')
-		if has_lsp then
-			local util = lspconfig.util
-			return util.root_pattern('go.work', 'go.mod', '.git')(fname) or util.path.dirname(fname)
-		end
-	end,
+	-- root_dir = function(fname)
+	-- 	local has_lsp, lspconfig = pcall(require, 'lspconfig')
+	-- 	if has_lsp then
+	-- 		local util = lspconfig.util
+	-- 		return util.root_pattern('go.work', 'go.mod', '.git')(fname) or util.path.dirname(fname)
+	-- 	end
+	-- end,
 	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
 	settings = {
 		gopls = {
@@ -84,13 +84,13 @@ local cfg = {
 				upgrade_dependency = true,
 			},
 			hints = {
-				assignVariableTypes = true,
-				compositeLiteralFields = true,
-				compositeLiteralTypes = true,
-				constantValues = true,
-				functionTypeParameters = true,
-				parameterNames = true,
-				rangeVariableTypes = true,
+				assignVariableTypes = false,
+				compositeLiteralFields = false,
+				compositeLiteralTypes = false,
+				constantValues = false,
+				functionTypeParameters = false,
+				parameterNames = false,
+				rangeVariableTypes = false,
 			},
 			usePlaceholders = true,
 			completeUnimported = true,
@@ -149,17 +149,17 @@ local opts = {
 			local opts = { buffer = bufnr, remap = false, desc = desc }
 			vim.keymap.set(mode, lhs, rhs, opts)
 		end
-		map("n", "<leader>xt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", "run test")
-		map("n", "<leader>xtf", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", "run file tests")
-		map("n", "<leader>xat", "<cmd>GoAddTest<CR>", "add test")
-		map("n", "<leader>xaa", "<cmd>GoAddAllTest<CR>", "add all tests")
-		map("n", "<leader>xfs", "<cmd>GoFillStruct<CR>", "fill struct")
-		map("n", "<leader>xie", "<cmd>GoIfErr<CR>", "if err")
-		map("n", "<leader>xgc", "gg<cmd>GoCodeLenAct<CR><C-o>", "GC analysis")
-		map("n", "<leader>xcl", "<cmd>GoCodeLenAct<CR>", "code lens")
-		map("n", "<leader>xct", "<cmd>GoTermClose<CR>", "close term")
-		map("n", "<leader>xgd", ":GoDoc ", "go doc")
-		map("n", "<leader>xgi", ":GoImpl ", "impl")
+		map("n", "<leader>zrt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", "run test")
+		map("n", "<leader>zrT", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", "run file tests")
+		map("n", "<leader>zta", "<cmd>GoAddTest<CR>", "add test")
+		map("n", "<leader>ztA", "<cmd>GoAddAllTest<CR>", "add all tests")
+		map("n", "<leader>zfs", "<cmd>GoFillStruct<CR>", "fill struct")
+		map("n", "<leader>zie", "<cmd>GoIfErr<CR>", "if err")
+		map("n", "<leader>zgc", "gg<cmd>GoCodeLenAct<CR><C-o>", "GC analysis")
+		map("n", "<leader>zcl", "<cmd>GoCodeLenAct<CR>", "code lens")
+		map("n", "<leader>zct", "<cmd>GoTermClose<CR>", "close term")
+		map("n", "<leader>zgd", ":GoDoc ", "go doc")
+		map("n", "<leader>zgi", ":GoImpl ", "impl")
 		map("n", "<leader>xmt", "<cmd>GoModTidy<CR>", "mod tidy")
 		map("n", "<leader>ff", function() vim.lsp.buf.format() end, "format file")
 	end,

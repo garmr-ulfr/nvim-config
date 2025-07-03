@@ -1,6 +1,6 @@
 -- system prompts
 local base = [[
-You are an AI programming assistant named "Senua". You are currently plugged in to the Neovim text editor on a user's machine.
+You are currently plugged in to the Neovim text editor on a user's machine.
 
 Your core tasks include:
 - Answering general programming questions.
@@ -118,6 +118,19 @@ When generating unit tests, follow these steps:
 8. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.
 ]]
 
+local docs = base .. [[
+
+When generating documentation, follow these steps:
+1. Identify the purpose and functionality of the code.
+2. Only describe function and method outputs if they are not self-explanatory or obvious.
+3. Describe any side effects if necessary.
+3. Always describe exported fields of classes or structs but only describe private fields if necessary.
+4. Avoid excessive detail; focus on high-level functionality.
+5. Use the appropriate documentation format for the identified programming language (e.g., JSDoc for JavaScript, docstrings for Python).
+6. Use clear and concise language to explain the code's behavior.
+7. Avoid including unnecessary code; only include the relevant parts that need documentation.
+]]
+
 local prompts = {
 	-- Code related prompts
 	Explain = {
@@ -151,9 +164,11 @@ local prompts = {
 		prompt = "provide better names for the following variables and functions.",
 	},
 	Documentation = {
+		system_prompt = docs,
 		prompt = "provide documentation for the following code.",
 	},
-	DocComments = {
+	Docs = {
+		system_prompt = docs,
 		prompt = "generate doc comments for the following code.",
 	},
 	Commit = {
@@ -165,7 +180,7 @@ local prompts = {
 	Summarize = {
 		prompt = "summarize the following text.",
 	},
-	Splelling = {
+	Spelling = {
 		prompt = "correct any grammar and spelling errors in the following text.",
 	},
 	Wording = {
@@ -346,11 +361,12 @@ return {
 			-- Clear buffer and chat history
 			{ "<leader>al", "<cmd>CopilotChatReset<cr>",    desc = "CopilotChat - Clear buffer and chat history" },
 			-- Toggle Copilot Chat Vsplit
-			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   mode = { "n", "v" },                                 desc = "CopilotChat - Toggle" },
+			{ "<leader>av", "<cmd>CopilotChatToggle<cr>",   desc = "CopilotChat - Toggle" },
+			mode = { "n", "v" },
 			-- Copilot Chat Models
-			{ "<leader>a?", "<cmd>CopilotChatModels<cr>",   desc = "CopilotChat - Select Models" },
+			{ "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
 			-- Copilot Chat Agents
-			{ "<leader>aa", "<cmd>CopilotChatAgents<cr>",   desc = "CopilotChat - Select Agents" },
+			{ "<leader>aa", "<cmd>CopilotChatAgents<cr>", desc = "CopilotChat - Select Agents" },
 		},
 	},
 }
