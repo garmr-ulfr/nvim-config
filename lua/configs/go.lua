@@ -176,30 +176,6 @@ local opts = {
 	-- },
 	lsp_inlay_hints = {
 		enable = true, -- this is the only field apply to neovim > 0.10
-		-- following are used for neovim < 0.10 which does not implement inlay hints
-		-- hint style, set to 'eol' for end-of-line hints, 'inlay' for inline hints
-		style = 'eol',
-		-- Note: following setup only works for style = 'eol', you do not need to set it for 'inlay'
-		-- Only show inlay hints for the current line
-		only_current_line = false,
-		-- Event which triggers a refersh of the inlay hints.
-		-- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-		-- not that this may cause higher CPU usage.
-		-- This option is only respected when only_current_line and
-		-- autoSetHints both are true.
-		only_current_line_autocmd = "CursorHold",
-		-- whether to show variable name before type hints with the inlay hints or not
-		-- default: false
-		show_variable_name = true,
-		-- prefix for parameter hints
-		parameter_hints_prefix = "\\(.*\\) 󰊕 ",
-		show_parameter_hints = true,
-		other_hints_prefix = "=> ",
-		max_len_align = false,
-		max_len_align_padding = 1,
-		right_align = false,
-		right_align_padding = 6,
-		highlight = "Comment",
 	},
 	gopls_cmd = nil,         -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile","/var/log/gopls.log" }
 	gopls_remote_auto = false, -- add -remote=auto to gopls

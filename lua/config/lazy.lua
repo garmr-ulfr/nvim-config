@@ -1,29 +1,11 @@
 require("lazy").setup({
+	-- theme
 	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = { 'nvim-lua/plenary.nvim' },
+		'catppuccin/nvim',
+		name = 'catppuccin',
+		priority = 1000,
 		config = function()
-			require('configs.telescope')
-		end
-	},
-	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-	{
-		'nvim-treesitter/nvim-treesitter',
-		build = function()
-			local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-			ts_update()
-		end,
-		config = function()
-			require('configs.treesitter')
-		end,
-	},
-	{ "nvim-treesitter/nvim-treesitter-context",  opts = {} },
-	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require('configs.trouble')
+			require('configs.catppuccin')
 		end
 	},
 	{
@@ -34,12 +16,9 @@ require("lazy").setup({
 			preset = "helix",
 			-- triggers = {},
 			spec = {
-				{ "<leader>h", group = "harpoon" },
-				{ "<leader>z", group = "code" },
 				{ "<leader>f", group = "file" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>p", group = "project" },
-				{ "<leader>t", group = "trouble" },
 			},
 		},
 		keys = {
@@ -52,15 +31,8 @@ require("lazy").setup({
 			},
 		},
 	},
-	{ 'mason-org/mason.nvim' },
-	{ 'mason-org/mason-lspconfig.nvim' },
-	{
-		'neovim/nvim-lspconfig',
-		config = function()
-			require('configs.lsp_config')
-		end
-	},
-	{ 'ray-x/go.nvim' },
+	{ "nvim-lua/plenary.nvim", lazy = true },
+	{ import = "plugins" },
 	--  {
 	--   "saghen/blink.cmp",
 	--   opts = {
@@ -79,31 +51,8 @@ require("lazy").setup({
 	--   },
 	-- },
 	{
-		'hrsh7th/nvim-cmp',
-		dependencies = {
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-nvim-lua',
-			'hrsh7th/cmp-buffer',
-			'hrsh7th/cmp-path',
-			{
-				"L3MON4D3/LuaSnip",
-				config = function()
-					local luasnip = require("luasnip")
-					luasnip.config.set_config({
-						defaults = {
-							history = true,
-							updateevents = "TextChanged,TextChangedI",
-						},
-					})
-				end,
-			},
-		},
-		config = function()
-			require('configs.nvim_cmp')
-		end
-	},
-	{
 		"zbirenbaum/copilot.lua",
+		lazy = true,
 		cmd = "Copilot",
 		event = "BufEnter",
 		opts = {
@@ -113,9 +62,9 @@ require("lazy").setup({
 	},
 	{
 		"zbirenbaum/copilot-cmp",
+		lazy = true,
 		opts = {},
 	},
-	{ import = "plugins" },
 	-- {
 	-- 	'huggingface/llm.nvim',
 	-- 	config = function()
@@ -124,23 +73,11 @@ require("lazy").setup({
 	-- },
 
 	-- Util
-	-- {
-	-- 	"theprimeagen/refactoring.nvim",
-	-- 	config = function()
-	-- 		require("configs.refactoring")
-	-- 	end,
-	-- },
 	{
 		'mbbill/undotree',
 		keys = {
 			{ "<leader>u", vim.cmd.UndotreeToggle, desc = "Undotree", mode = "n" }
 		}
-	},
-	{
-		'ThePrimeagen/harpoon',
-		config = function()
-			require('configs.harpoon')
-		end
 	},
 	{
 		'tpope/vim-fugitive',
@@ -150,21 +87,12 @@ require("lazy").setup({
 		},
 	},
 	{ 'numToStr/Comment.nvim' },
-	{
-		'jeniasaigak/goplay.nvim',
-		config = function()
-			require('configs.goplay')
-		end
-	},
 	-- Visual
-	{ 'ray-x/guihua.lua' },
+	{ 'nvim-tree/nvim-web-devicons', lazy = true },
 	{
-		"ray-x/lsp_signature.nvim",
-		config = function()
-			require('configs.lsp_signature')
-		end
+		'nvim-treesitter/playground',
+		cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" }
 	},
-	{ 'nvim-tree/nvim-web-devicons' },
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		optional = true,
@@ -173,24 +101,8 @@ require("lazy").setup({
 		},
 		ft = { "markdown", "copilot-chat", "codecompanion" },
 	},
-	{
-		'nvim-lualine/lualine.nvim',
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require('configs.lualine')
-		end
-	},
 	{ 'fei6409/log-highlight.nvim', ft = { "log" } },
 
-	-- theme
-	{
-		'catppuccin/nvim',
-		name = 'catppuccin',
-		priority = 1000,
-		config = function()
-			require('configs.catppuccin')
-		end
-	},
 	-- {
 	-- 	'EdenEast/nightfox.nvim',
 	-- 	config = function()

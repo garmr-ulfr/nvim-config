@@ -24,7 +24,7 @@ lspconfig.util.on_setup = lspconfig.util.add_hook_after(
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
 		if client:supports_method('textDocument/formatting') then
 			vim.api.nvim_create_autocmd('BufWritePre', {
@@ -61,7 +61,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help({ border = "rounded" })<cr>', "Signature Help")
 
 		local builtin = require('telescope.builtin')
-		map("n", "gr", builtin.lsp_references)
+		map('n', 'gr', function()
+			builtin.lsp_references({ initial_mode = "normal" })
+		end, "References")
 
 		map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>zz', "Go to definition")
 		map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>zz', "Go to declaration")

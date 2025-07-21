@@ -30,7 +30,7 @@ local symbols = {
 local has_cmp_comparators, copilot_cmp = pcall(require, "copilot_cmp.comparators")
 
 local cmp = require('cmp')
-local select_opts = { behavior = cmp.SelectBehavior.Select }
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 cmp.setup({
 	completion = {
 		completeopt = 'menu,menuone,noinsert,noselect',
@@ -53,39 +53,15 @@ cmp.setup({
 		},
 	},
 	mapping = {
-		-- confirm selection
+		['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+		['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 		['<C-y>'] = cmp.mapping.confirm({ select = true }),
-
-		-- cancel completion
 		['<C-e>'] = cmp.mapping.abort(),
 
 		-- scroll up and down in the completion documentation
 		['<C-u>'] = cmp.mapping.scroll_docs(-5),
 		['<C-d>'] = cmp.mapping.scroll_docs(5),
 
-		-- navigate items on the list
-		['<Up>'] = cmp.mapping.select_prev_item(select_opts),
-		['<Down>'] = cmp.mapping.select_next_item(select_opts),
-
-		-- if completion menu is visible, go to the previous item
-		-- else, trigger completion menu
-		['<C-p>'] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_prev_item(select_opts)
-			else
-				cmp.complete()
-			end
-		end),
-
-		-- if completion menu is visible, go to the next item
-		-- else, trigger completion menu
-		['<C-n>'] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_next_item(select_opts)
-			else
-				cmp.complete()
-			end
-		end),
 	},
 	snippet = {
 		expand = function(args)
@@ -117,23 +93,22 @@ cmp.setup({
 		ghost_text = true,
 	},
 	sources = {
-		{ name = 'copilot',  group_index = 1 },
-		{ name = 'nvim_lsp', group_index = 1 },
-		{ name = 'buffer',   group_index = 1 },
-		{ name = 'path',     group_index = 2 },
-		{ name = 'nvim_lua', group_index = 2 },
-		{ name = 'luasnip',  group_index = 2 },
+		{ name = 'copilot' },
+		{ name = 'nvim_lsp' },
+		{ name = 'buffer' },
+		{ name = 'path' },
+		{ name = 'nvim_lua' },
+		{ name = 'luasnip' },
 	},
 	sorting = {
 		--keep priority weight at 2 for much closer matches to appear above copilot
 		--set to 1 to make copilot always appear on top
-		priority_weight = 1,
+		priority_weight = 2,
 		comparators = vim.tbl_filter(function(v) return v ~= nil end, {
-			-- order matters here
-			cmp.config.compare.exact,
-			cmp.config.compare.offset,
 			has_cmp_comparators and copilot_cmp.prioritize or nil,
-			has_cmp_comparators and copilot_cmp.score or nil,
+			-- order matters here
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
 			-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
 			cmp.config.compare.score,
 			cmp.config.compare.recently_used,
