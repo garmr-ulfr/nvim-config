@@ -142,7 +142,7 @@ return {
 			gotests_template_dir = "",
 			comment_placeholder = '   ',
 			verbose = false,
-			lsp_cfg = true,
+			lsp_cfg = cfg,
 			lsp_gofumpt = false,
 			lsp_on_attach = true,
 			lsp_keymaps = function(bufnr)
@@ -173,14 +173,18 @@ return {
 				no_config = false,               -- true: golangci-lint --no-config
 				severity = vim.diagnostic.severity.INFO, -- severity level of the diagnostics
 			},
-			diagnostics = false,
-			-- diagnostic = {  -- set diagnostic to false to disable vim.diagnostic.config setup,
-			--   hdlr = false, -- hook lsp diag handler and send diag to quickfix
-			--   underline = true,
-			--   virtual_text = { spacing = 2, prefix = '' }, -- virtual text setup
-			--   signs = {'', '', '', ''},  -- set to true to use default signs, an array of 4 to specify custom signs
-			--   update_in_insert = false,
-			-- },
+			diagnostics = {
+				severity_sort = true,
+				float = { border = 'rounded' },
+				signs = {
+					text = {
+						[vim.diagnostic.severity.ERROR] = 'E',
+						[vim.diagnostic.severity.WARN] = 'W',
+						[vim.diagnostic.severity.INFO] = 'I',
+						[vim.diagnostic.severity.HINT] = 'H',
+					}
+				}
+			},
 			lsp_document_formatting = true,
 			lsp_inlay_hints = {
 				enable = false,

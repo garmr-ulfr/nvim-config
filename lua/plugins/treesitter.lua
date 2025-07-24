@@ -5,7 +5,7 @@ return {
 		build = ":TSUpdate",
 		-- branch = "main",
 		opts = {
-			auto_install = true,
+			auto_install = false,
 			ensure_installed = {
 				"bash",
 				"dockerfile",

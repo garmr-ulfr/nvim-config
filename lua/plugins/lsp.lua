@@ -40,19 +40,6 @@ local symbols = {
 -- )
 --
 
--- vim.diagnostic.config({
--- 	severity_sort = true,
--- 	float = { border = 'rounded' },
--- 	signs = {
--- 		text = {
--- 			[vim.diagnostic.severity.ERROR] = 'E',
--- 			[vim.diagnostic.severity.WARN] = 'W',
--- 			[vim.diagnostic.severity.INFO] = 'I',
--- 			[vim.diagnostic.severity.HINT] = 'H',
--- 		}
--- 	}
--- })
-
 -- local command = vim.api.nvim_create_user_command
 --
 -- command('LspWorkspaceAdd', function()
@@ -167,10 +154,23 @@ return {
 					map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', "Next diagnostic")
 				end
 			})
-			vim.print("setting up mason-lspconfig")
 			vim.lsp.config('*', {
 				capabilities = capabilities,
 			})
+
+			vim.diagnostic.config({
+				severity_sort = true,
+				float = { border = 'rounded' },
+				signs = {
+					text = {
+						[vim.diagnostic.severity.ERROR] = 'E',
+						[vim.diagnostic.severity.WARN] = 'W',
+						[vim.diagnostic.severity.INFO] = 'I',
+						[vim.diagnostic.severity.HINT] = 'H',
+					}
+				}
+			})
+
 			require("mason-lspconfig").setup(opts)
 
 			local has_cmp_comparators, copilot_cmp = pcall(require, "copilot_cmp.comparators")
