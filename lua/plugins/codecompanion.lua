@@ -47,8 +47,8 @@ When presenting code changes:
 ]],
 	vim.loop.os_uname().sysname
 )
-local COPILOT_EXPLAIN = string.format(
-	[[You are a programming instructor focused on clear, practical explanations.
+local COPILOT_EXPLAIN = [[
+You are a programming instructor focused on clear, practical explanations.
 
 When explaining code:
 - Highlight non-obvious implementation details
@@ -58,9 +58,9 @@ When explaining code:
 - Identify 'gotchas' or less obvious parts of the code that might trip up someone new.
 - If you are unsure about the code, concepts, or the user's question, ask clarifying questions.
 ]]
-)
-local COPILOT_REVIEW = string.format(
-	[[Your task is to review the provided code snippet, focusing specifically on its readability and maintainability.
+local COPILOT_REVIEW = [[
+Your task is to review the provided code snippet, focusing specifically on its readability and maintainability.
+
 Identify any issues related to:
 - Naming conventions that are unclear, misleading or doesn't follow conventions for the language being used.
 - Comment quality and the presence of unnecessary comments, or the lack of necessary ones.
@@ -82,9 +82,9 @@ Format your feedback as follows:
 
 If the code snippet has no readability issues, simply confirm that the code is clear and well-written as is.
 ]]
-)
-local COPILOT_REFACTOR = string.format(
-	[[Your task is to refactor the provided code snippet, focusing specifically on its readability and maintainability.
+local COPILOT_REFACTOR = [[
+Your task is to refactor the provided code snippet, focusing specifically on its readability and maintainability.
+
 Identify any issues related to:
 - Naming conventions that are unclear, misleading or doesn't follow conventions for the language being used.
 - The presence of unnecessary comments, or the lack of necessary ones.
@@ -96,9 +96,8 @@ Identify any issues related to:
 - Potential performance issues or inefficiencies.
 - Security vulnerabilities or risks.
 ]]
-)
-local TESTS = string.format(
-	[[When generating unit tests, follow these steps:
+local TESTS = [[
+When generating unit tests, follow these steps:
 
 1. Identify the purpose of the function or module being tested.
 2. Identify edge cases and typical use cases that should be covered in the tests.
@@ -112,9 +111,8 @@ local TESTS = string.format(
 	- Error handling (if applicable)
 8. Provide the generated unit tests in a clear and organized manner without additional explanations or chat.
 ]]
-)
-local DOCUMENT = string.format(
-	[[When writing documentation, follow these steps:
+local DOCUMENT = [[
+When writing documentation, follow these steps:
 
 1. Identify the purpose and functionality of the code.
 2. Only describe function and method outputs if they are not self-explanatory or obvious.
@@ -125,7 +123,25 @@ local DOCUMENT = string.format(
 6. Use clear and concise language to explain the code's behavior.
 7. Avoid including unnecessary code; only include the relevant parts that need documentation.
 ]]
-)
+
+local GO_LOGS = [[
+When adding logs to the provided code snippet, follow these guidelines:
+
+1. Only add logs at meaningful state changes, resource allocations, error handling, or important transitions. Do not add logs at function entry/exit or for generic calls (e.g., "function X called", "isOpen called").
+2. Use the appropriate log level:
+   - Use `Debug` for routine flow or non-critical state changes.
+   - Use `Info` for important events or successful completion of significant operations.
+   - Use `Warn` for recoverable issues or unexpected but non-fatal conditions.
+   - Use `Error` for failures or when returning errors.
+   - Use `slog.Log(nil, internal.LevelTrace, ...)`for detailed trace logs at key initialization, configuration, or transition points.
+3. Log messages should describe the operation or state change, not the function invocation. For example, log when a connection is established, when configuration is loaded, or when an error occurs.
+4. Avoid repetitive or verbose log messages. Keep logs concise and focused on relevant context.
+5. Do not log the same event in multiple places (avoid redundancy between caller and callee).
+6. Use plain messages or key-value pairs as appropriate, but follow the style used in the codebase.
+7. **Do not log variable assignments or trivial actions unless they are critical for debugging or understanding flow.**
+8. **Do not include metadata like timestamps or function names in the log messages; the logging framework will handle that.**
+9. Ensure each log provides enough context to understand the application's state at the time of logging.
+]]
 
 return {
 	{
@@ -497,6 +513,28 @@ return {
 						{
 							role = "user",
 							content = "provide better names for the following variables and functions.",
+						},
+					},
+				},
+				["Go Logs"] = {
+					strategy = "chat",
+					description = "Add logs to the provided code snippet.",
+					opts = {
+						short_name = "go-logs",
+						auto_submit = false,
+						is_slash_cmd = true,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = GO_LOGS,
+							opts = {
+								visible = false,
+							},
+						},
+						{
+							role = "user",
+							content = "add log statements to the provided code.",
 						},
 					},
 				},
