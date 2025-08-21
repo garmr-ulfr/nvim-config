@@ -278,6 +278,8 @@ return {
 
 			--set max height of items
 			vim.cmd([[ set pumheight=6 ]])
+
+			vim.lsp.enable('sourcekit')
 		end
 	},
 }

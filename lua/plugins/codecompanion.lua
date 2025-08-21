@@ -191,6 +191,11 @@ return {
 							description = "Stop Chat",
 						},
 					},
+					tools = {
+						opts = {
+							wait_timeout = 10 * 60 * 1000
+						}
+					},
 				},
 				inline = { adapter = "copilot", completion_provider = "cmp" },
 				agent = { adapter = "copilot", completion_provider = "cmp" },
@@ -231,6 +236,28 @@ return {
 							opts = {
 								contains_code = true,
 							},
+						},
+					},
+				},
+				["Explain Code"] = {
+					strategy = "chat",
+					description = "Explain the following code",
+					opts = {
+						short_name = "explain-code",
+						auto_submit = false,
+						is_slash_cmd = true,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = COPILOT_EXPLAIN,
+							opts = {
+								visible = false,
+							},
+						},
+						{
+							role = "user",
+							content = "explain how this code works.",
 						},
 					},
 				},
@@ -543,6 +570,10 @@ return {
 			display = {
 				action_palette = {
 					provider = "telescope",
+					opts = {
+						show_default_actions = true, -- Show default actions in the action palette
+						show_default_prompt_library = true, -- Show default prompt library in the action palette
+					}
 				},
 				chat = {
 					window = {
@@ -568,6 +599,10 @@ return {
 					},
 					auto_scroll = true, -- Automatically scroll down and place the cursor at the end
 				},
+				icons = {
+					chat_context = "",
+				},
+				fold_context = true,
 				diff = {
 					enabled = true,
 					-- provider = providers.diff, -- mini_diff|default

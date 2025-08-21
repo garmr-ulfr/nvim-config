@@ -197,7 +197,9 @@ local config = {
 return {
 	{
 		'nvim-lualine/lualine.nvim',
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = config,
+		dependencies = { "nvim-tree/nvim-web-devicons", 'tpope/vim-fugitive' },
+		config = function()
+			require('lualine').setup(config)
+		end,
 	},
 }

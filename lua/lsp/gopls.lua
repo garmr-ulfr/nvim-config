@@ -1,0 +1,66 @@
+-- return {
+-- 	filetypes = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
+-- 	message_level = vim.lsp.protocol.MessageType.Error,
+-- 	flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+-- 	settings = {
+-- 		gopls = {
+-- 			analyses = {
+-- 				atomicalign = false,
+-- 				unreachable = true,
+-- 				nilness = true,
+-- 				unusedvar = false,
+-- 				unusedparams = true,
+-- 				useany = true,
+-- 				unusedwrite = true,
+-- 				ST1003 = true,
+-- 				undeclaredname = true,
+-- 				fillreturns = true,
+-- 				nonewvars = false,
+-- 				fieldalignment = false,
+-- 				shadow = true,
+-- 			},
+-- 			codelenses = {
+-- 				generate = true,
+-- 				gc_details = true,
+-- 				test = true,
+-- 				tidy = true,
+-- 				vendor = true,
+-- 				regenerate_cgo = true,
+-- 				upgrade_dependency = true,
+-- 			},
+-- 			hints = {
+-- 				assignVariableTypes = false,
+-- 				compositeLiteralFields = false,
+-- 				compositeLiteralTypes = false,
+-- 				constantValues = false,
+-- 				functionTypeParameters = false,
+-- 				parameterNames = false,
+-- 				rangeVariableTypes = false,
+-- 			},
+-- 			usePlaceholders = true,
+-- 			completeUnimported = true,
+-- 			staticcheck = true,
+-- 			matcher = 'Fuzzy',
+-- 			diagnosticsDelay = '500ms',
+-- 			diagnosticsTrigger = 'Edit',
+-- 			symbolMatcher = 'FastFuzzy',
+-- 			semanticTokens = false, -- disable semantic tokens as treesitter is better
+-- 			vulncheck = 'Imports',
+-- 			gofumpt = false,
+-- 		},
+-- 	},
+-- 	-- handlers = {
+-- 	-- 	['textDocument/rangeFormatting'] = function(...)
+-- 	-- 		vim.lsp.handlers['textDocument/rangeFormatting'](...)
+-- 	-- 		if vim.fn.getbufinfo('%')[1].changed == 1 then
+-- 	-- 			vim.print('ran rangeFormatting')
+-- 	-- 		end
+-- 	-- 	end,
+-- 	-- 	['textDocument/formatting'] = function(...)
+-- 	-- 		vim.lsp.handlers['textDocument/formatting'](...)
+-- 	-- 		if vim.fn.getbufinfo('%')[1].changed == 1 then
+-- 	-- 			vim.print('ran formatting')
+-- 	-- 		end
+-- 	-- 	end,
+-- 	-- },
+-- }

@@ -5,13 +5,17 @@ require("catppuccin").setup({
 		dark = "macchiato",
 	},
 	transparent_background = true, -- disables setting the background color.
-	show_end_of_buffer = false,  -- shows the '~' characters after the end of buffers
-	term_colors = true,          -- sets terminal colors (e.g. `g:terminal_color_0`)
-	no_italic = false,           -- Force no italic
-	no_bold = false,             -- Force no bold
-	no_underline = false,        -- Force no underline
+	float = {
+		transparent = true,
+		solid = false,
+	},
+	show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+	term_colors = true,       -- sets terminal colors (e.g. `g:terminal_color_0`)
+	no_italic = false,        -- Force no italic
+	no_bold = false,          -- Force no bold
+	no_underline = false,     -- Force no underline
 	styles = {
-		comments = { "italic" },  -- Change the style of comments
+		comments = { "italic" }, -- Change the style of comments
 		conditionals = {},
 		loops = {},
 		functions = { "bold" },
@@ -33,19 +37,20 @@ require("catppuccin").setup({
 			["@string"] = { fg = colors.green },
 		}
 	end,
-	integrations = {
-		cmp = true,
-		gitsigns = true,
-		nvimtree = true,
-		treesitter = true,
-		harpoon = true,
-		mason = true,
-		markdown = true,
-		lsp_trouble = true,
-		telescope = {
-			enabled = true,
-		}
-	},
+	auto_integrations = true,
+	-- integrations = {
+	-- 	cmp = true,
+	-- 	gitsigns = true,
+	-- 	nvimtree = true,
+	-- 	treesitter = true,
+	-- 	harpoon = true,
+	-- 	mason = true,
+	-- 	markdown = true,
+	-- 	lsp_trouble = true,
+	-- 	telescope = {
+	-- 		enabled = true,
+	-- 	}
+	-- },
 })
 
 vim.cmd.colorscheme("catppuccin")
