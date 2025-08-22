@@ -160,6 +160,17 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		opts = {
+			adapters = {
+				copilot = function()
+					return require("codecompanion.adapters").extend("copilot", {
+						schema = {
+							model = {
+								default = "gpt-5",
+							},
+						},
+					})
+				end,
+			},
 			strategies = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
