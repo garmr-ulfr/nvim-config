@@ -56,6 +56,7 @@ require("lazy").setup({
 		cmd = "Copilot",
 		event = "BufEnter",
 		opts = {
+			copilot_model = "gpt-4.1",
 			suggestion = { enabled = false }, -- disable inline suggestions
 			panel = { enabled = false }, -- disable the copilot panel
 		},

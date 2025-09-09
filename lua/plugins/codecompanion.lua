@@ -160,17 +160,17 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 		},
 		opts = {
-			adapters = {
-				copilot = function()
-					return require("codecompanion.adapters").extend("copilot", {
-						schema = {
-							model = {
-								default = "gpt-5",
-							},
-						},
-					})
-				end,
-			},
+			-- adapters = {
+			-- 	copilot = function()
+			-- 		return require("codecompanion.adapters").extend("copilot", {
+			-- 			schema = {
+			-- 				model = {
+			-- 					default = "gpt-5",
+			-- 				},
+			-- 			},
+			-- 		})
+			-- 	end,
+			-- },
 			strategies = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
@@ -609,11 +609,12 @@ return {
 						},
 					},
 					auto_scroll = true, -- Automatically scroll down and place the cursor at the end
+					-- show_settings = true,
+					fold_context = true,
 				},
 				icons = {
 					chat_context = "",
 				},
-				fold_context = true,
 				diff = {
 					enabled = true,
 					-- provider = providers.diff, -- mini_diff|default

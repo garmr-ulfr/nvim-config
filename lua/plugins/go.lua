@@ -152,6 +152,8 @@ return {
 				end
 				map("n", "<leader>zrt", "<cmd>GoTestFunc -n 1 -a -test.timeout=30s<CR>", "run test")
 				map("n", "<leader>zrT", "<cmd>GoTestFile -n 1 -a -test.timeout=30s<CR>", "run file tests")
+				map("n", "<leader>zRt", ":GoTestFunc -n 1 -a -test.timeout=30s -t ", "run test w/tags")
+				map("n", "<leader>zRT", ":GoTestFile -n 1 -a -test.timeout=30s -t ", "run file tests w/tags")
 				map("n", "<leader>zta", "<cmd>GoAddTest<CR>", "add test")
 				map("n", "<leader>ztA", "<cmd>GoAddAllTest<CR>", "add all tests")
 				map("n", "<leader>zfs", "<cmd>GoFillStruct<CR>", "fill struct")
@@ -161,7 +163,7 @@ return {
 				map("n", "<leader>zct", "<cmd>GoTermClose<CR>", "close term")
 				map("n", "<leader>zgd", ":GoDoc ", "go doc")
 				map("n", "<leader>zgi", ":GoImpl ", "impl")
-				map("n", "<leader>xmt", "<cmd>GoModTidy<CR>", "mod tidy")
+				map("n", "<leader>zmt", "<cmd>GoModTidy<CR>", "mod tidy")
 				map("n", "<leader>ff", function() vim.lsp.buf.format() end, "format file")
 			end,
 			lsp_codelens = true,
