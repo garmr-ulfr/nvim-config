@@ -168,7 +168,7 @@ return {
 			end,
 			lsp_codelens = true,
 			golangci_lint = {
-				default = 'standard', -- set to one of { 'standard', 'fast', 'all', 'none' }
+				default = 'none', -- set to one of { 'standard', 'fast', 'all', 'none' }
 				-- disable = {'errcheck', 'staticcheck'}, -- linters to disable empty by default
 				-- enable = {'govet', 'ineffassign','revive', 'gosimple'}, -- linters to enable; empty by default
 				-- enable_only = {}, -- linters to enable only; empty by default, set to e.g. {'govet', 'ineffassign','revive', 'gosimple'}
