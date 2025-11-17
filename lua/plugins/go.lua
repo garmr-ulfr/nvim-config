@@ -64,7 +64,7 @@ return {
 		dependencies = {
 			'ray-x/guihua.lua',
 			'nvim-treesitter/nvim-treesitter',
-			-- 'neovim/nvim-lspconfig',
+			'neovim/nvim-lspconfig',
 		},
 		ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
 		opts = {
