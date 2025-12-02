@@ -55,16 +55,19 @@ require("lazy").setup({
 		lazy = true,
 		cmd = "Copilot",
 		event = "BufEnter",
-		opts = {
-			copilot_model = "gpt-4.1",
-			suggestion = { enabled = false }, -- disable inline suggestions
-			panel = { enabled = false }, -- disable the copilot panel
-		},
+		config = function()
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+			})
+		end,
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		lazy = true,
-		opts = {},
+		dependencies = { "zbirenbaum/copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
+		end,
 	},
 	-- {
 	-- 	'huggingface/llm.nvim',

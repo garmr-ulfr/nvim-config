@@ -173,7 +173,6 @@ return {
 
 			require("mason-lspconfig").setup(opts)
 
-			local has_cmp_comparators, copilot_cmp = pcall(require, "copilot_cmp.comparators")
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			cmp.setup({
 				completion = {
@@ -247,7 +246,7 @@ return {
 				sorting = {
 					priority_weight = 2,
 					comparators = vim.tbl_filter(function(v) return v ~= nil end, {
-						has_cmp_comparators and copilot_cmp.prioritize or nil,
+						require("copilot_cmp.comparators").prioritize,
 						-- order matters here
 						cmp.config.compare.offset,
 						cmp.config.compare.exact,

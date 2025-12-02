@@ -2,10 +2,9 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
+		branch = "main",
 		build = ":TSUpdate",
-		-- branch = "main",
 		opts = {
-			auto_install = false,
 			ensure_installed = {
 				"bash",
 				"dockerfile",
@@ -15,12 +14,16 @@ return {
 				"markdown",
 				"vim",
 			},
-			highlight = {
-				enable = true,
-			},
 		},
 		config = function(_, opts)
-			require('nvim-treesitter.configs').setup(opts)
+			require('nvim-treesitter').install(opts.ensure_installed)
+			vim.api.nvim_create_autocmd('FileType', {
+				pattern = opts.ensure_installed,
+				callback = function()
+					vim.treesitter.start()
+					vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+				end,
+			})
 		end,
 	},
 	{ "nvim-treesitter/nvim-treesitter-context", opts = {} },
