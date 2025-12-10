@@ -37,7 +37,7 @@ local gopls_settings = {
 		},
 		usePlaceholders = true,
 		completeUnimported = true,
-		staticcheck = true,
+		staticcheck = false,
 		matcher = 'Fuzzy',
 		diagnosticsDelay = '500ms',
 		diagnosticsTrigger = 'Edit',
@@ -130,7 +130,7 @@ return {
 			},
 			lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
 			gopls_cmd = { "gopls" },
-			gopls_remote_auto = false, -- add -remote=auto to gopls
+			gopls_remote_auto = true,  -- add -remote=auto to gopls
 			gocoverage_sign = "λ",
 			sign_priority = 5,
 			dap_debug = false,
