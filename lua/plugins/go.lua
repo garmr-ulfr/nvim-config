@@ -2,8 +2,17 @@
 
 local gopls_settings = {
 	gopls = {
+		directoryFilters = {
+			"-**/node_modules",
+			"-**/build",
+			"-**/bin",
+			"-cmd/backoffice",
+			"-cmd/api/apipb/services",
+			"-cmd/api/apipb/google/api",
+			"-cmd/pulumi/proto",
+		},
 		analyses = {
-			useany = true,
+			-- useany = true,
 			-- atomicalign = false,
 			-- unreachable = true,
 			-- nilness = true,
@@ -39,7 +48,7 @@ local gopls_settings = {
 		completeUnimported = true,
 		staticcheck = false,
 		matcher = 'Fuzzy',
-		diagnosticsDelay = '500ms',
+		diagnosticsDelay = '750ms',
 		diagnosticsTrigger = 'Edit',
 		symbolMatcher = 'FastFuzzy',
 		semanticTokens = false, -- disable semantic tokens as treesitter is better
@@ -130,7 +139,7 @@ return {
 			},
 			lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
 			gopls_cmd = { "gopls" },
-			gopls_remote_auto = true,  -- add -remote=auto to gopls
+			gopls_remote_auto = false, -- add -remote=auto to gopls
 			gocoverage_sign = "λ",
 			sign_priority = 5,
 			dap_debug = false,

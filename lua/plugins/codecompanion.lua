@@ -171,7 +171,7 @@ return {
 			-- 		})
 			-- 	end,
 			-- },
-			strategies = {
+			interactions = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
 					adapter = "copilot",
@@ -219,7 +219,7 @@ return {
 					opts = {
 						is_default = true,
 						modes = { "v" },
-						short_name = "explain",
+						alias = "explain",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -254,7 +254,7 @@ return {
 					strategy = "chat",
 					description = "Explain the following code",
 					opts = {
-						short_name = "explain-code",
+						alias = "explain-code",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -277,7 +277,7 @@ return {
 					description = "Review the provided code snippet.",
 					opts = {
 						modes = { "v" },
-						short_name = "review",
+						alias = "review",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -313,7 +313,7 @@ return {
 					strategy = "chat",
 					description = "Review code and provide suggestions for improvement.",
 					opts = {
-						short_name = "review-code",
+						alias = "review-code",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -337,7 +337,7 @@ return {
 					description = "Refactor the provided code snippet.",
 					opts = {
 						modes = { "v" },
-						short_name = "refactor",
+						alias = "refactor",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -372,7 +372,7 @@ return {
 					strategy = "chat",
 					description = "Refactor the provided code snippet.",
 					opts = {
-						short_name = "refactor-code",
+						alias = "refactor-code",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -394,7 +394,7 @@ return {
 					strategy = "chat",
 					description = "Generate unit tests for the provided code snippet.",
 					opts = {
-						short_name = "tests",
+						alias = "tests",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -416,7 +416,7 @@ return {
 					strategy = "chat",
 					description = "Generate a commit message for staged change",
 					opts = {
-						short_name = "commit",
+						alias = "commit",
 						auto_submit = true,
 						is_slash_cmd = true,
 					},
@@ -436,12 +436,46 @@ return {
 						},
 					},
 				},
+				["PR Summary"] = {
+					strategy = "chat",
+					description = "Generate a pull request summary based on the diff of the current branch.",
+					opts = {
+						alias = "pr-summary",
+						auto_submit = true,
+						is_slash_cmd = true,
+					},
+					prompts = {
+						{
+							role = "user",
+							content = function()
+								return "Write a detailed pull request summary based on the following git diff and following these guidelines:\n\n"
+									 .. "**Structured, changelog-style pull request summary.**\n"
+									 .. "- Start with a concise summary sentence describing the main purpose or bug fix of the PR.\n"
+									 .. "- Use bolded section headers for the main change and for any secondary/minor changes.\n"
+									 .. "- For each section, use bullet points to list specific changes, referencing affected files in parentheses.\n"
+									 .. "- Emphasize the primary change first, with supporting or cleanup changes grouped separately.\n"
+									 .. "- Keep language clear, direct, and focused on what changed and why.\n\n"
+									 .. "commits:"
+									 .. "\n```\n"
+									 .. vim.fn.system("git log --oneline main..HEAD")
+									 .. "\n```\n"
+									 .. "diff:"
+									 .. "\n```\n"
+									 .. vim.fn.system("git diff main...HEAD")
+									 .. "\n```"
+							end,
+							opts = {
+								contains_code = true,
+							},
+						},
+					},
+				},
 				["Inline Document"] = {
 					strategy = "inline",
 					description = "Add documentation for code.",
 					opts = {
 						modes = { "v" },
-						short_name = "inline-doc",
+						alias = "inline-doc",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -478,7 +512,7 @@ return {
 					description = "Write documentation for code.",
 					opts = {
 						modes = { "v" },
-						short_name = "doc",
+						alias = "doc",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -515,7 +549,7 @@ return {
 					description = "Give betting naming for the provided code snippet.",
 					opts = {
 						modes = { "v" },
-						short_name = "naming",
+						alias = "naming",
 						auto_submit = true,
 						user_prompt = false,
 						stop_context_insertion = true,
@@ -543,7 +577,7 @@ return {
 					strategy = "chat",
 					description = "Give betting naming for the provided code snippet.",
 					opts = {
-						short_name = "better-naming",
+						alias = "better-naming",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -558,7 +592,7 @@ return {
 					strategy = "chat",
 					description = "Add logs to the provided code snippet.",
 					opts = {
-						short_name = "go-logs",
+						alias = "go-logs",
 						auto_submit = false,
 						is_slash_cmd = true,
 					},
@@ -582,7 +616,7 @@ return {
 				action_palette = {
 					provider = "telescope",
 					opts = {
-						show_default_actions = true, -- Show default actions in the action palette
+						show_preset_actions = true, -- Show default actions in the action palette
 						show_default_prompt_library = true, -- Show default prompt library in the action palette
 					}
 				},
