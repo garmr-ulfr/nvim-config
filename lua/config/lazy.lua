@@ -1,15 +1,13 @@
 require("lazy").setup({
+	change_detection = { notify = false },
 	checker = { enabled = true },
 	spec = {
-		-- theme
-		-- {
-		-- 	'catppuccin/nvim',
-		-- 	name = 'catppuccin',
-		-- 	priority = 1000,
-		-- 	config = function()
-		-- 		require('configs.catppuccin')
-		-- 	end
-		-- },
+		{
+			'norcalli/nvim-colorizer.lua',
+			config = function()
+				require('colorizer').setup({}, { mode = 'foreground' })
+			end,
+		},
 		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ import = "plugins" },
 

@@ -43,7 +43,7 @@ return {
 				untracked    = { text = '┆' },
 			},
 			signs_staged_enable          = true,
-			signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
+			signcolumn                   = false, -- Toggle with `:Gitsigns toggle_signs`
 			numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
 			linehl                       = false, -- Toggle with `:Gitsigns toggle_linehl`
 			word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
@@ -51,19 +51,24 @@ return {
 			current_line_blame_opts      = {
 				virt_text = true,
 				virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-				delay = 300,
+				delay = 100,
 				ignore_whitespace = false,
 				virt_text_priority = 100,
 				use_focus = true,
 			},
 			current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+			update_debounce              = 100,
 			preview_config               = {
 				-- Options passed to nvim_open_win
-				style = 'minimal',
+				-- style = 'minimal',
+				border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 				relative = 'cursor',
 				row = 0,
 				col = 1
 			},
+			trouble                      = true,
+			gh                           = true,
+			_commit_maps                 = true,
 		},
 	},
 }
