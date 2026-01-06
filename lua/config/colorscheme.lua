@@ -129,6 +129,7 @@ require("nightfox").setup({
 			['@module'] = { fg = syntax.type },
 			['@variable.parameter'] = { fg = palettes.red[7] },
 			['@constructor'] = { fg = syntax.func },
+			['@boolean'] = { fg = syntax.builtin_const },
 		},
 	},
 })

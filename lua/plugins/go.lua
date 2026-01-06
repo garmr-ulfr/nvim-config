@@ -81,6 +81,7 @@ return {
 			goimports = 'gopls',
 			gofmt = 'gopls',
 			fillstruct = 'gopls',
+			build_tags = "with_quic",
 			-- max_line_len = 0,
 			tag_transform = false,
 			tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
