@@ -1,6 +1,6 @@
 require("lazy").setup({
 	change_detection = { notify = false },
-	checker = { enabled = true },
+	-- checker = { enabled = true },
 	spec = {
 		{
 			'norcalli/nvim-colorizer.lua',

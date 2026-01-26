@@ -158,19 +158,30 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
+			{
+				"j-hui/fidget.nvim",
+				opts = {
+					notification = {
+						window = {
+							winblend = 0,
+							relative = "win",
+						},
+					},
+				},
+			},
 		},
 		opts = {
-			-- adapters = {
-			-- 	copilot = function()
-			-- 		return require("codecompanion.adapters").extend("copilot", {
-			-- 			schema = {
-			-- 				model = {
-			-- 					default = "gpt-5",
-			-- 				},
-			-- 			},
-			-- 		})
-			-- 	end,
-			-- },
+			adapters = {
+				acp = {
+					gemini_cli = function()
+						return require("codecompanion.adapters").extend("gemini_cli", {
+							defaults = {
+								auth_method = "oauth-personal",
+							},
+						})
+					end,
+				},
+			},
 			interactions = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
@@ -751,5 +762,8 @@ return {
 				desc = "Code Companion - Quick chat",
 			},
 		},
+		init = function()
+			require("plugins.codecompanion.fidget-spinner").setup()
+		end,
 	},
 }
