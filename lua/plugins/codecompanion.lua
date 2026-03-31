@@ -80,7 +80,7 @@ Format your feedback as follows:
 - Explain the high-level issue or problem briefly.
 - Provide a specific suggestion for improvement.
 
-If the code snippet has no readability issues, simply confirm that the code is clear and well-written as is.
+If the code snippet has no issues, simply confirm that the code is clear and well-written as is.
 ]]
 local COPILOT_REFACTOR = [[
 Your task is to refactor the provided code snippet, focusing specifically on its readability and maintainability.
@@ -173,6 +173,16 @@ return {
 		opts = {
 			adapters = {
 				acp = {
+					claude_code = function()
+						return require("codecompanion.adapters").extend("claude_code", {
+							env = {
+								CLAUDE_CODE_OAUTH_TOKEN = "cmd:gpg --batch --quiet --decrypt ~/.config/claude-code/.token.gpg",
+							},
+							defaults = {
+								model = "opus",
+							},
+						})
+					end,
 					gemini_cli = function()
 						return require("codecompanion.adapters").extend("gemini_cli", {
 							defaults = {
@@ -185,7 +195,7 @@ return {
 			interactions = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
-					adapter = "copilot",
+					adapter = "claude_code",
 					roles = {
 						llm = function(adapter)
 							return adapter.formatted_name .. " "
@@ -219,8 +229,8 @@ return {
 						}
 					},
 				},
-				inline = { adapter = "copilot", completion_provider = "cmp" },
-				agent = { adapter = "copilot", completion_provider = "cmp" },
+				inline = { adapter = "claude_code", completion_provider = "cmp" },
+				agent = { adapter = "claude_code", completion_provider = "cmp" },
 			},
 			-- -- PROMPT LIBRARIES ---------------------------------------------------------
 			prompt_library = {
