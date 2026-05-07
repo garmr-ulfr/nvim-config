@@ -6,10 +6,32 @@ local gopls_settings = {
 			"-**/node_modules",
 			"-**/build",
 			"-**/bin",
-			"-cmd/backoffice",
 			"-cmd/api/apipb/services",
 			"-cmd/api/apipb/google/api",
 			"-cmd/pulumi/proto",
+			"-cmd/amp",
+			"-cmd/autoupdate-server",
+			"-cmd/backoffice",
+			"-cmd/billingimport",
+			"-cmd/datacap",
+			"-cmd/deploy",
+			"-cmd/egress-provision",
+			"-cmd/freddie",
+			"-cmd/geolookup",
+			"-cmd/keeper",
+			"-cmd/lc",
+			"-cmd/logtail",
+			"-cmd/migrator",
+			"-cmd/noskip",
+			"-cmd/openapiv2",
+			"-cmd/pfe",
+			"-cmd/phost",
+			"-cmd/pinger",
+			"-cmd/resellers-server",
+			"-cmd/tlsmasq-tool",
+			"-cmd/update_masquerades",
+			"-cmd/vps-test",
+			"-cmd/with-secrets",
 		},
 		analyses = {
 			useany = true,
@@ -48,13 +70,13 @@ local gopls_settings = {
 		},
 		usePlaceholders = true,
 		completeUnimported = true,
-		staticcheck = true,
+		staticcheck = false,
 		matcher = 'Fuzzy',
 		diagnosticsDelay = '750ms',
 		diagnosticsTrigger = 'Edit',
 		symbolMatcher = 'FastFuzzy',
 		semanticTokens = false, -- disable semantic tokens as treesitter is better
-		vulncheck = 'Imports',
+		vulncheck = 'Off',
 		-- ['local'] = get_current_gomod(),
 		gofumpt = false,
 		buildFlags = {},
@@ -142,7 +164,7 @@ return {
 			},
 			lsp_semantic_highlights = false, -- use highlights from gopls, disable by default as gopls/nvim not compatible
 			gopls_cmd = { "gopls" },
-			gopls_remote_auto = true,  -- add -remote=auto to gopls
+			gopls_remote_auto = false, -- shared daemon accumulates workspaces and OOMs on large repos
 			gocoverage_sign = "λ",
 			sign_priority = 5,
 			dap_debug = false,
@@ -161,6 +183,9 @@ return {
 			luasnip = true
 		},
 		config = function(_, opts)
+			-- Cap gopls heap so the Go GC reclaims aggressively before the kernel OOM-kills it.
+			vim.env.GOMEMLIMIT = vim.env.GOMEMLIMIT or '4GiB'
+
 			require('go').setup(opts)
 			local cfg = require('go.lsp').config()
 			cfg.settings.gopls = vim.tbl_deep_extend('force', cfg.settings.gopls, gopls_settings.gopls)

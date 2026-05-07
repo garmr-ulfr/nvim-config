@@ -74,3 +74,6 @@ map("v", "<leader>rd", [[:s/\_s\zs\_s*.\+>\{3,}\s\?DEBUG\s*\_.\{-}\n.*<\{3,}\s\?
 
 -- add debug code block for go. TEMPORARY, will be replaced by function to add debug code blocks for any language
 map("n", "<leader>ad", "o{ ///////////// >>>>> DEBUG<CR>} ///////////// <<<<< DEBUG<CR><Esc>kO")
+
+-- del grx mappings
+vim.keymap.del("n", "grx")

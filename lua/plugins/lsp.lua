@@ -54,7 +54,7 @@ local symbols = {
 -- 	vim.lsp.buf.remove_workspace_folder()
 -- end, { desc = 'Remove folder from workspace' })
 
-vim.lsp.set_log_level("error")
+-- vim.lsp.set_log_level("error")
 
 return {
 	{
@@ -148,10 +148,7 @@ return {
 					map('n', 'vrn', '<cmd>lua vim.lsp.buf.rename()<cr>', "Rename symbol")
 					map('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', "Range code action")
 
-					-- Diagnostics
 					map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', "Show diagnostics")
-					map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', "Previous diagnostic")
-					map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', "Next diagnostic")
 				end
 			})
 			vim.lsp.config('*', {

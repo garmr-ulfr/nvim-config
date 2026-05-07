@@ -134,4 +134,4 @@ require("nightfox").setup({
 	},
 })
 
-vim.cmd("ColorizerToggle")
+-- vim.cmd("ColorizerToggle")

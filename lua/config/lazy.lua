@@ -2,12 +2,12 @@ require("lazy").setup({
 	change_detection = { notify = false },
 	-- checker = { enabled = true },
 	spec = {
-		{
-			'norcalli/nvim-colorizer.lua',
-			config = function()
-				require('colorizer').setup({}, { mode = 'foreground' })
-			end,
-		},
+		-- {
+		-- 	'norcalli/nvim-colorizer.lua',
+		-- 	config = function()
+		-- 		require('colorizer').setup({}, { mode = 'foreground' })
+		-- 	end,
+		-- },
 		{ "nvim-lua/plenary.nvim", lazy = true },
 		{ import = "plugins" },
 

@@ -67,8 +67,19 @@ end
 
 local function spacer() return '%=' end
 
-local url = vim.fn.system('git config --get remote.origin.url')
-local repo = url:match("/(.*)%.git")
+local repo_cache = {}
+local function get_repo()
+	local cwd = vim.uv.cwd() or ''
+	local cached = repo_cache[cwd]
+	if cached ~= nil then return cached end
+	local out = vim.fn.system({ 'git', '-C', cwd, 'config', '--get', 'remote.origin.url' })
+	local r = ''
+	if vim.v.shell_error == 0 then
+		r = out:match("/([^/]+)%.git") or out:match("/([^/%s]+)%s*$") or ''
+	end
+	repo_cache[cwd] = r
+	return r
+end
 
 local function left_section(fg)
 	return {
@@ -134,7 +145,10 @@ end
 local function right_section(fg)
 	return {
 			 function()
-				 return repo .. '[' .. vim.fn.FugitiveHead() .. ']'
+				 local r = get_repo()
+				 local head = vim.fn.FugitiveHead()
+				 if r == '' and head == '' then return '' end
+				 return r .. '[' .. head .. ']'
 			 end,
 			 icon = '',
 			 color = { fg = fg or colors.violet, gui = 'bold' },

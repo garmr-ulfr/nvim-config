@@ -195,7 +195,7 @@ return {
 			interactions = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
-					adapter = "claude_code",
+					adapter = "copilot",
 					roles = {
 						llm = function(adapter)
 							return adapter.formatted_name .. " "
