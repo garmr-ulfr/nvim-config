@@ -34,3 +34,17 @@ vim.opt.foldlevel = 99
 
 vim.opt.mouse = ""
 -- vim.g.clipboard = 'osc52'
+
+-- Block writes to files named \ ' or ], which otherwise get created by
+-- fat-fingering one of those keys right after `:w` (`:w\` writes file "\").
+-- The doubled backslash escapes \ in the autocmd pattern.
+vim.api.nvim_create_autocmd("BufWriteCmd", {
+	pattern = { "\\\\", "'", "]" },
+	callback = function(args)
+		vim.api.nvim_echo(
+			{ { "refusing to write file named '" .. args.file .. "' (likely a typo)", "ErrorMsg" } },
+			true,
+			{ err = true }
+		)
+	end,
+})
