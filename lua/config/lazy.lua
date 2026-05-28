@@ -50,11 +50,10 @@ require("lazy").setup({
 		},
 		{
 			"MeanderingProgrammer/render-markdown.nvim",
-			optional = true,
+			-- optional = true,
 			opts = {
-				file_types = { "markdown", "copilot-chat" },
+				file_types = { "markdown", "codecompanion" },
 			},
-			ft = { "markdown", "copilot-chat", "codecompanion" },
 		},
 		{ 'fei6409/log-highlight.nvim', ft = { "log" } },
 	},

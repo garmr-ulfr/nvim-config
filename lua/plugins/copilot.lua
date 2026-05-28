@@ -9,9 +9,4 @@ return {
 			panel = { enabled = false },
 		},
 	},
-	{
-		"zbirenbaum/copilot-cmp",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		opts = {},
-	},
 }

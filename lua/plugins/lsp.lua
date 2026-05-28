@@ -1,61 +1,3 @@
-local symbols = {
-	Text = "",
-	Method = "󰆧",
-	Function = "󰊕",
-	Constructor = "",
-	Field = "󰇽",
-	Variable = "󰂡",
-	Class = "󰠱",
-	Interface = "",
-	Module = "",
-	Property = "󰜢",
-	Unit = "",
-	Value = "󰎠",
-	Enum = "",
-	Keyword = "󰌋",
-	Snippet = "",
-	Color = "󰏘",
-	File = "󰈙",
-	Reference = "",
-	Folder = "󰉋",
-	EnumMember = "",
-	Constant = "󰏿",
-	Struct = "",
-	Event = "",
-	Operator = "󰆕",
-	TypeParameter = "󰅲",
-	Copilot = ""
-}
--- local lspconfig = require('lspconfig')
--- lspconfig.util.on_setup = lspconfig.util.add_hook_after(
--- 	lspconfig.util.on_setup,
--- 	function(config, user_config)
--- 		config.capabilities = vim.tbl_deep_extend(
--- 			'force',
--- 			config.capabilities,
--- 			require('cmp_nvim_lsp').default_capabilities(),
--- 			vim.tbl_get(user_config, 'capabilities') or {}
--- 		)
--- 	end
--- )
---
-
--- local command = vim.api.nvim_create_user_command
---
--- command('LspWorkspaceAdd', function()
--- 	vim.lsp.buf.add_workspace_folder()
--- end, { desc = 'Add folder to workspace' })
---
--- command('LspWorkspaceList', function()
--- 	vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
--- end, { desc = 'List workspace folders' })
---
--- command('LspWorkspaceRemove', function()
--- 	vim.lsp.buf.remove_workspace_folder()
--- end, { desc = 'Remove folder from workspace' })
-
--- vim.lsp.set_log_level("error")
-
 return {
 	{
 		'mason-org/mason-lspconfig.nvim',
@@ -72,12 +14,7 @@ return {
 		dependencies = {
 			{ 'mason-org/mason.nvim', opts = {} },
 			'neovim/nvim-lspconfig',
-			'hrsh7th/cmp-nvim-lsp',
-			'hrsh7th/cmp-nvim-lua',
-			'hrsh7th/cmp-buffer',
-			'hrsh7th/cmp-path',
-			'hrsh7th/nvim-cmp',
-			"L3MON4D3/LuaSnip",
+			'saghen/blink.cmp',
 		},
 		config = function(_, opts)
 			vim.keymap.del('n', 'grn')
@@ -86,13 +23,11 @@ return {
 			vim.keymap.del('n', 'gri')
 			vim.keymap.del('n', 'grt')
 
-			local cmp = require('cmp')
-			local cmp_lsp = require("cmp_nvim_lsp")
 			local capabilities = vim.tbl_deep_extend(
 				"force",
 				{},
 				vim.lsp.protocol.make_client_capabilities(),
-				cmp_lsp.default_capabilities()
+				require('blink.cmp').get_lsp_capabilities({}, false)
 			)
 
 			vim.api.nvim_create_autocmd('LspAttach', {
@@ -157,7 +92,14 @@ return {
 
 			vim.diagnostic.config({
 				severity_sort = true,
-				float = { border = 'rounded' },
+				float = {
+					focusable = false,
+					style = "minimal",
+					border = "rounded",
+					source = true,
+					header = "",
+					prefix = "",
+				},
 				signs = {
 					text = {
 						[vim.diagnostic.severity.ERROR] = 'E',
@@ -169,111 +111,6 @@ return {
 			})
 
 			require("mason-lspconfig").setup(opts)
-
-			local cmp_select = { behavior = cmp.SelectBehavior.Select }
-			cmp.setup({
-				completion = {
-					completeopt = 'menu,menuone,noinsert,noselect',
-				},
-				window = {
-					completion = {
-						-- border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
-						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-						scrollbar = "║",
-						winhighlight = 'Normal:CmpMenu,FloatBorder:CmpMenuBorder,CursorLine:Visual,Search:None',
-						autocomplete = {
-							require("cmp.types").cmp.TriggerEvent.InsertEnter,
-							require("cmp.types").cmp.TriggerEvent.TextChanged,
-						},
-					},
-					documentation = {
-						border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-						winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-						scrollbar = "║",
-					},
-				},
-				mapping = {
-					['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-					['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-					['<C-y>'] = cmp.mapping.confirm({ select = true }),
-					['<C-e>'] = cmp.mapping.abort(),
-
-					-- scroll up and down in the completion documentation
-					['<C-u>'] = cmp.mapping.scroll_docs(-5),
-					['<C-d>'] = cmp.mapping.scroll_docs(5),
-
-				},
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				style = {
-					winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-				},
-				formatting = {
-					fields = { 'abbr', 'menu', 'kind' },
-					format = function(entry, item)
-						-- local short_name = {
-						-- 	nvim_lsp = 'LSP',
-						-- 	nvim_lua = 'nvim'
-						-- }
-						--
-						-- local menu_name = short_name[entry.source.name] or entry.source.name
-						--
-						-- item.menu = string.format('[%s]', menu_name)
-						item.menu_hl_group = "CmpItemKind" .. item.kind
-						item.menu = item.kind
-						item.abbr = item.abbr:sub(1, 50)
-						item.kind = '[' .. symbols[item.kind] .. ']'
-						return item
-					end,
-				},
-				experimental = {
-					ghost_text = true,
-				},
-				sources = {
-					{ name = 'copilot' },
-					{ name = 'nvim_lsp' },
-					{ name = 'buffer' },
-					{ name = 'path' },
-					{ name = 'nvim_lua' },
-					{ name = 'luasnip' },
-				},
-				sorting = {
-					priority_weight = 2,
-					comparators = vim.tbl_filter(function(v) return v ~= nil end, {
-						require("copilot_cmp.comparators").prioritize,
-						-- order matters here
-						cmp.config.compare.offset,
-						cmp.config.compare.exact,
-						-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-						cmp.config.compare.score,
-						cmp.config.compare.recently_used,
-						cmp.config.compare.locality,
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
-					}),
-				},
-				preselect = cmp.PreselectMode.None,
-			})
-
-			vim.diagnostic.config({
-				-- update_in_insert = true,
-				float = {
-					focusable = false,
-					style = "minimal",
-					border = "rounded",
-					source = true,
-					header = "",
-					prefix = "",
-				},
-			})
-
-			--set max height of items
-			vim.cmd([[ set pumheight=6 ]])
 		end
 	},
 }
