@@ -30,22 +30,28 @@ return {
 				require('blink.cmp').get_lsp_capabilities({}, false)
 			)
 
+			local format_group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true })
+
 			vim.api.nvim_create_autocmd('LspAttach', {
+				group = format_group,
 				callback = function(args)
 					local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-
-					if client:supports_method('textDocument/formatting') then
-						vim.api.nvim_create_autocmd('BufWritePre', {
-							buffer = args.buf,
-							callback = function()
-								if client.name == 'gopls' then
-									require('go.format').goimports()
-								else
-									vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-								end
-							end,
-						})
+					if not client:supports_method('textDocument/formatting') then
+						return
 					end
+
+					vim.api.nvim_clear_autocmds({ group = format_group, event = 'BufWritePre', buffer = args.buf })
+					vim.api.nvim_create_autocmd('BufWritePre', {
+						group = format_group,
+						buffer = args.buf,
+						callback = function()
+							if vim.lsp.get_clients({ bufnr = args.buf, name = 'gopls' })[1] then
+								require('go.format').goimports()
+							else
+								vim.lsp.buf.format({ bufnr = args.buf })
+							end
+						end,
+					})
 				end,
 			})
 
@@ -81,7 +87,7 @@ return {
 					map({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', "Format buffer")
 					map('n', 'vca', '<cmd>lua vim.lsp.buf.code_action()<cr>', "Code action")
 					map('n', 'vrn', '<cmd>lua vim.lsp.buf.rename()<cr>', "Rename symbol")
-					map('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>', "Range code action")
+					map('x', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', "Range code action")
 
 					map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', "Show diagnostics")
 				end
