@@ -195,14 +195,17 @@ return {
 			interactions = {
 				-- CHAT STRATEGY ----------------------------------------------------------
 				chat = {
-					adapter = "copilot",
+					adapter = {
+						name = "copilot",
+						model = "gpt-5.4",
+					},
 					roles = {
 						llm = function(adapter)
 							return adapter.formatted_name .. " "
 						end,
 						user = "Me 󰮠",
 					},
-					completion_provider = "cmp",
+					completion_provider = "blink",
 					keymaps = {
 						close = {
 							modes = {
@@ -229,8 +232,8 @@ return {
 						}
 					},
 				},
-				inline = { adapter = "claude_code", completion_provider = "cmp" },
-				agent = { adapter = "claude_code", completion_provider = "cmp" },
+				inline = { adapter = "claude_code", completion_provider = "blink" },
+				agent = { adapter = "claude_code", completion_provider = "blink" },
 			},
 			-- -- PROMPT LIBRARIES ---------------------------------------------------------
 			prompt_library = {
@@ -685,6 +688,20 @@ return {
 				-- effort to ensure no code leakage, using this is at your own risk
 				send_code = true,
 				system_prompt = SYSTEM_PROMPT,
+			},
+			rules = {
+				opts = {
+					chat = {
+						enabled = false,
+					},
+				},
+			},
+			memory = {
+				opts = {
+					chat = {
+						enabled = false,
+					},
+				},
 			},
 		},
 		keys = {

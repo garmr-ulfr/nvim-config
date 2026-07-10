@@ -30,7 +30,7 @@ return {
 				require('blink.cmp').get_lsp_capabilities({}, false)
 			)
 
-			local format_group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true })
+			local format_group = vim.api.nvim_create_augroup('LspFormatOnSave', {})
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = format_group,
@@ -40,14 +40,12 @@ return {
 						return
 					end
 
-					vim.api.nvim_clear_autocmds({ group = format_group, event = 'BufWritePre', buffer = args.buf })
+					-- vim.api.nvim_clear_autocmds({ group = format_group, event = 'BufWritePre', buffer = args.buf })
 					vim.api.nvim_create_autocmd('BufWritePre', {
 						group = format_group,
 						buffer = args.buf,
 						callback = function()
-							if vim.lsp.get_clients({ bufnr = args.buf, name = 'gopls' })[1] then
-								require('go.format').goimports()
-							else
+							if not vim.lsp.get_clients({ bufnr = args.buf, name = 'gopls' })[1] then
 								vim.lsp.buf.format({ bufnr = args.buf })
 							end
 						end,
